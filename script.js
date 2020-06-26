@@ -1,56 +1,20 @@
-//const { title } = require('process');
-
 let productsList = [];
 let cart = null;
+let products = [];
 const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
+function refreshItemInStorage() {
+  if (typeof Storage !== 'undefined') {
+    cart = cart || JSON.parse(localStorage.getItem('cart'));
+    localStorage.setItem('cart', JSON.stringify(cart || []));
+  } else {
+    console.error('Este navegador não tem suporte para salvar seus pedidos.');
+  }
+}
+
 window.onload = function onload() {
-  let products = [];
-
+  loadAll();
   refreshItemInStorage();
-
-  fetch(endpoint)
-    //Baixa dados da API
-    .then(async (data) => {
-      const result = await data.json();
-      productsList = result.results;
-    })
-    //Preenche lista de produtos
-    .then(() => {
-      products = productsList.map(({ id, title: t, thumbnail }) => ({
-        sku: id,
-        name: t,
-        image: thumbnail,
-      }));
-    })
-    //Define a lista
-    .then(() => {
-      products.forEach((product) => {
-        const { sku } = product;
-        const item = createProductItemElement(product);
-        item.lastElementChild.sku = sku;
-        item.lastElementChild.addEventListener('click', addItemInCart);
-        document.querySelector('.items').appendChild(item);
-      });
-    })
-    //Coloca a lista no HTML
-    .then(() => {
-      const price = createCustomElement('span', 'total-price', 0);
-      let total = 0;
-
-      cart.forEach((item) => {
-        const li = createCartItemElement(item);
-        total += item.salePrice;
-
-        document.querySelector('.cart__items').appendChild(li);
-      });
-
-      document.querySelector('.cart').appendChild(price);
-      printTotal(total);
-    })
-    .catch((err) => {
-      console.error('Error!', err);
-    });
 };
 
 function createProductImageElement(imageSource) {
@@ -74,9 +38,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
-  );
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
 }
@@ -105,9 +67,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 /* -------------- Personalizadas ---------------- */
 
 function addItemInCart(ev) {
-  const { sku } = ev.target;
+  const { sku : evSku } = ev.target;
   let li = null;
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
+  fetch(`https://api.mercadolibre.com/items/${evSku}`)
     .then(async (data) => {
       const { id: sku, title: name, price: salePrice } = await data.json();
       const result = { sku, name, salePrice };
@@ -141,11 +103,52 @@ function addItemInStorage(item) {
   refreshItemInStorage();
 }
 
-function refreshItemInStorage() {
-  if (typeof Storage !== 'undefined') {
-    cart = cart || JSON.parse(localStorage.getItem('cart'));
-    localStorage.setItem('cart', JSON.stringify(cart || []));
-  } else {
-    console.error('Este navegador não tem suporte para salvar seus pedidos.');
-  }
+/* ----------------- */
+
+function definesList() {
+  products.forEach((product) => {
+    const { sku } = product;
+    const item = createProductItemElement(product);
+    item.lastElementChild.sku = sku;
+    item.lastElementChild.addEventListener('click', addItemInCart);
+    document.querySelector('.items').appendChild(item);
+  });
+}
+
+function pushList() {
+  const price = createCustomElement('span', 'total-price', 0);
+  let total = 0;
+  cart.forEach((item) => {
+    const li = createCartItemElement(item);
+    total += item.salePrice;
+
+    document.querySelector('.cart__items').appendChild(li);
+  });
+  document.querySelector('.cart').appendChild(price);
+  printTotal(total);
+}
+
+function loadAll() {
+  fetch(endpoint)
+  // Baixa dados da API
+  .then(async (data) => {
+    const result = await data.json();
+    productsList = result.results;
+  })
+  // Preenche lista de produtos
+  .then(() => {
+    products = productsList.map(({ id, title: t, thumbnail }) => ({
+      sku: id,
+      name: t,
+      image: thumbnail,
+    }));
+  })
+  // Define a lista
+  .then(() => {
+    definesList();
+    pushList();
+  })
+  .catch((err) => {
+    console.error('Error!', err);
+  });
 }
