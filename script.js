@@ -50,5 +50,5 @@ window.onload = function onload() {
         image: item.thumbnail,
       });
       document.getElementsByClassName('items')[0].appendChild(product);
-      }));
+    }));
 };
