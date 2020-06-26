@@ -45,13 +45,13 @@ window.onload = function onload() {
   .then(response => response.json())
     .then((data) => {
       data.results.forEach((product) => {
-        const newProduct = createProductItemElement({
+        const eachProduct = createProductItemElement({
           sku: product.id,
           name: product.title,
           image: product.thumbnail,
         });
         const classItems = document.querySelector('.items');
-        classItems.appendChild(newProduct);
+        classItems.appendChild(eachProduct);
       });
     });
 };
