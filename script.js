@@ -31,7 +31,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código qui
+  // coloque seu código qu
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
