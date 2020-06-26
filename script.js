@@ -49,7 +49,6 @@ const myObject = {
 };
 
 fetch(API_URL, myObject).then(response => response.json()).then((data) => {
-
   const arrayResultados = data.results;
   console.log(arrayResultados);
   arrayResultados.forEach((item) => {
