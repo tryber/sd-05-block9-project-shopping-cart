@@ -7,7 +7,8 @@ const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 function refreshItemInStorage() {
   if (typeof Storage !== 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
-    localStorage.setItem('cart', JSON.stringify(cart || []));
+    if (!cart) cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
   } else {
     console.error('Este navegador não tem suporte para salvar seus pedidos.');
   }
@@ -129,6 +130,7 @@ function loadAll() {
   // Baixa dados da API
   .then(async (data) => {
     const result = await data.json();
+    refreshItemInStorage();
     productsList = result.results;
   })
   // Preenche lista de produtos
@@ -151,5 +153,4 @@ function loadAll() {
 
 window.onload = function onload() {
   loadAll();
-  refreshItemInStorage();
 };
