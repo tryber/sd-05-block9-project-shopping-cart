@@ -32,57 +32,55 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// ANCHOR getSkuFromProductItem
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+// ANCHOR cartItemClickListener
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
+// ANCHOR createCartItemElement
+// function createCartItemElement({ sku, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
 
 // ANCHOR
 
-window.onload = function onload() {
-  const API_computador_URL =
-    'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+const apiComputadorUrl =
+  'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
-  const myObject = {
-    method: 'GET',
-    headers: { Accept: 'application/json' },
-  };
-
-  let allProducts = [];
-
-  const fetchMercadoLivre = () => {
-    fetch(API_computador_URL, myObject)
-      .then((response) => response.json())
-      .then((data) => {
-        allProducts = data.results;
-        return allProducts;
-      })
-      .then((produtos) => {
-        produtos.forEach((produto) => {
-          let obj = {
-            sku: produto.id,
-            name: produto.title,
-            image: produto.thumbnail,
-          };
-          const items = document.getElementsByClassName('items')[0];
-          let section = createProductItemElement(obj);
-          items.appendChild(section);
-        });
+const myObject = {
+  method: 'GET',
+  headers: { Accept: 'application/json' },
+};
+// prettier-ignore
+const fetchMercadoLivre = () => {
+  fetch(apiComputadorUrl, myObject)
+    .then(response => response.json())
+    .then((data) => {
+      const allProducts = data.results;
+      return allProducts;
+    })
+    .then((produtos) => {
+      produtos.forEach((produto) => {
+        const obj = {
+          sku: produto.id,
+          name: produto.title,
+          image: produto.thumbnail,
+        };
+        const items = document.getElementsByClassName('items')[0];
+        const section = createProductItemElement(obj);
+        items.appendChild(section);
       });
-  };
+    });
+};
 
+window.onload = function onload() {
   fetchMercadoLivre();
 };
 
