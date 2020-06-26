@@ -47,15 +47,14 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 const product = 'computador';
 const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 const getObject1 = {
-    method: 'GET',
-  };
-  fetch(API_URL_1, getObject1)
-    .then(response => response.json())
-    .then((data) => {
-      data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
+  method: 'GET',
+};
+fetch(API_URL_1, getObject1)
+  .then(response => response.json())
+  .then((data) => {
+    data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
     })
-    .catch(() => console.log('Error on calling the MLB API'));
-
+  .catch(() => console.log('Error on calling the MLB API'));
 
 // async function createListOfProducts(product) {
 // }
