@@ -14,7 +14,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id:sku, title:name, thumbnail:image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -46,15 +46,15 @@ function createCartItemElement({ sku, name, salePrice }) {
 // ---------------------------------------------------
 
 const productSearch = 'computador';
-const api_url = `https://api.mercadolibre.com/sites/MLB/search?q=${productSearch}`;
+const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${productSearch}`;
 
 const getObject = {
   method: 'GET',
-}
+};
 
-fetch(api_url, getObject)
+fetch(API_URL, getObject)
   .then(response => response.json())
-  .then(data => {
+  .then((data) => {
     data.results.forEach(item => createProductItemElement(item));
-  }) 
-  .catch(() => console.log('Error on calling the MLB API'))
+  })
+  .catch(() => console.log('Error on calling the MLB API'));
