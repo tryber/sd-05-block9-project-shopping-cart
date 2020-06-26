@@ -14,14 +14,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id:sku, title:name, thumbnail:image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  document.querySelector('.items').appendChild(section);
 
   return section;
 }
@@ -31,7 +32,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqu
+  // coloque seu código aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -41,3 +42,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// ---------------------------------------------------
+
+const productSearch = 'computador';
+const api_url = `https://api.mercadolibre.com/sites/MLB/search?q=${productSearch}`;
+
+const getObject = {
+  method: 'GET',
+}
+
+fetch(api_url, getObject)
+  .then(response => response.json())
+  .then(data => {
+    data.results.forEach(item => createProductItemElement(item));
+  }) 
+  .catch(() => console.log('Error on calling the MLB API'))
