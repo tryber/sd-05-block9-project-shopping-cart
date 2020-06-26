@@ -46,18 +46,17 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 window.onload = function onload() {
   const sectionItens = document.getElementsByClassName('items')[0];
-  const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  fetch(endpoint)
+  const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(CPUlibre)
   .then(response => response.json())
   .then(data =>
-    data.results.forEach((element) => {
-      const infoProduct = {
-        sku: element.id,
-        name: element.title,
-        image: element.thumbnail,
-      };
-      const productElement = createProductItemElement(infoProduct);
-      sectionItens.appendChild(productElement);
+    data.results.forEach((product) => {
+      const INFOproduct = createProductItemElement({
+        sku: product.id,
+        name: product.title,
+        image: product.thumbnail,
+      });
+      sectionItens.appendChild(INFOproduct);
     }),
   );
 };
