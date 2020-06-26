@@ -53,8 +53,8 @@ function createProductItemElement({ sku, name, image }) {
   // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonAddToCart.addEventListener('click', () => {
-      addToCart({ sku });
-    });
+    addToCart({ sku });
+  });
   section.appendChild(buttonAddToCart);
   return section;
 }
