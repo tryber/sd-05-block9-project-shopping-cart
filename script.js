@@ -30,7 +30,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  return event.target;
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -43,25 +43,24 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 // ---------------------------------------------------
 
-// function that creates a list of products
-const product = 'computador';
-const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-const getObject1 = {
-  method: 'GET',
-};
-fetch(API_URL_1, getObject1)
-  .then(response => response.json())
-  .then((data) => {
-    data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
-  })
-  .catch(() => console.log('Error on calling the MLB API'));
+// 1 - function that creates a list of products
 
-// async function createListOfProducts(product) {
-// }
+async function createListOfProducts(product) {
+  const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+  const getObject1 = {
+    method: 'GET',
+  };
+  fetch(API_URL_1, getObject1)
+    .then(response => response.json())
+    .then((data) => {
+      data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
+    })
+    .catch(() => console.log('Error on calling the MLB API'));
+}
 
-// createListOfProducts('computador');
+createListOfProducts('computador');
 
-// add the product to the cart when the button is clicked
+// 2 - add the product to the cart when the button is clicked
 const items = document.querySelector('.items');
 items.addEventListener('click', (event) => {
   // gets products id
@@ -79,4 +78,10 @@ items.addEventListener('click', (event) => {
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .catch(() => console.log('Error trying to add a product to the cart'));
+});
+
+// 3 - Remove item from the cart
+const cartItems = document.querySelector('.cart__items');
+cartItems.addEventListener('click', () => {
+  cartItemClickListener(event).remove();
 });
