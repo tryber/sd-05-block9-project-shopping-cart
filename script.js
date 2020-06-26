@@ -49,13 +49,14 @@ window.onload = function onload() {
     .then(response => response.json())
     .then(data =>
       data.results.forEach((obj) => {
-        const produto = {
+        const product = {
           sku: obj.id,
           name: obj.title,
           image: obj.thumbnail,
         };
-        const elem = createProductItemElement(produto);
-        document.getElementsByClassName('items')[0].appendChild(elem)      
-      })
-    )
+        const elem = createProductItemElement(product);
+        document.getElementsByClassName('items')[0].appendChild(elem);
+        }
+      )
+    );
 };
