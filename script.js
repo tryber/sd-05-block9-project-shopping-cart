@@ -64,7 +64,7 @@ const items = document.querySelector('.items');
 items.addEventListener('click', (event) => {
   // gets products id
   const itemId = event.target.parentElement.firstElementChild.innerText;
-  
+
   // send a request
   const API_URL = `https://api.mercadolibre.com/items/${itemId}`;
   const getObject = {
