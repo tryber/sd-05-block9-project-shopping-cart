@@ -43,8 +43,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // ---------------------------------------------------
 
-
-
 // function that creates a list of products
 async function createListOfProducts(product) {
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
@@ -56,7 +54,7 @@ async function createListOfProducts(product) {
     .then((data) => {
       data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
     })
-    .catch(() => console.log('Error on calling the MLB API')); 
+    .catch(() => console.log('Error on calling the MLB API'));
 }
 
 createListOfProducts('computador');
