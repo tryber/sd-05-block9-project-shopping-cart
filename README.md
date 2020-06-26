@@ -62,6 +62,16 @@ Para entregar o seu projeto você deverá criar um Pull Request neste repositór
 
 Você pode adicionar outros arquivos se julgar necessário. Qualquer dúvida, procure a monitoria. Lembre-se que você pode consultar nosso conteúdo sobre Git & GitHub sempre que quiser!
 
+---
+
+### Entrega
+
+  - Projeto individual.
+
+  - Serão dois dias de projeto.
+
+  - O projeto tem até a seguinte data: `06/07/2020 - 14:00h`. Para ser entregue a avaliação final.
+
 ## Requisitos do projeto
 
 A seguir, estão listados todos os requisitos do projeto. Leia-os atentamente e siga à risca o que for pedido. Em particular, **atente-se para os nomes de ids que alguns elementos de seu projeto devem possuir**. O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação.
