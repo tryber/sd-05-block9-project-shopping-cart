@@ -45,7 +45,7 @@ window.onload = function onload() {
     .then(response => response.json())
     .then((data) => {
       const getSection = document.querySelector('.items');
-        data.results.forEach((item) => {
+      data.results.forEach((item) => {
           const createObj = createProductItemElement({
             sku: item.id,
             name: item.title,
@@ -53,5 +53,5 @@ window.onload = function onload() {
           });
           getSection.appendChild(createObj);
         });
-      });
+    });
 };
