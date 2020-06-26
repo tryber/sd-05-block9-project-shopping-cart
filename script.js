@@ -48,11 +48,11 @@ const myObject = {
   method: 'GET',
 };
 
-fetch(API_URL, myObject).then(response => response.json()).then(data => {
+fetch(API_URL, myObject).then(response => response.json()).then((data) => {
 
   const arrayResultados = data.results;
   console.log(arrayResultados);
-  arrayResultados.forEach(item => {
+  arrayResultados.forEach((item) => {
     const umElemento = createProductItemElement(item.id, item.title, item.thumbnail);
     const pegaPosicaoClassItems = document.querySelector('.items');
     pegaPosicaoClassItems.appendChild(umElemento);
