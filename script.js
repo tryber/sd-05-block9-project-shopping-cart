@@ -32,7 +32,7 @@ fetch(API_URL)
   .then(response => response.json())
   .then((data) => {
     const section = document.querySelector('.items');
-    for (let i = 0; i < data.results.length; i += 1) {
+    for (let i = 0; i < 50; i += 1) {
       const product = {
         sku: data.results[i].id,
         name: data.results[i].title,
