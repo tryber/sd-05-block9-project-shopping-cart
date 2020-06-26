@@ -12,22 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -40,18 +24,58 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// Requisito 2: babysteps
+// 1. Criar function para adicionar id de produto no carrinho, que será o event aplicado ao btn
+// Usando fetch e a url passada mas substituindo ItemID pelo id da API (sku no código fornecido)
+// E usando como indicado function createCartItemElement em filho do elemento <ol class="cart__items">.
+function addToCart({ sku }) {
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then(data => {
+      const cartItems = document.querySelector('.cart__items');
+      const newCartItem = createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      });
+      cartItems.appendChild(newCartItem);
+    });
+};
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  // 2. (babystep do req. 2), armazenar o button que vai receber eventlistener
+  // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+    buttonAddToCart.addEventListener('click', () => {
+      addToCart({ sku });
+    });
+    section.appendChild(buttonAddToCart);
+  return section;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  fetch(API_URL)
   .then(response => response.json())
     .then((data) => {
       data.results.forEach((product) => {
-        const eachProduct = createProductItemElement({
+        const newProduct = createProductItemElement({
           sku: product.id,
           name: product.title,
           image: product.thumbnail,
         });
         const classItems = document.querySelector('.items');
-        classItems.appendChild(eachProduct);
+        classItems.appendChild(newProduct);
       });
-    });
+    })
 };
