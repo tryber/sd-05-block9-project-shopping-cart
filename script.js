@@ -12,10 +12,44 @@ function refreshItemInStorage() {
   }
 }
 
-window.onload = function onload() {
-  loadAll();
+/* -------------- Personalizadas ---------------- */
+
+function addItemInStorage(item) {
+  cart.push(item);
   refreshItemInStorage();
-};
+}
+
+function addItemInCart(ev) {
+  const { sku: evSku } = ev.target;
+  let li = null;
+  fetch(`https://api.mercadolibre.com/items/${evSku}`)
+    .then(async (data) => {
+      const { id: sku, title: name, price: salePrice } = await data.json();
+      const result = { sku, name, salePrice };
+      li = createCartItemElement(result);
+      // Save in localstorage
+      addItemInStorage(result);
+    })
+    .then(() => {
+      if (li) document.querySelector('.cart__items').appendChild(li);
+      calcAndPrintTotal();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function calcAndPrintTotal() {
+  let total = 0;
+  cart.forEach(({ salePrice }) => {
+    total += salePrice;
+  });
+  printTotal(total);
+}
+
+function printTotal(total) {
+  document.querySelector('.total-price').innerText = `$${total.toFixed(2)}`;
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -62,45 +96,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.sku = sku;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-/* -------------- Personalizadas ---------------- */
-
-function addItemInCart(ev) {
-  const { sku : evSku } = ev.target;
-  let li = null;
-  fetch(`https://api.mercadolibre.com/items/${evSku}`)
-    .then(async (data) => {
-      const { id: sku, title: name, price: salePrice } = await data.json();
-      const result = { sku, name, salePrice };
-      li = createCartItemElement(result);
-      //Save in localstorage
-      addItemInStorage(result);
-    })
-    .then(() => {
-      if (li) document.querySelector('.cart__items').appendChild(li);
-      calcAndPrintTotal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-function calcAndPrintTotal() {
-  let total = 0;
-  cart.forEach(({ salePrice }) => {
-    total += salePrice;
-  });
-  printTotal(total);
-}
-
-function printTotal(total) {
-  document.querySelector('.total-price').innerText = `$${total.toFixed(2)}`;
-}
-
-function addItemInStorage(item) {
-  cart.push(item);
-  refreshItemInStorage();
 }
 
 /* ----------------- */
@@ -152,3 +147,8 @@ function loadAll() {
     console.error('Error!', err);
   });
 }
+
+window.onload = function onload() {
+  loadAll();
+  refreshItemInStorage();
+};
