@@ -15,7 +15,7 @@ function refreshItemInStorage() {
 }
 
 function printTotal(total) {
-  document.querySelector('.total-price').innerText = `$${total.toFixed(2)}`;
+  document.querySelector('.total-price').innerText = total;
 }
 
 function calcAndPrintTotal() {
