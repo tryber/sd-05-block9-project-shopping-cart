@@ -139,6 +139,7 @@ function loadAll() {
       image: thumbnail,
     }));
   })
+  
   // Define a lista
   .then(() => {
     definesList();
