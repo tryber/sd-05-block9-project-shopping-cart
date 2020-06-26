@@ -27,11 +27,11 @@ function createCartItemElement({ sku, name, salePrice }) {
 // Requisito 2: babysteps
 // 1. Criar function para adicionar id de produto no carrinho, que será o event aplicado ao btn
 // Usando fetch e a url passada mas substituindo ItemID pelo id da API (sku no código fornecido)
-// E usando como indicado function createCartItemElement em filho do elemento <ol class="cart__items">.
+// E usando como indicado createCartItemElement em filho do cart__items.
 function addToCart({ sku }) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
-    .then(data => {
+    .then((data) => {
       const cartItems = document.querySelector('.cart__items');
       const newCartItem = createCartItemElement({
         sku: data.id,
@@ -40,7 +40,7 @@ function addToCart({ sku }) {
       });
       cartItems.appendChild(newCartItem);
     });
-};
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -52,10 +52,10 @@ function createProductItemElement({ sku, name, image }) {
   // 2. (babystep do req. 2), armazenar o button que vai receber eventlistener
   // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-    buttonAddToCart.addEventListener('click', () => {
+  buttonAddToCart.addEventListener('click', () => {
       addToCart({ sku });
     });
-    section.appendChild(buttonAddToCart);
+  section.appendChild(buttonAddToCart);
   return section;
 }
 
@@ -77,5 +77,5 @@ window.onload = function onload() {
         const classItems = document.querySelector('.items');
         classItems.appendChild(newProduct);
       });
-    })
+    });
 };
