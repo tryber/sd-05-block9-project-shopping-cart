@@ -1,4 +1,17 @@
-window.onload = function onload() { };
+window.onload = function onload() {};
+
+function salvarCompras() {
+  localStorage.clear();
+  const pegaTudo = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('conteudo', pegaTudo);
+  console.log('salvei no localstorage');
+  console.log('mostrando o conteudo', localStorage.getItem('conteudo'));
+}
+
+function carregaListaCompras() {
+  const pegaPosicaoListaCarrinhos = document.querySelector('.cart__items');
+  pegaPosicaoListaCarrinhos.innerHTML = localStorage.getItem('conteudo');
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,6 +45,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  salvarCompras();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -46,9 +60,9 @@ function monitoraBotoesAdicionar(event) {
   const idSelecionado = event.target.parentNode.querySelector('.item__sku').innerHTML;
   const urlProduto = `https://api.mercadolibre.com/items/${idSelecionado}`;
   fetch(urlProduto).then(response => response.json()).then((data) => {
-    console.log(data);
-    console.log(data.title);
-    console.log(data.price);
+    //  console.log(data);
+    //  console.log(data.title);
+    //  console.log(data.price);
     const itemCarrinho = createCartItemElement({
       sku: idSelecionado,
       name: data.title,
@@ -56,7 +70,7 @@ function monitoraBotoesAdicionar(event) {
     });
     const pegaPosicaoCarrinho = document.querySelector('.cart__items');
     pegaPosicaoCarrinho.appendChild(itemCarrinho);
-  });
+  }).then(() => salvarCompras());
 }
 
 const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=Computador';
@@ -72,6 +86,8 @@ fetch(URL).then(response => response.json()).then((data) => {
     const pegaPosicaoClassItems = document.getElementsByClassName('items')[0];
     pegaPosicaoClassItems.appendChild(produto);
   });
+  carregaListaCompras();
+}).then(() => {
   const pegaBotoesAdd = document.querySelectorAll('.item__add');
   pegaBotoesAdd.forEach(botao => botao.addEventListener('click', monitoraBotoesAdicionar));
   const pegaPosItensNoCarrinho = document.querySelector('.cart__items');
