@@ -53,7 +53,7 @@ fetch(API_URL_1, getObject1)
   .then(response => response.json())
   .then((data) => {
     data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
-    })
+  })
   .catch(() => console.log('Error on calling the MLB API'));
 
 // async function createListOfProducts(product) {
