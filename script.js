@@ -46,12 +46,12 @@ window.onload = function onload() {
     .then((data) => {
       const getSection = document.querySelector('.items');
       data.results.forEach((item) => {
-          const createObj = createProductItemElement({
-            sku: item.id,
-            name: item.title,
-            image: item.thumbnail,
-          });
-          getSection.appendChild(createObj);
+        const createObj = createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
         });
+        getSection.appendChild(createObj);
+      });
     });
 };
