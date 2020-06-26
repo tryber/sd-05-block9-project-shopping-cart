@@ -56,7 +56,7 @@ window.onload = function onload() {
         };
         const elem = createProductItemElement(product);
         document.getElementsByClassName('items')[0].appendChild(elem);
-        }
-      )
+      },
+      ),
     );
 };
