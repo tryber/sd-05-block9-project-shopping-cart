@@ -1,7 +1,7 @@
 window.onload = function onload() {};
 
 function cartItemClickListener(event) {
-  let target = event.target;
+  const target = event.target;
   target.parentNode.remove();
 }
 
