@@ -1,3 +1,11 @@
+const items = document.querySelector('.items');
+const loading = document.createElement('span');
+const cart = document.querySelector('.cart');
+loading.className = 'loading';
+loading.innerHTML = 'loading...';
+let cartArr = [];
+let totalValue = 0;
+
 window.onload = function onload() {
   document.querySelector('.cart__items').innerHTML = (localStorage.getItem('cart'));
 };
@@ -36,6 +44,8 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  
+  // console.log(cartArr)
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -45,24 +55,26 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 // ---------------------------------------------------
 
+const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
+  const itemsObj = { 
+    id: sku,
+    name: name,
+    price: salePrice,
+   }
+  cartArr.push(itemsObj);
+  return cartArr;
+}
+
 // 1 - function that creates a list of products
-const items = document.querySelector('.items');
-const loading = document.createElement('span');
-const cart = document.querySelector('.cart');
-loading.className = 'loading';
-loading.innerHTML = 'loading...';
+
 
 async function createListOfProducts(product) {
   const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
   const getObject1 = {
     method: 'GET',
   };
-  items.appendChild(loading);
   fetch(API_URL_1, getObject1)
-    .then((response) => {
-      items.removeChild(loading);
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item))))
     .catch(() => console.log('Error on calling the MLB API'));
 }
@@ -81,10 +93,14 @@ items.addEventListener('click', (event) => {
   itemId = event.target.parentElement.firstElementChild.innerText;
   API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
   // send a request
-
   fetch(API_URL_2, getObject2)
     .then(response => response.json())
-    .then((item) => {
+    .then((item) => { async () => {
+        const objectItemsResult = await createCartObjectItems(item);
+        const sum = await createSum(objectItemsResult);
+        return sum;
+      }
+      document.querySelector('.total-price').firstElementChild.innerText = createSum(createCartObjectItems(item));
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
@@ -102,13 +118,19 @@ cartItems.addEventListener('click', () => {
   // the response is at the function onload at the beginning
 
 // 5 - Create sum of item's prices
-// async function createSum(itemSku) {
-//   let sum = 0;
-// }
+const createSum = (arr) => {
+  totalValue = arr.reduce((acc, num) => {
+    return acc + num.price;
+  }, 0);
+  return totalValue;
+}
 
 // 6 - clear button
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
   localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
+  document.querySelector('.total-price').firstElementChild.innerText = 0;
+  cartArr = [];
+  // console.log(cartArr)
 });
