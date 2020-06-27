@@ -1,5 +1,20 @@
 window.onload = function onload() {};
 
+function calculaPrecoFinal() {
+  const arraydeItensNoCarrinho = document.querySelectorAll('.cart__item');
+  let soma = 0;
+  arraydeItensNoCarrinho.forEach((item) => {
+    const separadoPeloCifrao = item.innerHTML.split('$')[1];
+    soma += parseFloat(separadoPeloCifrao, 10);
+    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
+    pegaPosicaoPrecoFinal.innerHTML = Math.round(soma * 100) / 100;
+  });
+  if (arraydeItensNoCarrinho.length === 0) {
+    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
+    pegaPosicaoPrecoFinal.innerHTML = 0;
+  }
+}
+
 function salvarCompras() {
   localStorage.clear();
   const pegaItensCarrinho = document.querySelector('.cart__items').innerHTML;
@@ -13,7 +28,7 @@ function carregaListaCompras() {
   const pegaPosicaoListaCarrinhos = document.querySelector('.cart__items');
   pegaPosicaoListaCarrinhos.innerHTML = localStorage.getItem('conteudoCarrinho');
 
-  const pegaSomaFinal = document.querySelector('.total-price')
+  const pegaSomaFinal = document.querySelector('.total-price');
   pegaSomaFinal.innerHTML = localStorage.getItem('total-price');
 }
 
@@ -59,22 +74,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-function calculaPrecoFinal() {
-  const arraydeItensNoCarrinho = document.querySelectorAll('.cart__item');
-  let soma = 0;
-  arraydeItensNoCarrinho.forEach((item) => {
-    const separadoPeloCifrao = item.innerHTML.split('$')[1];
-    soma += parseFloat(separadoPeloCifrao, 10);
-    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
-    //pegaPosicaoPrecoFinal.innerHTML = soma.toFixed(2);
-    pegaPosicaoPrecoFinal.innerHTML = Math.round(soma*100)/100;
-  });
-  if (arraydeItensNoCarrinho.length === 0) {
-    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
-    pegaPosicaoPrecoFinal.innerHTML = 0;
-  }
 }
 
 function monitoraBotoesAdicionar(event) {
