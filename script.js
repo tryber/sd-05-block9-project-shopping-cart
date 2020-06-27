@@ -7,6 +7,7 @@ if (localStorage.getItem('prices') !== null) {
     }
   });
 }
+
 const totalElementFather = document.querySelectorAll('.total-price')[0];
 const totalElement = document.createElement('span');
 totalElementFather.appendChild(totalElement);
