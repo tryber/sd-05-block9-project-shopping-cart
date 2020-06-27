@@ -79,7 +79,7 @@ function monitoraBotoesAdicionar(event) {
     pegaPosicaoCarrinho.appendChild(itemCarrinho);
     //  adiciona no final do carrinho o preço total:
     const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
-    const somaAnterior = parseInt(pegaPosicaoPrecoFinal.innerHTML, 10) || 0;
+    const somaAnterior = parseFloat(pegaPosicaoPrecoFinal.innerHTML, 10) || 0;
     const soma = somaAnterior + data.price;
     pegaPosicaoPrecoFinal.innerHTML = soma;
     //  calculaPrecoFinal();
