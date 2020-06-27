@@ -26,8 +26,12 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function getSkuFromProductItem(item) {
+<<<<<<< HEAD
   return item.target.sku;
   //return item.querySelector('span.item__sku').innerText;
+=======
+  return item.querySelector('span.item__sku').innerText;
+>>>>>>> refs/remotes/origin/Elisangelo-project-shopping-cart
 }
 
 function cartItemClickListener(event) {
@@ -52,7 +56,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+<<<<<<< HEAD
   li.addEventListener('click', getSkuFromProductItem);
+=======
+  li.addEventListener('click', cartItemClickListener);
+>>>>>>> refs/remotes/origin/Elisangelo-project-shopping-cart
   return li;
 }
 
