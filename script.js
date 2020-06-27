@@ -64,6 +64,10 @@ createListOfProducts('computador');
 
 // 2 - add the product to the cart when the button is clicked
 const items = document.querySelector('.items');
+const loading = document.createElement('span');
+const cart = document.querySelector('.cart');
+loading.className = 'loading';
+loading.innerHTML = 'loading...';
 let itemId;
 let API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
 const getObject2 = {
@@ -78,12 +82,12 @@ items.addEventListener('click', (event) => {
 
   fetch(API_URL_2, getObject2)
     .then((response) => {
-      document.querySelector('.loading').style.display = 'flex';
+      cart.appendChild(loading);
       return response.json();
     })
     .then((item) => {
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
-      document.querySelector('.loading').style.display = 'none';
+      cart.removeChild(loading);
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
