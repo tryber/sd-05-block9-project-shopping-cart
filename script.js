@@ -138,7 +138,7 @@ function loading(status = true) {
     const loader = document.createElement('div');
     loader.className = 'loading';
     loader.innerText = 'Carregando...';
-    container.appendChild = loader;
+    container.appendChild(loader);
   } else {
     const loader = document.querySelector('.loading');
     container.removeChild(loader);
