@@ -104,4 +104,4 @@ cartItems.addEventListener('click', () => {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
-})
+});
