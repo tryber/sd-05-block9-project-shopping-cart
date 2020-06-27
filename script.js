@@ -25,10 +25,11 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function cartItemClickListener(event) {
+  // const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
   // pega carrinho e exclui item clicado
   const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
-  carrinhoDeCompras.removeChild(itemExcluido.parentNode);
+  carrinhoDeCompras.removeChild(itemExcluido);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -50,10 +51,11 @@ function getSkuFromProductItem(item) {
     const itemDoCarrinho = document.getElementsByTagName('ol')[0];
     // cria as informacoes do produto selecionado que serao exibidas
     const li = createCartItemElement({ sku, name, salePrice });
-    const img = document.createElement('div');
-    img.appendChild(createProductImageElement(image));
+    // const img = document.createElement('div');
+    // img.appendChild(createProductImageElement(image));
     // anexando o produto escolhido dentro do carrinho
-    return itemDoCarrinho.appendChild(img).appendChild(li);
+    return itemDoCarrinho.appendChild(li);
+    // return itemDoCarrinho.appendChild(img).appendChild(li);
   });
   // return item.querySelector('span.item__sku').innerText;
 }
