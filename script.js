@@ -81,7 +81,7 @@ window.onload = function onload() {
         document.getElementsByClassName('items')[0].appendChild(productElement);
       });
     })
-    .then(function () { loadProducts() })
+    .then(function () { loadProducts(); })
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
     });
