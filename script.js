@@ -40,7 +40,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const target = event.target;
   target.remove();
-  prices.splice((prices.indexOf(target.classList[1])), 1);
+  prices.splice((prices.indexOf(parseInt(target.classList[1], 10))), 1);
   setSavedCart();
   sumProducts();
 }
