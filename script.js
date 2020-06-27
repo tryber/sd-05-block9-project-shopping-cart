@@ -14,6 +14,7 @@ totalElementFather.appendChild(totalElement);
 
 async function sumItems() {
   const totalSum = await prices.reduce(((total, number) => total + number), 0);
+  console.log(totalSum)
   totalElement.innerHTML = totalSum;
 }
 
@@ -26,7 +27,7 @@ function savingCart() {
 function cartItemClickListener(event) {
   const target = event.target;
   target.remove();
-  prices.splice((prices.indexOf(target.classList[1])), 1);
+  prices.splice((prices.indexOf(parseInt(target.classList[1], 10))), 1);
   savingCart();
   sumItems();
 }
