@@ -1,6 +1,5 @@
-const items = document.querySelector('.items');
 window.onload = function onload() {
-  cartItems.innerHTML = (localStorage.getItem('cart'));
+  document.querySelector('.cart__items').innerHTML = (localStorage.getItem('cart'));
 };
 
 function createProductImageElement(imageSource) {
@@ -64,7 +63,7 @@ async function createListOfProducts(product) {
 createListOfProducts('computador');
 
 // 2 - add the product to the cart when the button is clicked
-
+const items = document.querySelector('.items');
 let itemId;
 let API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
 const getObject2 = {
@@ -80,7 +79,7 @@ items.addEventListener('click', (event) => {
   fetch(API_URL_2, getObject2)
     .then(response => response.json())
     .then((item) => {
-      cartItems.appendChild(createCartItemElement(item));
+      document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
@@ -90,7 +89,7 @@ items.addEventListener('click', (event) => {
 const cartItems = document.querySelector('.cart__items');
 cartItems.addEventListener('click', () => {
   cartItemClickListener(event).remove();
-  localStorage.setItem('cart', cartItems.innerHTML);
+  localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 });
 
 // 4 - Save to local storage
@@ -105,5 +104,4 @@ cartItems.addEventListener('click', () => {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
-  localStorage.setItem('cart', cartItems.innerHTML);
-});
+})
