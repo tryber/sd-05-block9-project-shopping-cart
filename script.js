@@ -44,8 +44,6 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  
-  // console.log(cartArr)
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -56,18 +54,24 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 // ---------------------------------------------------
 
 const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
-  const itemsObj = { 
+  const itemsObj = {
     id: sku,
-    name: name,
+    name,
     price: salePrice,
-   }
+    };
   cartArr.push(itemsObj);
   return cartArr;
+};
+
+// 5 - Create sum of item's prices
+const createSum = (arr) => {
+  totalValue = arr.reduce((acc, num) => {
+    return acc + num.price;
+  }, 0);
+  return totalValue;
 }
 
 // 1 - function that creates a list of products
-
-
 async function createListOfProducts(product) {
   const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
   const getObject1 = {
@@ -95,11 +99,11 @@ items.addEventListener('click', (event) => {
   // send a request
   fetch(API_URL_2, getObject2)
     .then(response => response.json())
-    .then((item) => { async () => {
-        const objectItemsResult = await createCartObjectItems(item);
-        const sum = await createSum(objectItemsResult);
-        return sum;
-      }
+    .then((item) => { (async () => {
+      const objectItemsResult = await createCartObjectItems(item);
+      const sum = await createSum(objectItemsResult);
+      return sum;
+      });
       document.querySelector('.total-price').firstElementChild.innerText = createSum(createCartObjectItems(item));
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
@@ -117,13 +121,6 @@ cartItems.addEventListener('click', () => {
 // 4 - Save to local storage
   // the response is at the function onload at the beginning
 
-// 5 - Create sum of item's prices
-const createSum = (arr) => {
-  totalValue = arr.reduce((acc, num) => {
-    return acc + num.price;
-  }, 0);
-  return totalValue;
-}
 
 // 6 - clear button
 const clearButton = document.querySelector('.empty-cart');
