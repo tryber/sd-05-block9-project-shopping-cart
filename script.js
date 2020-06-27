@@ -1,3 +1,4 @@
+const items = document.querySelector('.items');
 window.onload = function onload() {
   cartItems.innerHTML = (localStorage.getItem('cart'));
 };
@@ -63,12 +64,12 @@ async function createListOfProducts(product) {
 createListOfProducts('computador');
 
 // 2 - add the product to the cart when the button is clicked
-const items = document.querySelector('.items');
+
 let itemId;
 let API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
-  const getObject2 = {
-    method: 'GET',
-  };
+const getObject2 = {
+  method: 'GET',
+};
 
 items.addEventListener('click', (event) => {
   // gets products id
