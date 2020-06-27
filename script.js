@@ -1,7 +1,8 @@
 window.onload = function onload() {};
 
 function cartItemClickListener(event) {
-  // coloque seu código qu
+  let target = event.target;
+  target.parentNode.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
