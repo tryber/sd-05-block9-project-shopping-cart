@@ -133,9 +133,16 @@ function pushList() {
 }
 
 function loading(status = true) {
-  const loader = document.querySelector('.loading');
-  if (status) loader.innerText = 'Carregando...';
-  else loader.innerText = 'Carregando...';
+  const container = document.querySelector('.container');
+  if (status) {
+    const loader = document.createElement('div');
+    loader.className = 'loading';
+    loader.innerText = 'Carregando...';
+    container.appendChild = loader;
+  } else {
+    const loader = document.querySelector('.loading');
+    container.removeChild(loader);
+  }
 }
 
 function loadAll() {
