@@ -1,4 +1,4 @@
-const prices = []
+const prices = [];
 if (localStorage.getItem('prices') !== null) {
   const priceSplit = localStorage.getItem('prices').split(',');
   priceSplit.forEach((number) => {
@@ -7,7 +7,6 @@ if (localStorage.getItem('prices') !== null) {
     }
   });
 }
-
 const totalElementFather = document.querySelectorAll('.total-price')[0];
 const totalElement = document.createElement('span');
 totalElementFather.appendChild(totalElement);
@@ -28,7 +27,7 @@ function cartItemClickListener(event) {
   target.remove();
   prices.splice((prices.indexOf(target.classList[1])), 1);
   savingCart();
-  sumItems()
+  sumItems();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
