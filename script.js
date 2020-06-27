@@ -69,7 +69,9 @@ function createElementCart(ID, origin) {
     };
     const productElement = createCartItemElement(productInformation);
     document.getElementsByClassName('cart__items')[0].appendChild(productElement);
-    if (origin === 'add') { saveLocalStorage(productInformation) };
+    if (origin === 'add') {
+      saveLocalStorage(productInformation);
+    }
   });
 }
 
