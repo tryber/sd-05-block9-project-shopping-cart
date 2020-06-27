@@ -1,4 +1,4 @@
-const prices = [];
+let prices = [];
 if (localStorage.getItem('prices') !== null) {
   const arrPrice = localStorage.getItem('prices').split(',');
   arrPrice.forEach((price) => {
@@ -44,6 +44,18 @@ function cartItemClickListener(event) {
   setSavedCart();
   sumProducts();
 }
+
+function clearAll() {
+  const elementToRemove = document.querySelectorAll('.cart__item');
+  elementToRemove.forEach((element) => {
+    element.remove();
+    localStorage.clear();
+    totalPrice.innerHTML = 0;
+    prices = [];
+  });
+}
+const clearButton = document.getElementsByClassName('empty-cart')[0];
+clearButton.addEventListener('click', clearAll);
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
