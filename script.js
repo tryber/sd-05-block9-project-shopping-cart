@@ -3,7 +3,7 @@ if (localStorage.getItem('prices') !== null) {
   const priceSplit = localStorage.getItem('prices').split(',');
   priceSplit.forEach((number) => {
     if (number !== '0' && number !== '') {
-      prices.push(parseInt(number, 10));
+      prices.push(parseFloat(number, 10));
     }
   });
 }
@@ -26,7 +26,7 @@ function savingCart() {
 function cartItemClickListener(event) {
   const target = event.target;
   target.remove();
-  prices.splice((prices.indexOf(parseInt(target.classList[1], 10))), 1);
+  prices.splice((prices.indexOf(parseFloat(target.classList[1], 10))), 1);
   savingCart();
   sumItems();
 }
@@ -104,15 +104,6 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   });
 });
 
-window.onload = function onload() {
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
-  if (localStorage.getItem('cart') !== undefined) {
-    const eventAdder = document.querySelectorAll('.cart__item');
-    eventAdder.forEach(item => item.addEventListener('click', cartItemClickListener));
-  }
-  sumItems();
-};
-
 function clearAll() {
   const elementsToRemove = document.querySelectorAll('.cart__item');
   elementsToRemove.forEach((element) => {
@@ -125,3 +116,21 @@ function clearAll() {
 
 const buttonClear = document.getElementsByClassName('empty-cart')[0];
 buttonClear.addEventListener('click', clearAll);
+
+const loading = () => {
+  const load = document.querySelector('.load-container');
+  load.appendChild(createCustomElement('span', 'loading', 'loading'));
+}
+
+window.onload = function onload() {
+loading();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 1000 );
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
+  if (localStorage.getItem('cart') !== undefined) {
+    const eventAdder = document.querySelectorAll('.cart__item');
+    eventAdder.forEach(item => item.addEventListener('click', cartItemClickListener));
+  }
+  sumItems();
+};
