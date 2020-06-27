@@ -55,12 +55,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-//  function calculaPrecoFinal() {
-//  const arraydeItensNoCarrinho = document.querySelectorAll('.cart__item');
-//  const separadoPeloSifrao = arraydeItensNoCarrinho[0].innerHTML.split('$');
-//  console.log('o array', arraydeItensNoCarrinho[0].innerHTML);
-//  console.log('separadoPeloSifrao', separadoPeloSifrao);
-//  }
+function calculaPrecoFinal() {
+  const arraydeItensNoCarrinho = document.querySelectorAll('.cart__item');
+  let soma = 0;
+  arraydeItensNoCarrinho.forEach((item) => {
+    const separadoPeloCifrao = item.innerHTML.split('$');
+    soma += parseFloat(separadoPeloCifrao[1], 10);
+    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
+    pegaPosicaoPrecoFinal.innerHTML = soma;
+  });
+}
 
 function monitoraBotoesAdicionar(event) {
   const idSelecionado = getSkuFromProductItem(event.target.parentNode);
@@ -78,13 +82,14 @@ function monitoraBotoesAdicionar(event) {
     const pegaPosicaoCarrinho = document.querySelector('.cart__items');
     pegaPosicaoCarrinho.appendChild(itemCarrinho);
     //  adiciona no final do carrinho o preço total:
-    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
-    const somaAnterior = parseFloat(pegaPosicaoPrecoFinal.innerHTML, 10) || 0;
-    const soma = somaAnterior + data.price;
-    pegaPosicaoPrecoFinal.innerHTML = soma;
+    //  const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
+    //  const somaAnterior = parseFloat(pegaPosicaoPrecoFinal.innerHTML, 10) || 0;
+    //  const soma = somaAnterior + data.price;
+    //  pegaPosicaoPrecoFinal.innerHTML = soma;
     //  calculaPrecoFinal();
   }).then(() => {
     salvarCompras();
+    calculaPrecoFinal();
   });
 }
 
