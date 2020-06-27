@@ -2,7 +2,7 @@ window.onload = function onload() {};
 
 function cartItemClickListener(event) {
   const target = event.target;
-  target.parentNode.remove();
+  target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
