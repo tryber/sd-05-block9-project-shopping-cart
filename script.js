@@ -1,5 +1,13 @@
+const getCart = () => {
+  const newCart = JSON.parse(localStorage.getItem('cart'));
+  return newCart || [];
+};
+
+let cart = getCart();
+
 const saveCart = () => {
-  localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
+  console.log(cart);
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
 
 function createProductImageElement(imageSource) {
@@ -22,6 +30,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  const remakeCart = cart.filter(({ sku: id }) => id !== event.target.id);
+  cart = remakeCart;
   saveCart();
 }
 
@@ -29,22 +39,31 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = sku;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
+loadCart = () => {
+  getCart()
+    .map(product => createCartItemElement(product))
+    .forEach((prod) => {
+      document.querySelector('.cart__items').appendChild(prod);
+    });
+};
+
 async function addToCart({ sku }) {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
-    .then(data =>
-      document.querySelector('.cart__items').appendChild(
-        createCartItemElement({
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        }),
-      ),
-    );
+    .then((data) => {
+      const newCartItem = {
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      };
+      cart.push(newCartItem);
+      document.querySelector('.cart__items').appendChild(createCartItemElement(newCartItem));
+    });
   saveCart();
 }
 
@@ -75,7 +94,5 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
       });
     });
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
-  document.querySelectorAll('.cart__item').forEach(product =>
-    product.addEventListener('click', cartItemClickListener));
+  loadCart();
 };
