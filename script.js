@@ -120,13 +120,13 @@ buttonClear.addEventListener('click', clearAll);
 const loading = () => {
   const load = document.querySelector('.load-container');
   load.appendChild(createCustomElement('span', 'loading', 'loading'));
-}
+};
 
 window.onload = function onload() {
-loading();
+  loading();
   setTimeout(() => {
     document.querySelector('.loading').remove();
-  }, 1000 );
+  }, 1000);
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
   if (localStorage.getItem('cart') !== undefined) {
     const eventAdder = document.querySelectorAll('.cart__item');
