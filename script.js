@@ -17,6 +17,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+const sumTotalPrice = async () => {
+  const total = document.querySelector('.total-price');
+  total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
+};
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -48,16 +53,16 @@ function createCartItemElement({ sku, name, salePrice }) {
 loadCart = () => {
   getCart()
     .map(product => createCartItemElement(product))
-    .forEach(prod => {
+    .forEach((prod) => {
       document.querySelector('.cart__items').appendChild(prod);
     });
-    sumTotalPrice();
+  sumTotalPrice();
 };
 
 async function addToCart({ sku }) {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
-    .then(data => {
+    .then((data) => {
       const newCartItem = {
         sku: data.id,
         name: data.title,
@@ -69,11 +74,6 @@ async function addToCart({ sku }) {
   saveCart();
   sumTotalPrice();
 }
-
-const sumTotalPrice = async () => {
-  const total = document.querySelector('.total-price');
-  total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
-};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -92,8 +92,8 @@ function createProductItemElement({ sku, name, image }) {
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
-    .then(data => {
-      data.results.forEach(item => {
+    .then((data) => {
+      data.results.forEach((item) => {
         const product = createProductItemElement({
           sku: item.id,
           name: item.title,
