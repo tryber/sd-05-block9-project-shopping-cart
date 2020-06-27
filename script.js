@@ -39,28 +39,28 @@ function createCustomElement(element, className, innerText) {
 
 const loading = () =>
   document
-    .querySelector('.items')
+    .querySelector('.load-container')
     .appendChild(createCustomElement('span', 'loading', 'loading...'));
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
-  event.target.remove();
-  const remakeCart = cart.filter(({ sku: id }) => id !== event.target.id);
+  event.target.parentElement.remove();
+  const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
   cart = remakeCart;
   saveCart();
   sumTotalPrice();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice, id, image }) {
   const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.className = 'span__item';
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.id = sku;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  li.id = id;
+  span.addEventListener('click', cartItemClickListener);
+  span.appendChild(li);
+  span.appendChild(createProductImageElement(image));
+  return span;
 }
 
 loadCart = () => {
@@ -79,7 +79,9 @@ async function addToCart({ sku }) {
       const newCartItem = {
         sku: data.id,
         name: data.title,
+        image: data.thumbnail,
         salePrice: data.price,
+        id: Math.floor(Math.random() * 9999999),
       };
       cart.push(newCartItem);
       document.querySelector('.cart__items').appendChild(createCartItemElement(newCartItem));
