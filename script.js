@@ -1,4 +1,6 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  document.querySelector('.cart__items').innerHTML = (localStorage.getItem('cart'));
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -77,11 +79,18 @@ items.addEventListener('click', (event) => {
     .then((item) => {
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
+    .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
+
+    
 });
 
 // 3 - Remove item from the cart
 const cartItems = document.querySelector('.cart__items');
 cartItems.addEventListener('click', () => {
   cartItemClickListener(event).remove();
+  localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 });
+
+// 4 - Save to local storage
+  // the response is at the function onload at the beginning
