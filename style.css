@@ -54,12 +54,12 @@ body {
 }
 
 .item .item__title {
+  background-color: white;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   flex-grow: 1;
   padding: 10px;
   text-align: center;
-  background-color: white;
 }
 
 .item .item__image {
@@ -119,10 +119,13 @@ body {
 }
 
 .span__item {
-  margin: 0;
+  align-items: center;
+  border-bottom: 1px solid gray;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0;
+  padding: 4px;
 }
 
 .cart__items {
