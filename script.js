@@ -47,7 +47,7 @@ function getSkuFromProductItem(item) {
   .then(response => response.json())
   .then(function (produtoAdicionado) {
     // quebrando em informacoes do produto o objeto convertido
-    const { id: sku, title: name, thumbnail: image, price: salePrice } = produtoAdicionado;
+    const { id: sku, title: name, price: salePrice/*thumbnail: image*/ } = produtoAdicionado;
     const itemDoCarrinho = document.getElementsByTagName('ol')[0];
     // cria as informacoes do produto selecionado que serao exibidas
     const li = createCartItemElement({ sku, name, salePrice });
