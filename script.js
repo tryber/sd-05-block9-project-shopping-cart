@@ -1,3 +1,4 @@
+// const itemClicado = document.querySelector('')
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,11 +29,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-  // console.log(event.target);
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -41,21 +37,40 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function cartItemClickListener(event) {
+  const itemClicado = event.target.sku;
+  // faz uma requição do produto selecionado a API
+  fetch(`https://api.mercadolibre.com/items/${itemClicado}`)
+  .then(response => response.json())
+  .then(function (produtoAdicionado) {
+    // quebrando em informacoes do produto o objeto convertido
+    const { id: sku, title: name, thumbnail: image, price: salePrice } = produtoAdicionado;
+    const carrinho = document.getElementsByTagName('ol')[0];
+    // cria as informacoes que serao exibidas
+    const ol = createCartItemElement({ sku, name, salePrice });
+    const img = document.createElement('div');
+    img.appendChild(createProductImageElement(image));
+    // anexando o produto escolhido dentro do carrinho
+    return carrinho.appendChild(img).appendChild(ol);
+  });
+}
+
 window.onload = function onload() {
   const items = document.getElementsByClassName('items')[0];
   const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+
   fetch(source)
     .then(response => response.json())
     .then(function (object) {
       // console.log(object.results[0]);
       object.results.map(function (product) {
-        const produto = {};
-        //  quebrando os dado recebido em informacoes do produto
-        produto.sku = product.id;     // codigo do produto
-        produto.name = product.title;     // nome do produto
-        produto.image = product.thumbnail;      // foto do produto
+        //  quebrando os dados recebido em informacoes do produto
+        const { id: sku, title: name, thumbnail: image } = product;
+        // produto --codigo -----nome ---------- foto
         // passando os parametros para a funcao para personalizar
-        const div = createProductItemElement(produto);
+        const div = createProductItemElement({ sku, name, image });
+        div.lastChild.sku = sku;
+        div.addEventListener('click', cartItemClickListener);
         // anexando o retorno da funcao (produto criado) dentro de um elemento do html.
         return items.appendChild(div);
       });
