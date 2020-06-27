@@ -3,14 +3,12 @@ window.onload = function onload() {};
 function salvarCompras() {
   localStorage.clear();
   const pegaTudo = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('conteudo', pegaTudo);
-  console.log('salvei no localstorage');
-  console.log('mostrando o conteudo', localStorage.getItem('conteudo'));
+  localStorage.setItem('conteudoCarrinho', pegaTudo);
 }
 
 function carregaListaCompras() {
   const pegaPosicaoListaCarrinhos = document.querySelector('.cart__items');
-  pegaPosicaoListaCarrinhos.innerHTML = localStorage.getItem('conteudo');
+  pegaPosicaoListaCarrinhos.innerHTML = localStorage.getItem('conteudoCarrinho');
 }
 
 function createProductImageElement(imageSource) {
@@ -44,6 +42,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  console.log('mostrando o event target', event.target);
   event.target.remove();
   salvarCompras();
 }
@@ -56,8 +55,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+//  function calculaPrecoFinal() {
+//  const arraydeItensNoCarrinho = document.querySelectorAll('.cart__item');
+//  const separadoPeloSifrao = arraydeItensNoCarrinho[0].innerHTML.split('$');
+//  console.log('o array', arraydeItensNoCarrinho[0].innerHTML);
+//  console.log('separadoPeloSifrao', separadoPeloSifrao);
+//  }
+
 function monitoraBotoesAdicionar(event) {
-  const idSelecionado = event.target.parentNode.querySelector('.item__sku').innerHTML;
+  const idSelecionado = getSkuFromProductItem(event.target.parentNode);
+  //  event.target.parentNode.querySelector('.item__sku').innerHTML;
   const urlProduto = `https://api.mercadolibre.com/items/${idSelecionado}`;
   fetch(urlProduto).then(response => response.json()).then((data) => {
     //  console.log(data);
@@ -70,13 +77,22 @@ function monitoraBotoesAdicionar(event) {
     });
     const pegaPosicaoCarrinho = document.querySelector('.cart__items');
     pegaPosicaoCarrinho.appendChild(itemCarrinho);
-  }).then(() => salvarCompras());
+    //  adiciona no final do carrinho o preço total:
+    const pegaPosicaoPrecoFinal = document.querySelector('.total-price');
+    const somaAnterior = parseInt(pegaPosicaoPrecoFinal.innerHTML, 10) || 0;
+    const soma = somaAnterior + data.price;
+    pegaPosicaoPrecoFinal.innerHTML = soma;
+    //  calculaPrecoFinal();
+  }).then(() => {
+    salvarCompras();
+  });
 }
 
 const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=Computador';
 fetch(URL).then(response => response.json()).then((data) => {
   const arrayResultados = data.results;
-  console.log(arrayResultados);
+
+  //  adiciona cada um dos produtos na página
   arrayResultados.forEach((item) => {
     const produto = createProductItemElement({
       sku: item.id,
@@ -86,6 +102,8 @@ fetch(URL).then(response => response.json()).then((data) => {
     const pegaPosicaoClassItems = document.getElementsByClassName('items')[0];
     pegaPosicaoClassItems.appendChild(produto);
   });
+
+  //  se houver algo salvo no localStorage - recarrega o carrinho
   carregaListaCompras();
 }).then(() => {
   const pegaBotoesAdd = document.querySelectorAll('.item__add');
