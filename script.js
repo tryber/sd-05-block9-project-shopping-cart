@@ -13,7 +13,7 @@ const totalPrice = document.createElement('span');
 totalPriceElement.appendChild(totalPrice);
 
 async function sumProducts() {
-  const totalItems = await prices.reduce(((total, number) => total + number), 0);
+  const totalItems = prices.reduce(((total, number) => total + number), 0);
   totalPrice.innerHTML = totalItems;
 }
 
@@ -55,8 +55,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function searchProduct(sku) {
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
+async function searchProduct(sku) {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then((data) => {
     const products = {
