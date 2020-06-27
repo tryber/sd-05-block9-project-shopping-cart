@@ -137,6 +137,7 @@ function loading(status = true) {
   if (status) {
     const loader = document.createElement('div');
     loader.className = 'loading';
+    loader.innerText = 'Carregando...';
     container.appendChild(loader);
   } else {
     const loader = document.querySelector('.loading');
@@ -169,6 +170,7 @@ function loadAll() {
   })
   .catch((err) => {
     console.error('Error!', err);
+    loading(false);
   });
 }
 
