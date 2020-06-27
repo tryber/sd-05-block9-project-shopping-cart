@@ -29,7 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const tagToBeRemoved = event.target;
+  tagToBeRemoved.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -68,8 +69,10 @@ function getID (event) {
   .then(data => {
     const {id: sku, title: name, price: salePrice} = data;
     const cartItemElement = createCartItemElement({sku, name, salePrice});
+    cartItemElement.addEventListener("click", cartItemClickListener);
     const cart = document.getElementsByClassName("cart__items")[0];
     cart.appendChild(cartItemElement);
   })
 }
+
 
