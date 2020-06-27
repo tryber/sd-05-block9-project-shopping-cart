@@ -1,4 +1,3 @@
-// const itemClicado = document.querySelector('')
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,7 +25,21 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function getSkuFromProductItem(item) {
-  return item.target.sku;
+  const itemClicado = item.target.sku;
+  // faz uma requição do produto selecionado a API
+  fetch(`https://api.mercadolibre.com/items/${itemClicado}`)
+  .then(response => response.json())
+  .then(function (produtoAdicionado) {
+    // quebrando em informacoes do produto o objeto convertido
+    const { id: sku, title: name, thumbnail: image, price: salePrice } = produtoAdicionado;
+    const itemDoCarrinho = document.getElementsByTagName('ol')[0];
+    // cria as informacoes do produto selecionado que serao exibidas
+    const li = createCartItemElement({ sku, name, salePrice });
+    const img = document.createElement('div');
+    img.appendChild(createProductImageElement(image));
+    // anexando o produto escolhido dentro do carrinho
+    return itemDoCarrinho.appendChild(img).appendChild(li);
+  });
   // return item.querySelector('span.item__sku').innerText;
 }
 
@@ -34,26 +47,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', getSkuFromProductItem);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 function cartItemClickListener(event) {
-  const itemClicado = getSkuFromProductItem(event);
-  // faz uma requição do produto selecionado a API
-  fetch(`https://api.mercadolibre.com/items/${itemClicado}`)
-  .then(response => response.json())
-  .then(function (produtoAdicionado) {
-    // quebrando em informacoes do produto o objeto convertido
-    const { id: sku, title: name, thumbnail: image, price: salePrice } = produtoAdicionado;
-    const carrinho = document.getElementsByTagName('ol')[0];
-    // cria as informacoes que serao exibidas
-    const ol = createCartItemElement({ sku, name, salePrice });
-    const img = document.createElement('div');
-    img.appendChild(createProductImageElement(image));
-    // anexando o produto escolhido dentro do carrinho
-    return carrinho.appendChild(img).appendChild(ol);
-  });
+  const itemExcluido = event.target;
+  // pega carrinho e exclui item clicado
+  const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
+  carrinhoDeCompras.removeChild(itemExcluido.parentNode);
 }
 
 window.onload = function onload() {
@@ -71,12 +73,13 @@ window.onload = function onload() {
         // passando os parametros para a funcao para personalizar
         const div = createProductItemElement({ sku, name, image });
         div.lastChild.sku = sku;
-        div.addEventListener('click', cartItemClickListener);
+        // adicinando escuta a cada botao da lista de produtos
+        div.lastChild.addEventListener('click', getSkuFromProductItem);
         // anexando o retorno da funcao (produto criado) dentro de um elemento do html.
         return items.appendChild(div);
       });
     });
 };
-
+// const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
 // createCartItemElement({ sku, name, salePrice });
