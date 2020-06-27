@@ -115,7 +115,7 @@ window.onload = function onload() {
 
 function clearAll() {
   const elementsToRemove = document.querySelectorAll('.cart__item');
-  elementsToRemove.forEach( element => {
+  elementsToRemove.forEach((element) => {
     element.remove();
     localStorage.clear();
     totalElement.innerHTML = 0;
