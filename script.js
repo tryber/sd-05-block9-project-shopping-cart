@@ -89,7 +89,7 @@ items.addEventListener('click', (event) => {
       setTimeout(() => {
         document.querySelector('.cart__items').appendChild(createCartItemElement(item));
         cart.removeChild(loading);
-      }, 1000)
+      }, 1000);
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
