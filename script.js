@@ -46,6 +46,11 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 // ---------------------------------------------------
 
 // 1 - function that creates a list of products
+const items = document.querySelector('.items');
+const loading = document.createElement('span');
+const cart = document.querySelector('.cart');
+loading.className = 'loading';
+loading.innerHTML = 'loading...';
 
 async function createListOfProducts(product) {
   const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
@@ -53,8 +58,12 @@ async function createListOfProducts(product) {
     method: 'GET',
   };
   fetch(API_URL_1, getObject1)
-    .then(response => response.json())
+    .then((response) => {
+      items.appendChild(loading);
+      return response.json()
+    })
     .then((data) => {
+      items.removeChild(loading);
       data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
     })
     .catch(() => console.log('Error on calling the MLB API'));
@@ -63,11 +72,6 @@ async function createListOfProducts(product) {
 createListOfProducts('computador');
 
 // 2 - add the product to the cart when the button is clicked
-const items = document.querySelector('.items');
-const loading = document.createElement('span');
-const cart = document.querySelector('.cart');
-loading.className = 'loading';
-loading.innerHTML = 'loading...';
 let itemId;
 let API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
 const getObject2 = {
@@ -82,14 +86,10 @@ items.addEventListener('click', (event) => {
 
   fetch(API_URL_2, getObject2)
     .then((response) => {
-      cart.appendChild(loading);
       return response.json();
     })
-    .then((item) => {
-      setTimeout(() => {
-        document.querySelector('.cart__items').appendChild(createCartItemElement(item));
-        cart.removeChild(loading);
-      }, 1000);
+    .then((item) => {  
+      document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
