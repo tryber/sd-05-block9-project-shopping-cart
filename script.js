@@ -103,7 +103,7 @@ items.addEventListener('click', (event) => {
       // const sum = await createSum(objectItemsResult);
       // return sum;
       // });
-      document.querySelector('.total-price').firstElementChild.innerText = createSum(createCartObjectItems(item));
+      document.querySelector('.total-price').innerText = createSum(createCartObjectItems(item));
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
@@ -126,7 +126,7 @@ const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
   localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
-  document.querySelector('.total-price').firstElementChild.innerText = 0;
+  document.querySelector('.total-price').innerText = 0;
   cartArr = [];
   // console.log(cartArr)
 });
