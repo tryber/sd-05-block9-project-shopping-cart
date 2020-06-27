@@ -5,10 +5,7 @@ const getCart = () => {
 
 let cart = getCart();
 
-const saveCart = () => {
-  console.log(cart);
-  localStorage.setItem('cart', JSON.stringify(cart));
-};
+const saveCart = () => localStorage.setItem('cart', JSON.stringify(cart));
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -21,6 +18,17 @@ const sumTotalPrice = async () => {
   const total = document.querySelector('.total-price');
   total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
 };
+
+async function clearCart() {
+  const carts = document.querySelector('.cart__items');
+  carts.innerHTML = '';
+  cart = [];
+  saveCart();
+  sumTotalPrice();
+}
+
+const clearBtn = document.querySelector('.empty-cart');
+clearBtn.addEventListener('click', clearCart);
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
