@@ -48,7 +48,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   const addToChart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(addToChart);
-  addToChart.addEventListener('click', function() {
+  addToChart.addEventListener('click', function () {
     searchInfo(sku);
   });
   const fatherElement = document.getElementsByClassName('items')[0];
