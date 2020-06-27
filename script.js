@@ -14,7 +14,6 @@ totalElementFather.appendChild(totalElement);
 
 async function sumItems() {
   const totalSum = await prices.reduce(((total, number) => total + number), 0);
-  console.log(totalSum)
   totalElement.innerHTML = totalSum;
 }
 
