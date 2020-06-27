@@ -81,8 +81,6 @@ items.addEventListener('click', (event) => {
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
-
-    
 });
 
 // 3 - Remove item from the cart
