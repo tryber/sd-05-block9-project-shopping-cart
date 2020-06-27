@@ -40,37 +40,37 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(response => response.json())
-    .then((data) => {
-      data.results.forEach((element) => {
-        const product = createProductItemElement({
-          sku: element.id,
-          name: element.title,
-          image: element.thumbnail,
-        });
-        document.querySelector('.items').appendChild(product);
+window.onload = function onload() { };
+
+fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  .then(response => response.json())
+  .then((data) => {
+    data.results.forEach((element) => {
+      const product = createProductItemElement({
+        sku: element.id,
+        name: element.title,
+        image: element.thumbnail,
       });
-    })
-    .then((() => {
-      addBtns = document.querySelectorAll('.item__add');
-      addBtns.forEach((btn) => {
-        btn.addEventListener('click', (event) => {
-          const evento = event.target;
-          const idItem = evento.previousElementSibling.previousElementSibling
+      document.querySelector('.items').appendChild(product);
+    });
+  })
+  .then((() => {
+    addBtns = document.querySelectorAll('.item__add');
+    addBtns.forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        const evento = event.target;
+        const idItem = evento.previousElementSibling.previousElementSibling
           .previousElementSibling.innerText;
-          fetch(`https://api.mercadolibre.com/items/${idItem}`)
-            .then(response => response.json())
-            .then((data) => {
-              const productCart = createCartItemElement({
-                sku: data.id,
-                name: data.title,
-                salePrice: data.price,
-              });
-              document.querySelector('.cart__items').appendChild(productCart);
+        fetch(`https://api.mercadolibre.com/items/${idItem}`)
+          .then(response => response.json())
+          .then((data) => {
+            const product = createCartItemElement({
+              sku: data.id,
+              name: data.title,
+              salePrice: data.price,
             });
-        });
+            document.querySelector('.cart__items').appendChild(product);
+          });
       });
-    }));
-};
+    });
+  }));
