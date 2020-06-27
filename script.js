@@ -19,11 +19,6 @@ const sumTotalPrice = async () => {
   total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
 };
 
-const loading = () =>
-  document
-    .querySelector('.items')
-    .appendChild(createCustomElement('span', 'loading', 'loading...'));
-
 async function clearCart() {
   const carts = document.querySelector('.cart__items');
   carts.innerHTML = '';
@@ -41,6 +36,11 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
+const loading = () =>
+  document
+    .querySelector('.items')
+    .appendChild(createCustomElement('span', 'loading', 'loading...'));
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
