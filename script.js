@@ -77,9 +77,13 @@ items.addEventListener('click', (event) => {
   // send a request
 
   fetch(API_URL_2, getObject2)
-    .then(response => response.json())
+    .then((response) => {
+      document.querySelector('.loading').style.display = 'flex';
+      return response.json();
+    })
     .then((item) => {
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
+      document.querySelector('.loading').style.display = 'none';
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
     .catch(() => console.log('Error trying to add a product to the cart'));
@@ -104,4 +108,5 @@ cartItems.addEventListener('click', () => {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
+  localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 });
