@@ -1,4 +1,4 @@
-const prices = [];
+let prices = [];
 if (localStorage.getItem('prices') !== null) {
   const priceSplit = localStorage.getItem('prices').split(',');
   priceSplit.forEach((number) => {
@@ -112,3 +112,16 @@ window.onload = function onload() {
   }
   sumItems();
 };
+
+function clearAll() {
+  const elementsToRemove = document.querySelectorAll('.cart__item');
+  elementsToRemove.forEach( element => {
+    element.remove();
+    localStorage.clear();
+    totalElement.innerHTML = 0;
+    prices = [];
+  });
+}
+
+const buttonClear = document.getElementsByClassName('empty-cart')[0];
+buttonClear.addEventListener('click', clearAll);
