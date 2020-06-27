@@ -60,7 +60,7 @@ async function createListOfProducts(product) {
   fetch(API_URL_1, getObject1)
     .then((response) => {
       items.appendChild(loading);
-      return response.json()
+      return response.json();
     })
     .then((data) => {
       items.removeChild(loading);
@@ -85,10 +85,8 @@ items.addEventListener('click', (event) => {
   // send a request
 
   fetch(API_URL_2, getObject2)
-    .then((response) => {
-      return response.json();
-    })
-    .then((item) => {  
+    .then(response => response.json())
+    .then((item) => {
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML))
