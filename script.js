@@ -3,7 +3,7 @@ if (localStorage.getItem('prices') !== null) {
   const arrPrice = localStorage.getItem('prices').split(',');
   arrPrice.forEach((price) => {
     if (price !== '0' && price !== '') {
-      prices.push(parseInt(price, 10));
+      prices.push(parseFloat(price, 10));
     }
   });
 }
@@ -40,7 +40,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const target = event.target;
   target.remove();
-  prices.splice((prices.indexOf(parseInt(target.classList[1], 10))), 1);
+  prices.splice((prices.indexOf(parseFloat(target.classList[1], 10))), 1);
   setSavedCart();
   sumProducts();
 }
