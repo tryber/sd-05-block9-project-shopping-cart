@@ -120,7 +120,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
 const loading = () => {
   const load = document.querySelector('.load-container');
   load.appendChild(createCustomElement('span', 'loading', 'loading...'));
-}
+};
 
 window.onload = function onload() {
   loading();
