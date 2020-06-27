@@ -53,12 +53,12 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
       });
     })
-    .then(((itens) => {
-      itens = document.querySelectorAll('.item__add');
+    .then((() => {
+      addBtns = document.querySelectorAll('.item__add');
       for (let i = 0; i < addBtns.length; i += 1) {
         addBtns[i].addEventListener('click', (event) => {
           console.log(event.target);
-        })
+        });
       }
     }));
 };
