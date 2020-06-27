@@ -57,15 +57,14 @@ async function createListOfProducts(product) {
   const getObject1 = {
     method: 'GET',
   };
+  items.appendChild(loading);
   fetch(API_URL_1, getObject1)
     .then((response) => {
-      items.appendChild(loading);
+      items.removeChild(loading);
       return response.json();
     })
-    .then((data) => {
-      items.removeChild(loading);
-      data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)));
-    })
+    .then(data => data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)))
+    )
     .catch(() => console.log('Error on calling the MLB API'));
 }
 
