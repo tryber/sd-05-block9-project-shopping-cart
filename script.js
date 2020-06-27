@@ -50,7 +50,7 @@ function cartItemClickListener(event) {
   sumTotalPrice();
 }
 
-function createCartItemElement({ sku, name, salePrice, id, image }) {
+function createCartItemElement({ name, salePrice, id, image }) {
   const li = document.createElement('li');
   const span = document.createElement('span');
   span.className = 'span__item';
