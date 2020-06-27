@@ -55,10 +55,10 @@ window.onload = function onload() {
     })
     .then((() => {
       addBtns = document.querySelectorAll('.item__add');
-      for (let i = 0; i < addBtns.length; i += 1) {
-        addBtns[i].addEventListener('click', (event) => {
+      addBtns.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
           console.log(event.target);
         });
-      }
+      });
     }));
 };
