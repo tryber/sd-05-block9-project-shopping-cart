@@ -63,8 +63,7 @@ async function createListOfProducts(product) {
       items.removeChild(loading);
       return response.json();
     })
-    .then(data => data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item)))
-    )
+    .then(data => data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item))))
     .catch(() => console.log('Error on calling the MLB API'));
 }
 
