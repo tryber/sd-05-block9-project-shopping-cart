@@ -51,7 +51,19 @@ function addToCart(ID) {
     console.log(data.price);
     const productElement = createCartItemElement(productInformation);
     document.getElementsByClassName('cart__items')[0].appendChild(productElement);
-  })
+  });
+}
+
+function loadProducts() {
+  const productList = document.getElementsByClassName('items')[0];
+  function getProduct(e) {
+    const productSelected = e.target;
+    if (productSelected.classList.contains('item__add')) {
+      const productSelectedID = productSelected.parentNode.firstChild.innerText;
+      addToCart(productSelectedID);
+    }
+  }
+  productList.addEventListener('click', getProduct);
 }
 
 window.onload = function onload() {
@@ -69,18 +81,7 @@ window.onload = function onload() {
         document.getElementsByClassName('items')[0].appendChild(productElement);
       });
     })
-    .then(function () {
-      const productList = document.getElementsByClassName('items')[0];
-      function getProduct(e) {
-      const productSelected = e.target;
-      if (productSelected.classList.contains('item__add')) {
-        const productSelectedID = productSelected.parentNode.firstChild.innerText;
-        addToCart(productSelectedID);
-      }
-
-    }
-    productList.addEventListener('click', getProduct);
-    })
+    .then(function () { loadProducts() })
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
     });
