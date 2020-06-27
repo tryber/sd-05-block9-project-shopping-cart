@@ -34,6 +34,13 @@ function cartItemClickListener(event) {
   calcAndPrintTotal();
 }
 
+function clearAll() {
+  document.querySelector('.cart__items').innerHTML = '';
+  cart = [];
+  refreshItemInStorage();
+  calcAndPrintTotal();
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -125,7 +132,20 @@ function pushList() {
   printTotal(total);
 }
 
+function loading(status = true) {
+  const container = document.querySelector('.container');
+  if (status) {
+    const loader = document.createElement('div');
+    loader.className = 'loading';
+    container.appendChild(loader);
+  } else {
+    const loader = document.querySelector('.loading');
+    container.removeChild(loader);
+  }
+}
+
 function loadAll() {
+  loading(true);
   fetch(endpoint)
   // Baixa dados da API
   .then(async (data) => {
@@ -145,6 +165,7 @@ function loadAll() {
   .then(() => {
     definesList();
     pushList();
+    loading(false);
   })
   .catch((err) => {
     console.error('Error!', err);
@@ -152,5 +173,6 @@ function loadAll() {
 }
 
 window.onload = function onload() {
+  document.querySelector('.empty-cart').addEventListener('click', clearAll);
   loadAll();
 };
