@@ -58,18 +58,16 @@ const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
     id: sku,
     name,
     price: salePrice,
-    };
+  };
   cartArr.push(itemsObj);
   return cartArr;
 };
 
 // 5 - Create sum of item's prices
 const createSum = (arr) => {
-  totalValue = arr.reduce((acc, num) => {
-    return acc + num.price;
-  }, 0);
+  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
   return totalValue;
-}
+};
 
 // 1 - function that creates a list of products
 async function createListOfProducts(product) {
@@ -99,11 +97,12 @@ items.addEventListener('click', (event) => {
   // send a request
   fetch(API_URL_2, getObject2)
     .then(response => response.json())
-    .then((item) => { (async () => {
-      const objectItemsResult = await createCartObjectItems(item);
-      const sum = await createSum(objectItemsResult);
-      return sum;
-      });
+    .then((item) => {
+      // (async () => {
+      // const objectItemsResult = await createCartObjectItems(item);
+      // const sum = await createSum(objectItemsResult);
+      // return sum;
+      // });
       document.querySelector('.total-price').firstElementChild.innerText = createSum(createCartObjectItems(item));
       document.querySelector('.cart__items').appendChild(createCartItemElement(item));
     })
