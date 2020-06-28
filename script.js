@@ -1,3 +1,21 @@
+function totalPrice() {
+  const itemsCarrinho = document.querySelectorAll('.cart__item');
+  let total = 0;
+  itemsCarrinho.forEach((item) => {
+    total += item.price;
+  });
+  document.querySelector('.total-price').innerText = `Valor Total: ${total}`;
+}
+
+/*
+function limpar() {
+  const itemsCarrinho = document.querySelectorAll('.cart__item');
+  itemsCarrinho.forEach((item) => {
+    item.parentElement.removeChild(item);
+  });
+}
+*/
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,8 +46,9 @@ function createProductItemElement({ sku, name, image }) {
 // return item.querySelector('span.item__sku').innerText;
 // }
 
-function cartItemClickListener() {
-  // coloque seu código aqui
+function cartItemClickListener(event) {
+  evento = event.target;
+  evento.parentElement.removeChild(evento);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,7 +59,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = function onload() { };
+// window.onload = function onload() { };
 
 fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
@@ -58,7 +77,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     addBtns = document.querySelectorAll('.item__add');
     addBtns.forEach((btn) => {
       btn.addEventListener('click', (event) => {
-        let evento = event.target;
+        const evento = event.target;
         const idItem = evento.previousElementSibling.previousElementSibling
           .previousElementSibling.innerText;
         fetch(`https://api.mercadolibre.com/items/${idItem}`)
@@ -70,13 +89,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
               salePrice: data.price,
             });
             document.querySelector('.cart__items').appendChild(product);
-            const delItem = document.querySelectorAll('.cart__item');
-            delItem.forEach((item) => {
-              item.addEventListener('click', (e) => {
-                evento = e.target;
-                evento.parentNode.removeChild(evento);
-              });
-            });
+            totalPrice();
           });
       });
     });
