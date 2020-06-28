@@ -45,9 +45,8 @@ function adicionarItem({ sku }) {
     );
 }
 
-function adicionarItemII(id) {
-  const links = `https://api.mercadolibre.com/items/${id}`;
-  fetch(links)
+function addII(id) {
+  fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then(data =>
       document.getElementsByClassName('cart__items')[0].appendChild(
@@ -80,10 +79,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function historico(){
+function historico() {
   for (let i = 0; i < localStorage.length; i += 1) {
     const hist = localStorage.key(i);
-    adicionarItemII(hist);
+    addII(hist);
   }
 }
 
