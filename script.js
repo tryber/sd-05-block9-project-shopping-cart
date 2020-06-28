@@ -1,3 +1,9 @@
+let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
+// console.log(carrinhoSalvo);
+function salvaCarrinho() {
+  localStorage.setItem('carrinho', JSON.stringify(carrinhoSalvo));
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,11 +31,18 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function cartItemClickListener(event) {
-  // const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
+  const filtro = [];
+  carrinhoSalvo.forEach((produto) => {
+    const { sku } = produto;
+  // pega localStorage ( carrinho) e exclui item clicado
+    if (!`${itemExcluido.innerHTML}`.includes(sku)) filtro.push(produto);
+  });
+  carrinhoSalvo = undefined;
+  carrinhoSalvo = filtro;
+  salvaCarrinho();
   // pega carrinho e exclui item clicado
-  const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
-  carrinhoDeCompras.removeChild(itemExcluido);
+  document.getElementsByTagName('ol')[0].removeChild(itemExcluido);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -47,15 +60,18 @@ function getSkuFromProductItem(item) {
   .then(response => response.json())
   .then(function (produtoAdicionado) {
     // quebrando em informacoes do produto o objeto convertido
-    const { id: sku, title: name, price: salePrice/* thumbnail: image */ } = produtoAdicionado;
+    const { id: sku, title: name, price: salePrice, thumbnail: image } = produtoAdicionado;
+    // criando objeto para guardar no localStorage
+    const novoItem = { sku, name, salePrice, image };
+    carrinhoSalvo.push(novoItem);
+    // console.log(carrinhoSalvo);
     const itemDoCarrinho = document.getElementsByTagName('ol')[0];
     // cria as informacoes do produto selecionado que serao exibidas
     const li = createCartItemElement({ sku, name, salePrice });
-    // const img = document.createElement('div');
-    // img.appendChild(createProductImageElement(image));
     // anexando o produto escolhido dentro do carrinho
-    return itemDoCarrinho.appendChild(li);
-    // return itemDoCarrinho.appendChild(img).appendChild(li);
+    itemDoCarrinho.appendChild(li);
+    // salvando no localStorage
+    salvaCarrinho();
   });
   // return item.querySelector('span.item__sku').innerText;
 }
@@ -81,6 +97,13 @@ window.onload = function onload() {
         return items.appendChild(div);
       });
     });
+  if (localStorage.getItem('carrinho') !== '') {
+    carrinhoSalvo = undefined;
+    carrinhoSalvo = (JSON.parse(localStorage.getItem('carrinho')));
+    carrinhoSalvo.forEach(produto => document
+      .getElementsByTagName('ol')[0].appendChild(createCartItemElement(produto)),
+    );
+  }
 };
 // const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
