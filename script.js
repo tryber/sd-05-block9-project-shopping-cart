@@ -73,8 +73,11 @@ function createElementCart(ID, origin) {
       saveLocalStorage(productInformation);
     }
   })
+  // Apaga a frase de loading no término da requisação
   .then(function () {
-    document.getElementsByClassName('loading')[1].style.display = 'none';
+    if (document.getElementsByClassName('loading')[0]) {
+      document.getElementsByClassName('loading')[0].remove();
+    }
   });
 }
 
@@ -136,7 +139,8 @@ window.onload = function onload() {
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
     })
+    // Apaga a frase de loading no término da requisação
     .then(function () {
-      document.getElementsByClassName('loading')[0].style.display = 'none';
+      document.getElementsByClassName('loading')[0].remove();
     });
 };
