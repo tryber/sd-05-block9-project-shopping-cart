@@ -1,5 +1,6 @@
 let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
 // console.log(carrinhoSalvo);
+let total = 0
 function salvaCarrinho() {
   localStorage.setItem('carrinho', JSON.stringify(carrinhoSalvo));
 }
@@ -34,9 +35,10 @@ function cartItemClickListener(event) {
   const itemExcluido = event.target;
   const filtro = [];
   carrinhoSalvo.forEach((produto) => {
-    const { sku } = produto;
+    const { sku, salePrice } = produto;
   // pega localStorage ( carrinho) e exclui item clicado
     if (!`${itemExcluido.innerHTML}`.includes(sku)) filtro.push(produto);
+    total -= salePrice;
   });
   carrinhoSalvo = undefined;
   carrinhoSalvo = filtro;
@@ -71,6 +73,7 @@ function getSkuFromProductItem(item) {
     // anexando o produto escolhido dentro do carrinho
     itemDoCarrinho.appendChild(li);
     // salvando no localStorage
+    total += salePrice;
     salvaCarrinho();
   });
   // return item.querySelector('span.item__sku').innerText;
@@ -98,7 +101,7 @@ window.onload = function onload() {
       });
     });
   if (localStorage.getItem('carrinho') !== '') {
-    carrinhoSalvo = undefined;
+    carrinhoSalvo = [];
     carrinhoSalvo = (JSON.parse(localStorage.getItem('carrinho')));
     carrinhoSalvo.forEach(produto => document
       .getElementsByTagName('ol')[0].appendChild(createCartItemElement(produto)),
