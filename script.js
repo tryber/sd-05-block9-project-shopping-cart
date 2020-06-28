@@ -175,7 +175,7 @@ function loadProductsList() {
       document.getElementsByClassName('items')[0].innerHTML = error;
     });
     // Apaga a frase de loading no término da requisação
- /* .then(function () {
+  /* .then(function () {
       document.getElementsByClassName('loading')[0].remove();
     });*/
 }
