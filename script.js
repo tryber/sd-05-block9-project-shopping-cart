@@ -30,23 +30,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function adicionarItem({ sku }) {
+function adicionarItem(sku) {
   const linko = `https://api.mercadolibre.com/items/${sku}`;
   fetch(linko)
-    .then(response => response.json())
-    .then(data =>
-      document.getElementsByClassName('cart__items')[0].appendChild(
-        createCartItemElement({
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        }),
-      ),
-    );
-}
-
-function addII(id) {
-  fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then(data =>
       document.getElementsByClassName('cart__items')[0].appendChild(
@@ -69,7 +55,7 @@ function createProductItemElement({ sku, name, image }) {
   // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const btnCerto = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnCerto.addEventListener('click', () => {
-    adicionarItem({ sku });
+    adicionarItem(sku);
   });
   section.appendChild(btnCerto);
   return section;
@@ -82,7 +68,7 @@ function getSkuFromProductItem(item) {
 function historico() {
   for (let i = 0; i < localStorage.length; i += 1) {
     const hist = localStorage.key(i);
-    addII(hist);
+    adicionarItem(hist);
   }
 }
 
