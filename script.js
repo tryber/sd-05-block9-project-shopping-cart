@@ -1,6 +1,6 @@
-window.onload = function onload() { };
-
-// const arrLocal =
+function carrinhoCompras() {
+  localStorage.setItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -9,8 +9,9 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function cartItemClickListener(event) {
-  console.log(event);
+async function cartItemClickListener(event) {
+  await event.remove();
+  await carrinhoCompras();
 }
 
 function createCartItemElement(data) {
@@ -20,20 +21,21 @@ function createCartItemElement(data) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', () => cartItemClickListener(li));
   return li;
 }
 
-function addToCart(skuId) {
+async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
   const addLibre = `https://api.mercadolibre.com/items/${skuId}`;
   const getOlList = document.querySelector('.cart__items');
-  fetch(addLibre)
+  await fetch(addLibre) // o await tem a função de esperar a anterior acabar
   .then(response => response.json())
   .then(data => getOlList.appendChild(createCartItemElement({
     sku: data.id,
     name: data.title,
     salePrice: data.base_price,
   })));
+  await carrinhoCompras();
 }
 
 function createCustomElement(element, className, innerText) {
@@ -61,17 +63,20 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-const sectionItens = document.getElementsByClassName('items')[0];
-const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-fetch(CPUlibre)
-.then(response => response.json())
-.then(data =>
-  data.results.forEach((product) => {
-    const INFOproduct = createProductItemElement({
-      sku: product.id,
-      name: product.title,
-      image: product.thumbnail,
-    });
-    sectionItens.appendChild(INFOproduct);
-  }),
-);
+window.onload = function onload() {
+  const sectionItens = document.getElementsByClassName('items')[0];
+  const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(CPUlibre)
+  .then(response => response.json())
+  .then(data =>
+    data.results.forEach((product) => {
+      const INFOproduct = createProductItemElement({
+        sku: product.id,
+        name: product.title,
+        image: product.thumbnail,
+      });
+      sectionItens.appendChild(INFOproduct);
+    }),
+  ); // pq o async não funciona sem const ou funções - line 81
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('li do carrinho');
+};
