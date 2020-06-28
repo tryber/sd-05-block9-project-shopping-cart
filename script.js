@@ -72,6 +72,9 @@ function createElementCart(ID, origin) {
     if (origin === 'add') {
       saveLocalStorage(productInformation);
     }
+  })
+  .then(function () {
+    document.getElementsByClassName('loading')[1].style.display = 'none';
   });
 }
 
@@ -132,5 +135,8 @@ window.onload = function onload() {
     .then(function () { erase(); })
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
+    })
+    .then(function () {
+      document.getElementsByClassName('loading')[0].style.display = 'none';
     });
 };
