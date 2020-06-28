@@ -3,6 +3,7 @@ window.onload = function onload() {};
 const adicionaLoading = () => {
   const elementoLoading = document.createElement('div');
   elementoLoading.className = 'loading';
+  elementoLoading.innerText = 'loading';
   const pegaWrapper = document.getElementsByClassName('loading-wrapper')[0];
   pegaWrapper.appendChild(elementoLoading);
 };
