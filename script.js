@@ -35,6 +35,9 @@ function cartItemClickListener(event) {
     const index = productsListStorage.indexOf(info[1]);
     productsListStorage.splice(index, 1);
     localStorage.productsList = productsListStorage;
+    let price = info[info.length - 1];
+    price = price.split('$');
+    finalPrice(false, price[1]);
     productClicked.remove();
   }
 }
@@ -58,8 +61,8 @@ function saveLocalStorage(productInformation) {
   localStorage.productsList = productsListStorage;
 }
 
-function createElementCart(ID, origin) {
-  fetch(`https://api.mercadolibre.com/items/${ID}`)
+function createElementCart(ID) {
+  return (fetch(`https://api.mercadolibre.com/items/${ID}`)
   .then(response => response.json())
   .then(function (data) {
     const productInformation = {
@@ -69,21 +72,37 @@ function createElementCart(ID, origin) {
     };
     const productElement = createCartItemElement(productInformation);
     document.getElementsByClassName('cart__items')[0].appendChild(productElement);
-    if (origin === 'add') {
-      saveLocalStorage(productInformation);
-    }
-  });
+    return productInformation;
+  }))
 }
 
-function addToCart(ID) {
-  createElementCart(ID, 'add');
+async function finalPrice(somar, price) {
+  let totalPrice = parseInt(document.querySelector('.total-price').innerText);
+  if(somar) {
+    totalPrice += price;
+    document.querySelector('.total-price').innerText = totalPrice;
+  } else {
+    totalPrice -= price;
+    document.querySelector('.total-price').innerText = totalPrice;
+  }
+}
+
+const addToCart = async function(ID) {
+  try {
+    const productInformation = await createElementCart(ID);
+    saveLocalStorage(productInformation);
+    finalPrice(true, productInformation.salePrice);
+  } catch(e) {
+    console.log(e);
+  }
 }
 
 function loadCart() {
   if (localStorage.productsList) {
     const productsListStorage = localStorage.productsList.split(',');
-    productsListStorage.forEach((ID) => {
-      createElementCart(ID);
+    productsListStorage.forEach(async (ID) => {
+      const productInformation = await createElementCart(ID);
+      finalPrice(true, productInformation.salePrice);
     });
   }
 }
