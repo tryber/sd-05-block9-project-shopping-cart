@@ -72,12 +72,6 @@ function createElementCart(ID, origin) {
     if (origin === 'add') {
       saveLocalStorage(productInformation);
     }
-  })
-  // Apaga a frase de loading no término da requisação
-  .then(function () {
-    if (document.getElementsByClassName('loading')[0]) {
-      document.getElementsByClassName('loading')[0].remove();
-    }
   });
 }
 
@@ -146,7 +140,7 @@ window.onload = function onload() {
       document.getElementsByClassName('items')[0].innerHTML = error;
     })
     // Apaga a frase de loading no término da requisação
-    /*.then(function () {
+    .then(function () {
       document.getElementsByClassName('loading')[0].remove();
-    });*/
+    });
 };
