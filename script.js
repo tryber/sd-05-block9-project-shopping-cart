@@ -62,4 +62,4 @@ async function insertProducts() {
   });
 }
 
-window.onload = () =>  insertProducts();
+window.onload = () => insertProducts();
