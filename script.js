@@ -15,7 +15,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -27,11 +26,15 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Função para somar ou subtrair o preço dos produtos que estão no carrinho
 async function finalPrice(somar, price) {
+  // resgata o preço atual no container de preço total e converte para número
   let totalPrice = parseInt(document.querySelector('.total-price').innerText, 10);
+  // se for pra somar o primeiro parâmetro na chamada deve ser 'true'
   if (somar) {
     totalPrice += price;
     document.querySelector('.total-price').innerText = totalPrice;
+  // se for 'false' diminui o preço do produto do preço total
   } else {
     totalPrice -= price;
     document.querySelector('.total-price').innerText = totalPrice;
@@ -41,14 +44,24 @@ async function finalPrice(somar, price) {
 function cartItemClickListener(event) {
   const productClicked = event.target;
   if (productClicked.classList.contains('cart__item')) {
+    // separa o texto do item no carrinho em um array
     const info = productClicked.innerText.split(' ');
+    // separa os produtos que estão no localStorage em um array
     const productsListStorage = localStorage.productsList.split(',');
+    // recupera o índice do produto que vai ser removido do localStorage
+    // o id do produto está na posição 1 do array
     const index = productsListStorage.indexOf(info[1]);
+    // remove o id do produto retirado do carrinho do localStorage
     productsListStorage.splice(index, 1);
+    // coloca os ids remanescentes de volta no localStorage
     localStorage.productsList = productsListStorage;
+    // recupera o preço do ítem que é o último ítem do array info
     let price = info[info.length - 1];
+    // cria um array com o preço para conseguir retirar o $ do número
     price = price.split('$');
+    // chama a função de cálculo do preço final para diminuir o preço do produto
     finalPrice(false, price[1]);
+    // remove o objeto do carrinho
     productClicked.remove();
   }
 }
@@ -61,6 +74,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// função para inserir o ID do produto no localStorage
+// a função recebe o objeto do produto a ser salvo
 function saveLocalStorage(productInformation) {
   let productsListStorage = [];
   if (localStorage.productsList) {
@@ -137,11 +152,8 @@ function loading() {
   loadObject.appendChild(createCustomElement('span', 'loading', 'loading'));
 }
 
-window.onload = function onload() {
-  loading();
-  setTimeout(() => {
-    document.querySelector('.loading').remove();
-  }, 1000);
+// Cria a lista de produtos quando a página é carregada
+function loadProductsList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(url)
     .then(response => response.json())
@@ -163,7 +175,15 @@ window.onload = function onload() {
       document.getElementsByClassName('items')[0].innerHTML = error;
     });
     // Apaga a frase de loading no término da requisação
-    /* .then(function () {
+ /* .then(function () {
       document.getElementsByClassName('loading')[0].remove();
     });*/
+}
+
+window.onload = function onload() {
+  loading();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 1000);
+  loadProductsList();
 };
