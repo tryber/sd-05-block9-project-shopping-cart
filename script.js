@@ -41,3 +41,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// Pegando a lista de computadores
+
+const baseTerm = 'computador';
+const searchUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=';
