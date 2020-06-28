@@ -72,6 +72,23 @@ function historico() {
   }
 }
 
+function lixo() {
+  const allcartitems = document.getElementsByTagName('li');
+  for (let i = allcartitems.length - 1; i >= 0; i -= 1) {
+    allcartitems[i].remove();
+  }
+  localStorage.clear();
+}
+
+function createBtn() {
+  const btnLixo = document.createElement('button');
+  btnLixo.className = 'empty-cart';
+  btnLixo.addEventListener('click', lixo);
+  btnLixo.innerText = "Esvaziar o carrinho"
+  document.getElementsByClassName('place')[0].appendChild(btnLixo)
+}
+// document.getElementsByClassName('empty-cart')[0].addEventListener('click', lixo);
+
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
@@ -88,5 +105,6 @@ window.onload = function onload() {
       ),
     );
   historico();
+  createBtn();
   // console.log(localStorage.key(2))
 };
