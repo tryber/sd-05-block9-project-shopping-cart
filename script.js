@@ -29,7 +29,10 @@ function getSkuFromProductItem(item) {
 // Função para somar ou subtrair o preço dos produtos que estão no carrinho
 async function finalPrice(somar, price) {
   // resgata o preço atual no container de preço total e converte para número
-  let totalPrice = parseInt(document.querySelector('.total-price').innerText, 10);
+  let totalPrice = document.querySelector('.total-price').innerText;
+  if (typeof totalPrice !== 'number') {
+    totalPrice = parseFloat(totalPrice);
+  }
   // se for pra somar o primeiro parâmetro na chamada deve ser 'true'
   if (somar) {
     totalPrice += price;
