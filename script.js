@@ -121,7 +121,7 @@ function erase() {
 function loading() {
   const loadObject = document.querySelector('.loading-container');
   loadObject.appendChild(createCustomElement('span', 'loading', 'loading'));
-};
+}
 
 window.onload = function onload() {
   loading();
