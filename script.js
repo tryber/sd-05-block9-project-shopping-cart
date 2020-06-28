@@ -1,6 +1,6 @@
-window.onload = function onload() {
-  insertProducts();
-};
+// window.onload = function onload() {
+//   insertProducts();
+// };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -83,9 +83,9 @@ async function insertProducts() {
   });
 }
 
-// window.onload = () => {
-//   insertProducts();
-// };
+window.onload = () => {
+  insertProducts();
+};
 const itemButtons = document.getElementsByClassName('item__add');
 // console.log(itemButtons, typeof itemButtons);
 // console.log( Object.entries(itemButtons))
