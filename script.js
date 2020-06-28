@@ -119,6 +119,9 @@ function loading() {
 
 window.onload = function onload() {
   loading();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 1000);
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(url)
     .then(response => response.json())
@@ -138,9 +141,9 @@ window.onload = function onload() {
     .then(function () { erase(); })
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
-    })
-    // Apaga a frase de loading no término da requisação
-    .then(function () {
-      document.getElementsByClassName('loading')[0].remove();
     });
+    // Apaga a frase de loading no término da requisação
+    /*.then(function () {
+      document.getElementsByClassName('loading')[0].remove();
+    });*/
 };
