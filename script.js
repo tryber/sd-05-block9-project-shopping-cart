@@ -34,7 +34,7 @@ function salvarDados() {
 function limpar() {
   const itemsCarrinho = document.querySelectorAll('.cart__item');
   itemsCarrinho.forEach((elemento) => {
-    console.log(elemento);
+    elemento.parentElement.removeChild(elemento);
   });
   salvarDados();
 }
@@ -89,7 +89,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
     carregarDados();
-    document.querySelector('.empty-cart').addEventListener('click', limpar());
+    document.querySelector('.empty-cart').addEventListener('click', () => limpar());
     data.results.forEach((element) => {
       const product = createProductItemElement({
         sku: element.id,
