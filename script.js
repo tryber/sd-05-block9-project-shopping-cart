@@ -15,7 +15,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  //consoele.log()
+  // console.log(event.target.id);
+  localStorage.removeItem(event.target.id);
   event.target.remove();
 
 }
@@ -23,6 +24,7 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   localStorage.setItem(sku, "item");
