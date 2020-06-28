@@ -84,8 +84,8 @@ function createBtn() {
   const btnLixo = document.createElement('button');
   btnLixo.className = 'empty-cart';
   btnLixo.addEventListener('click', lixo);
-  btnLixo.innerText = "Esvaziar o carrinho"
-  document.getElementsByClassName('place')[0].appendChild(btnLixo)
+  btnLixo.innerText = 'Esvaziar o carrinho';
+  document.getElementsByClassName('place')[0].appendChild(btnLixo);
 }
 // document.getElementsByClassName('empty-cart')[0].addEventListener('click', lixo);
 
