@@ -18,7 +18,7 @@ function totalPrice() {
   let total = 0;
   itemsCarrinho.forEach((item) => {
     const descricaoItem = item.innerText;
-    total += Number(descricaoItem.substring(descricaoItem.indexOf("$") + 1));
+    total += Number(descricaoItem.substring(descricaoItem.indexOf('$') + 1));
   });
   document.querySelector('.total-price').innerText = `Valor Total: ${total}`;
 }
