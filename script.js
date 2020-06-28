@@ -1,5 +1,6 @@
 window.onload = function onload() { };
 // Variáveis globais
+// const emptyCartBtt = document.querySelector('.empty-cart');
 
 // Função fornecida
 function createProductImageElement(imageSource) {
@@ -23,9 +24,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Faz a soma total
+const sumItens = () => {
+  const Itens = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].innerText = Math.round(
+    [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
+    .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
+};
+
+const saveCart = () => {
+  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+  localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
+};
+
 // Remover item do carrinho
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCart();
+  sumItens();
 }
 
 // Função fornecida
@@ -37,11 +53,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const saveCart = () => {
-  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
-  localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
-};
-
 // Função para armazenar itens selecionados para o carrinho
 async function addToCart(sku) {
   const ol = document.getElementsByClassName('cart__items')[0];
@@ -52,7 +63,7 @@ async function addToCart(sku) {
       }),
     );
   ol.appendChild(product);
-  // sumItems();
+  sumItens();
   saveCart();
 }
 
@@ -68,6 +79,14 @@ function createProductItemElement({ sku, name, image }) {
   buttonAdd.addEventListener('click', () => addToCart(sku));
   return section;
 }
+
+/* Função para esvaziar o carrinho
+function emptyCart() {
+  const list = document.getElementsByClassName('cart__items')[0];
+  list.innerHTML = '';
+  sumItems();
+  saveCart();
+ }/*
 
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
