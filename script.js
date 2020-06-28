@@ -3,8 +3,8 @@ const items = document.querySelector('.items');
 // const cart = document.querySelector('.cart');
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
-const cartArray = [];
-
+const clearButton = document.querySelector('.empty-cart');
+let cartArray = [];
 
 // FUNÇÕES
 // requisito 4. carrega o carrinho através do local storage
@@ -42,8 +42,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // função veio pronta
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
- */
+} */
+
 // função veio semi-pronta (sem conteúdo)
 function cartItemClickListener(event) {
   return event.target;
@@ -105,4 +105,12 @@ items.addEventListener('click', (event) => {
     })
     .then(() => localStorage.setItem('cart', cartItems.innerHTML))
     .catch(() => console.log('Error: Could not add product to cart'));
+});
+
+// requisito 6. botão limpar carrinho de compras
+clearButton.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  localStorage.setItem('cart', cartItems.innerHTML);
+  totalPrice.innerText = 0;
+  cartArray = [];
 });
