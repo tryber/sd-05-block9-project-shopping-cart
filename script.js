@@ -118,7 +118,13 @@ function erase() {
   buttonClearCart.addEventListener('click', cleanCart);
 }
 
+function loading() {
+  const loadObject = document.querySelector('.loading-container');
+  loadObject.appendChild(createCustomElement('span', 'loading', 'loading'));
+};
+
 window.onload = function onload() {
+  loading();
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(url)
     .then(response => response.json())
