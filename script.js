@@ -46,7 +46,7 @@ const saveCart = () => {
 async function addToCart(sku) {
   const ol = document.getElementsByClassName('cart__items')[0];
   const product = await fetchProductData(sku)
-   .then(productData =>
+    .then(productData =>
       createCartItemElement({
         sku: productData.id, name: productData.title, salePrice: productData.price,
       }),
@@ -54,7 +54,7 @@ async function addToCart(sku) {
   ol.appendChild(product);
   // sumItems();
   saveCart();
- } 
+}
 
 // Função fornecida
 function createProductItemElement({ sku, name, image }) {
