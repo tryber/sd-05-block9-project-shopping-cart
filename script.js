@@ -20,7 +20,7 @@ function totalPrice() {
     const descricaoItem = item.innerText;
     total += Number(descricaoItem.substring(descricaoItem.indexOf('$') + 1));
   });
-  document.querySelector('.total-price').innerText = `Valor Total: ${total}`;
+  document.querySelector('.total-price').innerText = `${total}`;
 }
 
 function salvarDados() {
