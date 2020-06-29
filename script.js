@@ -77,15 +77,13 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = async () => {
-  if (localStorage.getItem('carrinho') !== '') {
+  if (localStorage.getItem('carrinho') === '') salvaCarrinho();
     carrinhoSalvo = JSON.parse(localStorage.getItem('carrinho'));
     await carrinhoSalvo.forEach(produto => document.getElementsByTagName('ol')[0]
     .appendChild(createCartItemElement(produto)));
     // somaTotal = totalSum()
     // document.querySelector('.cart').classList.add('total-price')
     // totalSum();
-  } else salvaCarrinho();
-
   const items = document.getElementsByClassName('items')[0];
   const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
