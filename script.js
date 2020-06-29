@@ -66,7 +66,7 @@ async function addToCart(sku) {
         sku: productData.id, name: productData.title, salePrice: productData.price,
       }),
     );
-  ol.appendChild(product);
+  cartItems = ol.appendChild(product);
   sumItens();
   saveCart();
 }
