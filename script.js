@@ -27,8 +27,9 @@ function calcAndPrintTotal() {
 }
 
 function cartItemClickListener(event) {
-  const { sku } = event.target;
-  cart = cart.filter(({ sku: id }) => id !== sku);
+  const { id } = event.target;
+  console.log(id, cart)
+  cart = cart.filter(({ id: sku }) => sku !== id);
   document.querySelector('.cart__items').removeChild(event.target);
   refreshItemInStorage();
   calcAndPrintTotal();
@@ -45,7 +46,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.sku = sku;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -65,6 +65,8 @@ function addItemInCart(ev) {
       const { id: sku, title: name, price: salePrice } = await data.json();
       const result = { sku, name, salePrice };
       li = createCartItemElement(result);
+      result.id = `${sku}-${cart.length}-${Math.round(Math.random() * 1E7)}`;
+      li.id = result.id;
       // Save in localstorage
       addItemInStorage(result);
     })
@@ -124,6 +126,7 @@ function pushList() {
   let total = 0;
   cart.forEach((item) => {
     const li = createCartItemElement(item);
+    li.id = item.id;
     total += item.salePrice;
 
     document.querySelector('.cart__items').appendChild(li);
