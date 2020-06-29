@@ -19,8 +19,8 @@ function cartItemClickListener(event) {
   localStorage.removeItem(event.target.id);
   event.target.remove();
   console.log(event.target.className);
-  const theoldtotal = parseInt(document.getElementsByClassName('total')[0].innerText);
-  document.getElementsByClassName('total')[0].innerText = theoldtotal - parseInt(event.target.className);
+  const theoldtotal = parseInt(document.getElementsByClassName('total')[0].innerText, 10);
+  document.getElementsByClassName('total')[0].innerText = theoldtotal - parseInt(event.target.className, 10);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -31,8 +31,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   localStorage.setItem(sku, 'item');
-  const oldtotal = parseInt(document.getElementsByClassName('total')[0].innerText);
-  document.getElementsByClassName('total')[0].innerText = parseInt(salePrice) + oldtotal;
+  const oldtotal = parseInt(document.getElementsByClassName('total')[0].innerText, 10);
+  document.getElementsByClassName('total')[0].innerText = parseInt(salePrice, 10) + oldtotal;
   return li;
 }
 
@@ -99,7 +99,7 @@ function createTotal() {
   const total = document.createElement('h2');
   total.className = 'total';
   total.innerText = '0';
-  document.getElementsByClassName('total-price')[0].appendChild(total)
+  document.getElementsByClassName('total-price')[0].appendChild(total);
 }
 // document.getElementsByClassName('empty-cart')[0].addEventListener('click', lixo);
 
