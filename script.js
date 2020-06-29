@@ -80,3 +80,5 @@ window.onload = function onload() {
   ); // pq o async não funciona sem const ou funções - line 81
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('li do carrinho');
 };
+
+module.exports = createProductImageElement;
