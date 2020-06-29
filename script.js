@@ -4,6 +4,7 @@ const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
 let cartArray = [];
+let cartTotalValue = 0;
 
 // FUNÇÕES
 // requisito 4. carrega o carrinho através do local storage
@@ -46,8 +47,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image, pric
 
 // requisito 5. soma o valor total
 const sumTotal = (arr) => {
-  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
-  return totalValue;
+  cartTotalValue = arr.reduce((acc, num) => acc + num.price, 0);
+  return cartTotalValue;
 };
 
 // função veio semi-pronta (sem conteúdo)
@@ -117,5 +118,4 @@ clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
   localStorage.setItem('cart', cartItems.innerHTML);
   totalPrice.innerText = 0;
-  cartArray = [];
 });
