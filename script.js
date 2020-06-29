@@ -16,6 +16,10 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const clicou = event.target;
+  if (clicou.classList.contains('cart__item')) {
+    clicou.remove();
+  }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
