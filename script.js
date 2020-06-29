@@ -126,7 +126,7 @@ window.onload = function onload() {
   loader();
   setTimeout(() => {
     (document.querySelector('.loading').remove());
-  }, 3333);
+  }, 1);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(data =>
