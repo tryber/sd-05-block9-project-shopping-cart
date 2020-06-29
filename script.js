@@ -1,3 +1,8 @@
+// 4. Created function, to maintain cart on localStorage
+function keepCartStored() {
+  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+}
+
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
@@ -59,11 +64,6 @@ function createProductItemElement({ sku, name, image }) {
   });
   section.appendChild(buttonAddToCart);
   return section;
-}
-
-// 4. Created function, to maintain cart on localStorage
-function keepCartStored() {
-  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
 }
 
 // Provided function, looks like it could have been of use for requirement 2.
