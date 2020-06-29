@@ -28,7 +28,6 @@ function calcAndPrintTotal() {
 
 function cartItemClickListener(event) {
   const { id } = event.target;
-  console.log(id, cart)
   cart = cart.filter(({ id: sku }) => sku !== id);
   document.querySelector('.cart__items').removeChild(event.target);
   refreshItemInStorage();
