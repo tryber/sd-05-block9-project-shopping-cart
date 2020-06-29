@@ -19,12 +19,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// requsisito 2. função que que pega infos sobre itens do carrinho
-const getProductInfo = async (itemId) => {
-  const product = await fetch(`https://api.mercadolibre.com/items/${itemId}`);
-  const productJson = await product.json();
-  return productJson;
-};
+// requisito 3. remove um item do carrinho quando clicado nele
+function cartItemClickListener(event) {
+  event.target.remove();
+  // saveCart();
+  // sumTotal();
+}
 
 // função veio pronta
 function createCartItemElement({ sku, name, salePrice }) {
@@ -34,6 +34,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// requsisito 2. função que que pega infos sobre itens do carrinho
+const getProductInfo = async (itemId) => {
+  const product = await fetch(`https://api.mercadolibre.com/items/${itemId}`);
+  const productJson = await product.json();
+  return productJson;
+};
 
 // requisito 2. função que adiciona ao carrinho
 async function addToCart(sku) {
@@ -65,10 +72,6 @@ function createProductItemElement({ sku, name, image }) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
-/* function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
- */
 // requisito 1. gerar lista de produtos
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
