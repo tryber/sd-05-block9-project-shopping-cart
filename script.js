@@ -11,25 +11,7 @@ const getObject = {
   method: 'GET',
 };
 
-// 5 - Create sum of item's prices
-async function createSum(arr) {
-  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
-  return totalValue;
-}
-
 // ------------------------------------------------
-
-window.onload = function onload() {
-  loading('loading');
-  setTimeout(() => document.querySelector('.loading').remove(), 1000);
-  createListOfProducts('computador');
-  cartItems.innerHTML = (localStorage.getItem('cart'));
-  if (localStorage.getItem('cartItemsObject')) {
-    cartArr = JSON.parse(localStorage.getItem('cartItemsObject'));
-    createSum(cartArr);
-    totalPrice.innerText = totalValue;
-  }
-};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -76,6 +58,8 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 // ---------------------------------------------------
 
+
+// create a object to save in local storage
 const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
   const itemsObj = {
     id: sku,
@@ -85,6 +69,12 @@ const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
   cartArr.push(itemsObj);
   return cartArr;
 };
+
+// 5 - Create sum of item's prices
+async function createSum(arr) {
+  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
+  return totalValue;
+}
 
 // 1 - function that creates a list of products
 async function createListOfProducts(product) {
@@ -144,4 +134,16 @@ clearButton.addEventListener('click', () => {
 // 7 - add loading text
 const loading = (text) => {
   loadingContainer.appendChild(createCustomElement('div', 'loading', text));
-}
+};
+
+window.onload = function onload() {
+  loading('loading');
+  setTimeout(() => document.querySelector('.loading').remove(), 1000);
+  createListOfProducts('computador');
+  cartItems.innerHTML = (localStorage.getItem('cart'));
+  if (localStorage.getItem('cartItemsObject')) {
+    cartArr = JSON.parse(localStorage.getItem('cartItemsObject'));
+    createSum(cartArr);
+    totalPrice.innerText = totalValue;
+  }
+};
