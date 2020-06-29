@@ -4,7 +4,6 @@ const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const fetchApi = () => {
   const myObject = {
     method: 'GET',
-    headers: { 'Accept': 'application/json', }
   };
   fetch(API_URL, myObject)
     .then(response => response.json())
@@ -14,13 +13,13 @@ const fetchApi = () => {
 };
 
 const mapeiaData = (data) => {
-  const mapeiaAPI = data.results.map((elementos) => {
+  const mapeiaAPI = data.results.map((elementos => {
     return {
       sku: elementos.id,
       name: elementos.title,
       image: elementos.thumbnail,
     };
-  });
+  }));
   console.log(mapeiaAPI);
   return mapeiaAPI;
 };
