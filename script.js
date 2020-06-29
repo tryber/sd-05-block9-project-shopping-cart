@@ -87,4 +87,4 @@ window.onload = function onload() {
     const evento = document.querySelectorAll('.cart__item');
     evento.forEach(item => item.addEventListener('click', cartItemClickListener));
   }
-}
+};
