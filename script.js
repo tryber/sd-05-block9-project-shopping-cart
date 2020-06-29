@@ -26,7 +26,7 @@ function createProductItemElement({ sku, name, image }) {
   const btnAddToChart = createCustomElement(
     'button',
     'item__add',
-    'Adicionar ao carrinho!'
+    'Adicionar ao carrinho!',
   );
   btnAddToChart.addEventListener('click', () => {
     getProductDetails({ sku });
@@ -42,8 +42,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   console.log(event);
-  const cart__items = document.querySelector('.cart__items');
-  cart__items.appendChild(createCartItemElement(item));
+  const cart__Items = document.querySelector('.cart__items');
+  cart__Items.appendChild(createCartItemElement(item));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -69,8 +69,8 @@ async function getProductDetails({ sku }) {
   const productDetails = await queryProductById();
   const { title: name, price: salePrice } = await productDetails.json();
   const cart__items = document.querySelector('.cart__items');
-  const cart_product = createCartItemElement({ sku, name, salePrice });
-  cart__items.appendChild(cart_product);
+  const cart_Product = createCartItemElement({ sku, name, salePrice });
+  cart__items.appendChild(cart_Product);
 }
 
 async function insertProducts() {
@@ -87,9 +87,3 @@ window.onload = () => {
   insertProducts();
 };
 const itemButtons = document.getElementsByClassName('item__add');
-// console.log(itemButtons, typeof itemButtons);
-// console.log( Object.entries(itemButtons))
-// itemButtons.forEach(button => {
-//   console.log(button);
-//   button.onclick = (target) => getSkuFromProductItem(target);1
-// })
