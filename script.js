@@ -1,7 +1,10 @@
 window.onload = function onload() { };
-
-// Variáveis globais
+// Variáveis
 const loading = document.querySelector('.loading');
+const cartItems = document.querySelector('.cart__items');
+
+// Carrega o carrinho através do local storage
+cartItems.innerHTML = (localStorage.getItem('cart'));
 
 // Função fornecida
 function createProductImageElement(imageSource) {
