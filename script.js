@@ -40,8 +40,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  console.log(event);
+function cartItemClickListener() {
   const cart__Items = document.querySelector('.cart__items');
   cart__Items.appendChild(createCartItemElement(item));
 }
