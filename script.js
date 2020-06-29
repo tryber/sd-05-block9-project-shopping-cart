@@ -1,3 +1,14 @@
+// 5. a) Get prices (to be accumulated) directly on html cart
+// b) sum all prices and show the result
+// c) write it with async await (still did not do that)
+const getAndSumPrices = () => {
+  const cartItens = document.querySelectorAll('.cart__item');
+  const priceArray = [...cartItens].map(item => item.innerHTML.match(/[\d.\d]+$/));
+  const totalPricePlace = document.getElementsByClassName('total-price')[0];
+  totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
+};
+// partially working with a delay (-1 item on cart), investigate that
+
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
@@ -68,21 +79,10 @@ function getSkuFromProductItem(item) {
 }
 
 // 4. Created function, to maintain cart on localStorage
-function keepCartStored() {
-  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
-}
-// does not work, work on progress, must be onload and fetch
-
-// 5. a) Get prices (to be accumulated) directly on html cart
-// b) sum all prices and show the result
-// c) write it with async await (still did not do that)
-const getAndSumPrices = () => {
-  const cartItens = document.querySelectorAll('.cart__item');
-  const priceArray = [...cartItens].map(item => item.innerHTML.match(/[\d.\d]+$/));
-  const totalPricePlace = document.getElementsByClassName('total-price')[0];
-  totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
-};
-// working but with a delay, investigate that
+// function keepCartStored() {
+//   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+// }
+// does not work, work on progress, must be on onload and fetch
 
 // 6. Created function to empty cart
 // const emptyCart = () => {
