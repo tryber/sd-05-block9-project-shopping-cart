@@ -18,15 +18,21 @@ function cartItemClickListener(event) {
   // console.log(event.target.id);
   localStorage.removeItem(event.target.id);
   event.target.remove();
+  console.log(event.target.className);
+  const theoldtotal = parseInt(document.getElementsByClassName('total')[0].innerText);
+  document.getElementsByClassName('total')[0].innerText = theoldtotal - parseInt(event.target.className);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.className = salePrice;
   li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   localStorage.setItem(sku, 'item');
+  const oldtotal = parseInt(document.getElementsByClassName('total')[0].innerText);
+  document.getElementsByClassName('total')[0].innerText = parseInt(salePrice) + oldtotal;
   return li;
 }
 
@@ -78,6 +84,7 @@ function lixo() {
     allcartitems[i].remove();
   }
   localStorage.clear();
+  document.getElementsByClassName('total')[0].innerText = 0;
 }
 
 function createBtn() {
@@ -86,6 +93,13 @@ function createBtn() {
   btnLixo.addEventListener('click', lixo);
   btnLixo.innerText = 'Esvaziar o carrinho';
   document.getElementsByClassName('place')[0].appendChild(btnLixo);
+}
+
+function createTotal() {
+  const total = document.createElement('h2');
+  total.className = 'total';
+  total.innerText = '0';
+  document.getElementsByClassName('total-price')[0].appendChild(total)
 }
 // document.getElementsByClassName('empty-cart')[0].addEventListener('click', lixo);
 
@@ -106,5 +120,6 @@ window.onload = function onload() {
     );
   historico();
   createBtn();
+  createTotal();
   // console.log(localStorage.key(2))
 };
