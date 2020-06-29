@@ -1,8 +1,17 @@
+const botaoExcluiItems = document.querySelector('.empty-cart');
 
 const salvaCarrinho = () => {
   const carrinhoSalvo = document.getElementsByTagName('ol')[0].innerHTML;
   localStorage.setItem('carrinho', carrinhoSalvo);
 };
+
+const limparCarrinho = () => {
+  document.getElementsByTagName('ol')[0].innerHTML = '';
+  localStorage.setItem('carrinho', '');
+}
+botaoExcluiItems.addEventListener('click', limparCarrinho)
+// botaoExcluiItems.addEventListener('click', limparCarrinho);
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -83,8 +92,8 @@ fetch(source)
 window.onload = function onload() {
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
-    const excluiItem = document.querySelectorAll('.cart__item');
-    excluiItem.forEach(item => item.addEventListener('click', cartItemClickListener));
+    const excluiItem = document.getElementsByClassName("cart__item");
+    Array.from(excluiItem).forEach(item => item.addEventListener('click', cartItemClickListener));
   }
 };
 // const Carrinho = cartItemClickListener(evento)
