@@ -67,13 +67,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// Pegando a lista de computadores
-
-
 function queryProducts(term = 'computador') {
   return fetch(`${API_URL}${term}`);
 }
-
 
 async function insertProducts() {
   const productsResponse = await queryProducts();
