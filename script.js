@@ -82,6 +82,16 @@ const getAndSumPrices = () => {
   const totalPricePlace = document.getElementsByClassName('total-price')[0];
   totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
 };
+// working but with a delay, investigate that
+
+// 6. Created function to empty cart
+// const emptyCart = () => {
+//   const cartItems = document.querySelectorAll('.cart__item');
+//   cartItems.innerHTML = null;
+// }
+// const emptyButton = document.getElementsByClassName('empty-cart');
+// emptyButton.addEventListener('click', emptyCart);
+// not working, error saying emptyButton.addEventListener is not a function
 
 // 1. Fetch the API on your html page
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -98,5 +108,6 @@ window.onload = function onload() {
         const classItems = document.querySelector('.items');
         classItems.appendChild(newProduct);
       });
-    });
+    })
+    .then(document.querySelector('.loading').remove());
 };
