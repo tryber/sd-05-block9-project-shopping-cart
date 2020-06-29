@@ -16,6 +16,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+async function getProductDetails({ sku }) {
+  console.log(`${PRODUCT_ENDPOINT}${sku}`);
+  const queryProductById = () => fetch(`${PRODUCT_ENDPOINT}${sku}`);
+  const productDetails = await queryProductById();
+  const { title: name, price: salePrice } = await productDetails.json();
+  const cart__items = document.querySelector('.cart__items');
+  const cartProduct = createCartItemElement({ sku, name, salePrice });
+  cart__items.appendChild(cartProduct);
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -41,8 +51,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener() {
-  const cart__Items = document.querySelector('.cart__items');
-  cart__Items.appendChild(createCartItemElement(item));
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.appendChild(createCartItemElement(item));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -62,15 +72,6 @@ function queryProducts(term = 'computador') {
   return fetch(`${API_URL}${term}`);
 }
 
-async function getProductDetails({ sku }) {
-  console.log(`${PRODUCT_ENDPOINT}${sku}`);
-  const queryProductById = () => fetch(`${PRODUCT_ENDPOINT}${sku}`);
-  const productDetails = await queryProductById();
-  const { title: name, price: salePrice } = await productDetails.json();
-  const cart__items = document.querySelector('.cart__items');
-  const cart_Product = createCartItemElement({ sku, name, salePrice });
-  cart__items.appendChild(cart_Product);
-}
 
 async function insertProducts() {
   const productsResponse = await queryProducts();
@@ -85,4 +86,3 @@ async function insertProducts() {
 window.onload = () => {
   insertProducts();
 };
-const itemButtons = document.getElementsByClassName('item__add');
