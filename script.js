@@ -31,15 +31,20 @@ async function finalPrice(somar, price) {
   // resgata o preço atual no container de preço total e converte para número
   let totalPrice = document.querySelector('.total-price').innerText;
   if (typeof totalPrice !== 'number') {
-    totalPrice = parseFloat(totalPrice);
+    totalPrice = parseInt((parseFloat(totalPrice)*100).toFixed(0))/100;
+  }
+  if (typeof price !== 'number') {
+    price = parseFloat(price);
   }
   // se for pra somar o primeiro parâmetro na chamada deve ser 'true'
   if (somar) {
-    totalPrice += price;
+    totalPrice = totalPrice + price;
+    totalPrice = parseInt((totalPrice*100).toFixed(0))/100;
     document.querySelector('.total-price').innerText = totalPrice;
   // se for 'false' diminui o preço do produto do preço total
-  } else {
-    totalPrice -= price;
+  } else { 
+    totalPrice = totalPrice - price;
+    totalPrice = parseInt((totalPrice*100).toFixed(0))/100;
     document.querySelector('.total-price').innerText = totalPrice;
   }
 }
@@ -171,9 +176,9 @@ function loadProductsList() {
         document.getElementsByClassName('items')[0].appendChild(productElement);
       });
     })
-    .then(function () { loadProducts(); })
-    .then(function () { loadCart(); })
-    .then(function () { erase(); })
+    .then(loadProducts())
+    .then(loadCart())
+    .then(erase())
     .catch((error) => {
       document.getElementsByClassName('items')[0].innerHTML = error;
     });
