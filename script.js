@@ -47,7 +47,7 @@ function cartItemClickListener(event) {
   const totalPrice = document.querySelector('.total-price');
   soma = Math.round(soma * 100) / 100;
 
-  totalPrice.innerHTML = `Preço Total: ${soma}`;
+  totalPrice.innerHTML = soma;
 
   localStorage.removeItem(idDoItemDoCart);
 
@@ -68,7 +68,7 @@ const somaPreco = async (productPrice) => {
   // soma += productPrice;
   // soma = parseInt(productPrice);
   soma += await Math.round((parseFloat(productPrice, 10)).toFixed(2) * 100) / 100;
-  totalPrice.innerHTML = `Preço Total: ${soma}`;
+  totalPrice.innerHTML = soma;
 };
 
 
