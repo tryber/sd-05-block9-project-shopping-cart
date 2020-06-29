@@ -1,6 +1,14 @@
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 const PRODUCT_ENDPOINT = 'https://api.mercadolibre.com/items/';
 
+async function myBill() {
+  const cartItemsPrices = await document.querySelectorAll('.item_cart_price');
+  let amount = 0;
+  cartItemsPrices.forEach(element => amount += Number(element.innerText));
+  const totalPriceSpam = document.querySelector('.total-price');
+  totalPriceSpam.innerText = `$${amount}`;
+}
+
 const saveCartToLocalStorage = () => {
   const cartItems = document.querySelector('.cart__items');
   localStorage.setItem('cartItems', cartItems.innerHTML);
@@ -94,17 +102,6 @@ const loadingCartFromLocalStorage = () => {
   });
 };
 
-async function myBill() {
-  const cartItemsPrices = await document.querySelectorAll('.item_cart_price');
-  let amount = 0;
-  cartItemsPrices.forEach(element => {
-    amount += Number(element.innerText);
-  });
-  const totalPriceSpam = document.querySelector('.total-price');
-  totalPriceSpam.innerText = `$${amount}`;
-}
-
-myBill();
 window.onload = () => {
   insertProducts();
   if (localStorage.getItem('cartItems')) loadingCartFromLocalStorage();
