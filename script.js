@@ -1,10 +1,11 @@
+// ANCHOR Cria a imagem no grid - Não devo mexer
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
-
+// ANCHOR Cria item por item qnd chamado - Não devo mexer
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -33,12 +34,14 @@ function createProductItemElement({ sku, name, image }) {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-// ANCHOR cartItemClickListener
+// ANCHOR cartItemClickListener - Apaga o item clicado
 function cartItemClickListener(event) {
   const child = event.target;
+  const idDoItemDoCart = child.children[0].className;
+  localStorage.removeItem(idDoItemDoCart);
+
   child.parentNode.removeChild(child);
-  console.log(child);
-  // event.target.parentNode.removeChild('li')
+  console.log(idDoItemDoCart);
 }
 // ANCHOR createCartItemElement
 function createCartItemElement({ sku, name, salePrice }) {
@@ -50,7 +53,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 
-// ANCHOR fetch specific item
+// ANCHOR fetch specific item and Add to the cart
 // prettier-ignore
 const catchIDandCreateCartItemElement = (event) => {
   const productID = event.target.parentNode.querySelector('.item__sku')
@@ -64,9 +67,15 @@ const catchIDandCreateCartItemElement = (event) => {
         salePrice: data.price,
       });
 
-      const cartItems = document.getElementsByClassName('cart__items')[0];
+      const span = document.createElement('span');
+      span.className = productID;
+      li.appendChild(span);
 
+      const cartItems = document.getElementsByClassName('cart__items')[0];
+      
       cartItems.appendChild(li);
+
+      localStorage.setItem(productID, li)
     });
 };
 
@@ -75,14 +84,16 @@ const catchIDandCreateCartItemElement = (event) => {
 const apiComputadorUrl =
   'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
-const objJason = {
-  method: 'GET',
-  headers: { Accept: 'application/json' },
-};
+  // Aparentemente não precisa do bloco abaixo
+// const objJason = {
+//   method: 'GET',
+//   headers: { Accept: 'application/json' },
+// };
 
+// ANCHOR Adiciona os produtos à página
 // prettier-ignore
 const fetchMercadoLivre = () => {
-  fetch(apiComputadorUrl, objJason)
+  fetch(apiComputadorUrl)
     .then(response => response.json())
     .then((data) => {
       const allProducts = data.results;
