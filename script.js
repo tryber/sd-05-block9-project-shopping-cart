@@ -12,6 +12,12 @@ const getObject = {
   method: 'GET',
 };
 
+// 5 - Create sum of item's prices
+async function createSum(arr) {
+  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
+  return totalValue;
+}
+
 window.onload = function onload() {
   cartItems.innerHTML = (localStorage.getItem('cart'));
   if (localStorage.getItem('cartItemsObject')) {
@@ -76,12 +82,6 @@ const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
   return cartArr;
 };
 
-// 5 - Create sum of item's prices
-async function createSum(arr) {
-  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
-  return totalValue;
-}
-
 // 1 - function that creates a list of products
 async function createListOfProducts(product) {
   const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
@@ -117,10 +117,8 @@ items.addEventListener('click', (event) => {
 // 3 - Remove item from the cart
 cartItems.addEventListener('click', (event) => {
   const removedId = (cartItemClickListener(event).firstElementChild.innerText);
-  const removedElement = cartArr.find((element) => {
-    return element.id === removedId;
-  });
-  let removedIndex = cartArr.indexOf(removedElement);
+  const removedElement = cartArr.find(element => element.id === removedId);
+  const removedIndex = cartArr.indexOf(removedElement);
   cartArr.splice(removedIndex, 1);
   createSum(cartArr);
   totalPrice.innerText = totalValue;
