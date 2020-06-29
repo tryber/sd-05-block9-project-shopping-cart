@@ -1,4 +1,4 @@
-window.onload = function onload() { };
+// window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,14 +14,19 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+let cartSum = 0;
+
 function cartItemClickListener(event) {
   // console.log(event.target.id);
   localStorage.removeItem(event.target.id);
   event.target.remove();
   console.log(event.target.className);
   const theoldtotal = parseInt(document.getElementsByClassName('total')[0].innerText, 10);
+  cartSum = theoldtotal - parseInt(event.target.className, 10);
   document.getElementsByClassName('total')[0].innerText = theoldtotal - parseInt(event.target.className, 10);
 }
+
+// document.getElementsByClassName('total')[0].innerText
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -32,6 +37,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   localStorage.setItem(sku, 'item');
   const oldtotal = parseInt(document.getElementsByClassName('total')[0].innerText, 10);
+  cartSum = parseInt(salePrice, 10) + oldtotal;
   document.getElementsByClassName('total')[0].innerText = parseInt(salePrice, 10) + oldtotal;
   return li;
 }
@@ -96,14 +102,31 @@ function createBtn() {
 }
 
 function createTotal() {
-  const total = document.createElement('h2');
+  const total = document.createElement('h2'); 
   total.className = 'total';
-  total.innerText = '0';
+  total.innerText = 0;
   document.getElementsByClassName('total-price')[0].appendChild(total);
 }
 // document.getElementsByClassName('empty-cart')[0].addEventListener('click', lixo);
 
+function loader(status = true) {
+  const container = document.querySelector('.container');
+  if (status) {
+    const loader = document.createElement('div');
+    loader.className = 'loading';
+    loader.innerText = 'Carregando...';
+    container.appendChild(loader);
+  } else {
+    const loader = document.querySelector('.loading');
+    container.removeChild(loader);
+  }
+}
+
 window.onload = function onload() {
+  loader();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 3333);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(data =>
@@ -121,5 +144,28 @@ window.onload = function onload() {
   historico();
   createBtn();
   createTotal();
+  // somatotal.then((res)=>{document.getElementsByClassName('total')[0].innerText = res});
   // console.log(localStorage.key(2))
 };
+
+// async function somatotal(){
+// return 0
+// }
+
+// async function puxapromessa = () => {
+
+//   const promessa = new Promise((resolve, reject) => { // resolve, reject
+        
+//     cartSum != 0 ? resolve(cartSum) : reject()
+//   }
+//   )
+  
+//   function suucesso(){document.getElementsByClassName('total')[0].innerText = cartSum};
+//   function tentamais(){
+//     document.getElementsByClassName('total')[0].innerText = 0;
+//     console.log("deu ruim")}
+   
+//   promessa
+//     .then(suucesso)
+//     .catch(tentamais)
+// }
