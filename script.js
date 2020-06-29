@@ -1,4 +1,4 @@
-let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
+const carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
 const salvaCarrinho = () => localStorage
 .setItem('carrinho', JSON.stringify(carrinhoSalvo));
 
@@ -29,11 +29,11 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function cartItemClickListener(event) {
-  // const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
   // pega carrinho e exclui item clicado
   const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
   carrinhoDeCompras.removeChild(itemExcluido);
+  salvaCarrinho();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
