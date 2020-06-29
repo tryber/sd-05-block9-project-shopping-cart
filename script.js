@@ -1,6 +1,7 @@
-// 3. Remove items from cart when you click on it 
+// 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
+  keepCartStored();
 }
 
 // Provided function, necessary for 2. and 3. to work
@@ -25,6 +26,22 @@ function addToCart({ sku }) {
       });
       cartItems.appendChild(newCartItem);
     });
+}
+
+// Provided function
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
+// Provided function
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
 }
 
 // Provided function, used in 2. to access and store API button
@@ -52,22 +69,6 @@ function keepCartStored() {
 // Provided function, looks like it could have been of use for requirement 2.
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-// Provided function
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-
-// Provided function
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
 }
 
 // 1. Fetch the API on your html page
