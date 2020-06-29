@@ -1,7 +1,5 @@
 // VARIÁVEIS
-/* const items = document.querySelector('.items');
-const cartItems = document.querySelector('.cart__items');
-const totalPrice = document.querySelector('.total-price');
+/* const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
  */
 
@@ -21,36 +19,56 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// requsisito 2. função que que pega infos sobre itens do carrinho
+const getProductInfo = async (itemId) => {
+  const product = await fetch(`https://api.mercadolibre.com/items/${itemId}`);
+  const productJson = await product.json();
+  return productJson;
+};
+
 // função veio pronta
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-/* function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li
-};
-*/
+  return li;
+}
 
+// requisito 2. função que adiciona ao carrinho
+async function addToCart(sku) {
+  const ol = document.getElementsByClassName('cart__items')[0];
+  const product = await getProductInfo(sku)
+    .then(productData =>
+      createCartItemElement({
+        sku: productData.id, name: productData.title, salePrice: productData.price,
+      }),
+    );
+  ol.appendChild(product);
+  // sumItens();
+  // saveCart();
+}
+
+// função veio pronta e eu fiz modificações
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const buttonAdd = section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  buttonAdd.addEventListener('click', () => addToCart(sku));
+  return section;
+}
+
+/* function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+} */
+
+/* function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+ */
 // requisito 1. gerar lista de produtos
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
