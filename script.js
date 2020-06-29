@@ -128,7 +128,7 @@ generatesProducts('computador');
 let itemId;
 let apiItemURL = `https://api.mercadolibre.com/items/${itemId}`;
 const getItem = {
-  method: 'GET',  
+  method: 'GET',
 };
 items.addEventListener('click', (event) => {
   itemId = event.target.parentElement.firstElementChild.innerText;
