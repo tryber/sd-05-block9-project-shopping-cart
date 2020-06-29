@@ -2,10 +2,6 @@ window.onload = function onload() { };
 // Variáveis
 const loading = document.querySelector('.loading');
 
-const chargeCart = () => {
-  const product = JSON.parse(localStorage.getItem('cart'));
-};
-
 // Função fornecida
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
