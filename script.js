@@ -52,7 +52,7 @@ const sumTotal = (arr) => {
   return cartTotalValue;
 };
 
-// função veio semi-pronta (sem conteúdo)
+// requisito 3. remove o item do carrinho ao clicar nele
 function cartItemClickListener(event) {
   event.target.remove();
   const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
