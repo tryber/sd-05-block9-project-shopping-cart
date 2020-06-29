@@ -1,11 +1,10 @@
+const container = document.querySelector('.container');
+const loadingContainer = document.querySelector('.loading-container');
 const items = document.querySelector('.items');
-const loading = document.createElement('span');
 const cart = document.querySelector('.cart');
 const cartItems = document.querySelector('.cart__items');
 const clearButton = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
-loading.className = 'loading';
-loading.innerHTML = 'loading...';
 let cartArr = [];
 let totalValue = 0;
 const getObject = {
@@ -18,7 +17,12 @@ async function createSum(arr) {
   return totalValue;
 }
 
+// ------------------------------------------------
+
 window.onload = function onload() {
+  loading('loading');
+  setTimeout(() => document.querySelector('.loading').remove(), 1000);
+  createListOfProducts('computador');
   cartItems.innerHTML = (localStorage.getItem('cart'));
   if (localStorage.getItem('cartItemsObject')) {
     cartArr = JSON.parse(localStorage.getItem('cartItemsObject'));
@@ -91,8 +95,6 @@ async function createListOfProducts(product) {
     .catch(() => console.log('Error on calling the MLB API'));
 }
 
-createListOfProducts('computador');
-
 // 2 - add the product to the cart when the button is clicked
 let itemId;
 let API_URL_2 = `https://api.mercadolibre.com/items/${itemId}`;
@@ -138,3 +140,8 @@ clearButton.addEventListener('click', () => {
   cartArr = [];
   localStorage.setItem('cartItemsObject', '');
 });
+
+// 7 - add loading text
+const loading = (text) => {
+  loadingContainer.appendChild(createCustomElement('div', 'loading', text));
+}
