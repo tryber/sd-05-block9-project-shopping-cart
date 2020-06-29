@@ -138,10 +138,14 @@ const fetchMercadoLivre = () => {
 
         btnItemAdd.addEventListener('click', catchIDandCreateCartItemElement);
       });
+    })
+    .then(() => {
+      document.querySelector('.loading').innerHTML = '';
     });
 };
 
 window.onload = function onload() {
+  document.querySelector('.loading').innerHTML = 'loading...';
   const cartItems = document.getElementsByClassName('cart__items')[0];
   const btnClear = document.getElementsByClassName('empty-cart')[0];
   const totalPriec = document.querySelector('.total-price');
