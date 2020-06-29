@@ -102,7 +102,7 @@ function createBtn() {
 }
 
 function createTotal() {
-  const total = document.createElement('h2'); 
+  const total = document.createElement('h2');
   total.className = 'total';
   total.innerText = 0;
   document.getElementsByClassName('total-price')[0].appendChild(total);
@@ -112,13 +112,13 @@ function createTotal() {
 function loader(status = true) {
   const container = document.querySelector('.container');
   if (status) {
-    const loader = document.createElement('div');
-    loader.className = 'loading';
-    loader.innerText = 'Carregando...';
-    container.appendChild(loader);
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    loading.innerText = 'Carregando...';
+    container.appendChild(loading);
   } else {
-    const loader = document.querySelector('.loading');
-    container.removeChild(loader);
+    const loading = document.querySelector('.loading');
+    container.removeChild(loading);
   }
 }
 
@@ -155,16 +155,16 @@ window.onload = function onload() {
 // async function puxapromessa = () => {
 
 //   const promessa = new Promise((resolve, reject) => { // resolve, reject
-        
+
 //     cartSum != 0 ? resolve(cartSum) : reject()
 //   }
 //   )
-  
+
 //   function suucesso(){document.getElementsByClassName('total')[0].innerText = cartSum};
 //   function tentamais(){
 //     document.getElementsByClassName('total')[0].innerText = 0;
 //     console.log("deu ruim")}
-   
+
 //   promessa
 //     .then(suucesso)
 //     .catch(tentamais)
