@@ -1,6 +1,5 @@
-// VARIÁVEIS
+// CONSTANTES  E VARIÁVEIS
 const items = document.querySelector('.items');
-// const cart = document.querySelector('.cart');
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
@@ -8,7 +7,7 @@ let cartArray = [];
 
 // FUNÇÕES
 // requisito 4. carrega o carrinho através do local storage
-window.onload = function onload() {
+window.onload = function loadCart() {
   cartItems.innerHTML = (localStorage.getItem('cart'));
 };
 
@@ -29,12 +28,13 @@ function createCustomElement(element, className, innerText) {
 }
 
 // função veio pronta
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image, price: salePrice }) {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', salePrice));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
 }
@@ -44,10 +44,21 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
+// requisito 5. soma o valor total
+const sumTotal = (arr) => {
+  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
+  return totalValue;
+};
+
 // função veio semi-pronta (sem conteúdo)
 function cartItemClickListener(event) {
-  return event.target;
+  event.target.remove();
+  const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
+  remakeCart();
+  sumTotal();
+  localStorage.setItem('cart', cartItems.innerHTML);
 }
+
 
 // função veio pronta
 function createCartItemElement({ sku, name, salePrice }) {
@@ -75,17 +86,11 @@ generatesProducts('computador');
 const objectCart = ({ id: sku, title: name, price: salePrice }) => {
   const singleCartItem = {
     id: sku,
-    name,
+    title: name,
     price: salePrice,
   };
   cartArray.push(singleCartItem);
   return cartArray;
-};
-
-// requisito 5. soma o valor total
-const sumTotal = (arr) => {
-  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
-  return totalValue;
 };
 
 // requisito 2. adiciona ao carrinho ao clicar no botão
