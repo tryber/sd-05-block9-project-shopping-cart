@@ -3,6 +3,7 @@ const loading = document.createElement('span');
 const cart = document.querySelector('.cart');
 const cartItems = document.querySelector('.cart__items');
 const clearButton = document.querySelector('.empty-cart');
+const totalPrice = document.querySelector('.total-price');
 loading.className = 'loading';
 loading.innerHTML = 'loading...';
 let cartArr = [];
@@ -13,6 +14,11 @@ const getObject = {
 
 window.onload = function onload() {
   cartItems.innerHTML = (localStorage.getItem('cart'));
+  if (localStorage.getItem('cartItemsObject')) {
+    cartArr = JSON.parse(localStorage.getItem('cartItemsObject'));
+    createSum(cartArr);
+    totalPrice.innerText = totalValue;
+  }
 };
 
 function createProductImageElement(imageSource) {
@@ -45,7 +51,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  console.log(event.target);
   return event.target;
 }
 
@@ -54,6 +59,8 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  // add a span with sku
+  li.appendChild(createCustomElement('span', 'item__sku', sku));
   return li;
 }
 
@@ -71,7 +78,7 @@ const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
 
 // 5 - Create sum of item's prices
 async function createSum(arr) {
-  totalValue = await arr.reduce((acc, num) => acc + num.price, 0);
+  totalValue = arr.reduce((acc, num) => acc + num.price, 0);
   return totalValue;
 }
 
@@ -99,6 +106,8 @@ items.addEventListener('click', (event) => {
     .then(response => response.json())
     .then((item) => {
       localStorage.setItem('cartItemsObject', JSON.stringify(createCartObjectItems(item)));
+      createSum(cartArr);
+      totalPrice.innerText = totalValue;
       cartItems.appendChild(createCartItemElement(item));
     })
     .then(() => localStorage.setItem('cart', cartItems.innerHTML))
@@ -106,7 +115,16 @@ items.addEventListener('click', (event) => {
 });
 
 // 3 - Remove item from the cart
-cartItems.addEventListener('click', () => {
+cartItems.addEventListener('click', (event) => {
+  const removedId = (cartItemClickListener(event).firstElementChild.innerText);
+  const removedElement = cartArr.find((element) => {
+    return element.id === removedId;
+  });
+  let removedIndex = cartArr.indexOf(removedElement);
+  cartArr.splice(removedIndex, 1);
+  createSum(cartArr);
+  totalPrice.innerText = totalValue;
+  localStorage.setItem('cartItemsObject', JSON.stringify(cartArr));
   cartItemClickListener(event).remove();
   localStorage.setItem('cart', cartItems.innerHTML);
 });
@@ -118,7 +136,7 @@ cartItems.addEventListener('click', () => {
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
   localStorage.setItem('cart', cartItems.innerHTML);
-  document.querySelector('.total-price').innerText = 0;
+  totalPrice.innerText = 0;
   cartArr = [];
   localStorage.setItem('cartItemsObject', '');
 });
