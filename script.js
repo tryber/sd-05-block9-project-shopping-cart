@@ -145,10 +145,15 @@ const fetchMercadoLivre = () => {
 };
 
 window.onload = function onload() {
-  document.querySelector('.loading').innerHTML = 'loading...';
   const cartItems = document.getElementsByClassName('cart__items')[0];
   const btnClear = document.getElementsByClassName('empty-cart')[0];
   const totalPriec = document.querySelector('.total-price');
+
+  const div = document.createElement('div');
+  div.className = 'loading';
+  div.innerHTML = 'loading...';
+  document.body.appendChild(div);
+
   fetchMercadoLivre();
   loadCartItems();
 
