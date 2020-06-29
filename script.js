@@ -6,24 +6,24 @@ const fetchApi = () => {
     method: 'GET',
   };
   fetch(API_URL, myObject)
-    .then((response => response.json()))
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       renderContent(data);
     });
 };
 
-const mapeiaData = (data => {
+const mapeiaData = (data) => {
   const { results } = data;
-  const mapeiaAPI = results.map((elementos => {
+  const mapeiaAPI = results.map((elementos) => {
     return {
       sku: elementos.id,
       name: elementos.title,
       image: elementos.thumbnail,
     };
-  }));
+  });
   console.log(mapeiaAPI);
   return mapeiaAPI;
-});
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -51,12 +51,12 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-const addElementos = (data => {
+const addElementos = (data) => {
   const section = document.getElementsByClassName('items')[0];
-  data.forEach((elemento => {
+  data.forEach((elemento) => {
     section.appendChild(createProductItemElement(elemento));
-  }));
-});
+  });
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -75,8 +75,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 
-const renderContent = (data => {
+const renderContent = (data) => {
   const mapData = mapeiaData(data);
   addElementos(mapData);
-});
+};
 fetchApi();
