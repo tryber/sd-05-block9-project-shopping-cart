@@ -1,22 +1,9 @@
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-}
-
+// 3. Remove items from cart when you click on it 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   event.target.remove();
 }
 
+// Provided function, necessary for 2. and 3. to work
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -25,10 +12,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// Requisito 2: babysteps
-// 1. Criar function para adicionar id de produto no carrinho, que será o event aplicado ao btn
-// Usando fetch e a url passada mas substituindo ItemID pelo id da API (sku no código fornecido)
-// E usando como indicado createCartItemElement em filho do cart__items.
+// 2. Created function to add ids of products in cart
 function addToCart({ sku }) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
@@ -43,6 +27,7 @@ function addToCart({ sku }) {
     });
 }
 
+// Provided function, used in 2. to access and store API button
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -50,7 +35,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  // 2. (babystep do req. 2), armazenar o button que vai receber eventlistener
   // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonAddToCart.addEventListener('click', () => {
@@ -60,10 +44,33 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+// 4. Created function, to maintain cart on localStorage
+function keepCartStored() {
+  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+}
+
+// Provided function, looks like it could have been of use for requirement 2.
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Provided function
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
+// Provided function
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
+// 1. Fetch the API on your html page
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 window.onload = function onload() {
   fetch(API_URL)
