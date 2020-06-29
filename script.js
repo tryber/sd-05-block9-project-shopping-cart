@@ -35,7 +35,7 @@ async function finalPrice(somar, getPrice) {
     totalPrice = parseFloat(totalPrice);
   }
   if (typeof price !== 'number') {
-    price = parseFloat(price);
+    price = parseFloat(price, 10);
   }
   // se for pra somar o primeiro parâmetro na chamada deve ser 'true'
   if (somar) {
