@@ -98,12 +98,14 @@ window.onload = async () => {
       });
     });
   if (localStorage.getItem('carrinho') === '') salvaCarrinho();
-  carrinhoSalvo = JSON.parse(localStorage.getItem('carrinho'));
-  await carrinhoSalvo.forEach(produto => document.getElementsByTagName('ol')[0]
+  else { 
+    carrinhoSalvo = JSON.parse(localStorage.getItem('carrinho'));
+    await carrinhoSalvo.forEach(produto => document.getElementsByTagName('ol')[0]
     .appendChild(createCartItemElement(produto)));
     // somaTotal = totalSum()
     // document.querySelector('.cart').classList.add('total-price')
     // totalSum();
+  }
 };
 // const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
