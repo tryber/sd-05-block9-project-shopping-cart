@@ -1,3 +1,25 @@
+async function getPrice() {
+  let sum = 0;
+  const localStorageKeys = Object.keys(localStorage);
+  for (item of localStorageKeys) {
+    const response = await fetch(`https://api.mercadolibre.com/items/${item}`);
+    const data = await response.json();
+    const itemPrice = data.price;
+    sum += Number(localStorage.getItem(item)) * itemPrice;
+  }
+  return sum;
+}
+
+async function totalPrice() {
+  const price = await getPrice();
+  const cartTag = document.querySelector('.cart');
+  cartTag.classList.add('total-price');
+  const priceTag = document.querySelector('.price');
+  priceTag.innerHTML = `${price}`;
+  cartTag.insertBefore(priceTag, document.querySelector('.empty-cart'));
+  return priceTag;
+}
+
 function addLocalStorageKey(productSKU) {
   if (localStorage.getItem(productSKU) === null) return localStorage.setItem(productSKU, 1);
   return localStorage.setItem(productSKU, Number(localStorage.getItem(productSKU)) + 1);
@@ -42,6 +64,7 @@ function cartItemClickListener(event) {
   const productSKU = tagToBeRemoved.innerHTML.slice(5, 18);
   removeLocalStorageKey(productSKU);
   tagToBeRemoved.remove();
+  totalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -52,7 +75,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function addToChart(event) {
+function addToCart(event) {
   const itemID = event.target.parentElement.firstChild.innerHTML;
   fetch(`https://api.mercadolibre.com/items/${itemID}`)
   .then(response => response.json())
@@ -63,6 +86,7 @@ function addToChart(event) {
     const cart = document.getElementsByClassName('cart__items')[0];
     cart.appendChild(cartItemElement);
     addLocalStorageKey(sku);
+    totalPrice();
   });
 }
 
@@ -83,14 +107,15 @@ function loadLocalStorage() {
   });
 }
 
-function clearChart() {
-  const chartItemsContainer = document.querySelector('.cart__items');
+function clearCart() {
+  const cartItemsContainer = document.querySelector('.cart__items');
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', function () {
-    while (chartItemsContainer.firstChild) {
-      removeLocalStorageKey(chartItemsContainer.lastChild.innerHTML.slice(5, 18));
-      chartItemsContainer.removeChild(chartItemsContainer.lastChild);
+    while (cartItemsContainer.firstChild) {
+      removeLocalStorageKey(cartItemsContainer.lastChild.innerHTML.slice(5, 18));
+      cartItemsContainer.removeChild(cartItemsContainer.lastChild);
     }
+    totalPrice();
   });
 }
 
@@ -107,34 +132,11 @@ window.onload = function onload() {
   })
   .then(() => {
     const addButtons = document.querySelectorAll('.item__add'); //  Tem que ser querySelector, pq forEach não itera sobre uma HTML collection
-    addButtons.forEach(element => element.addEventListener('click', addToChart));
+    addButtons.forEach(element => element.addEventListener('click', addToCart));
   })
   .then(() => {
     loadLocalStorage();
   })
-  .then(() => clearChart());
+  .then(() => clearCart())
+  .then(() => totalPrice());
 };
-
-// async function totalPrice() {
-//   let sum = 0;
-//   const localStorageKeys = Object.keys(localStorage);
-//   localStorageKeys.forEach(key => {
-//     for(let i = 0; i < Number(localStorage.getItem(key)); i += 1) {
-//       fetch(`https://api.mercadolibre.com/items/${key}`)
-//       .then(response => response.json())
-//       .then(data => {
-//         const {price: salePrice} = data;
-//         sum += salePrice;
-//       })
-//     }
-//   })
-//   await sum;
-//   const cartTag = document.querySelector(".cart__title");
-//   console.log(cartTag);
-//   cartTag.classList.add('total-price');
-//   const priceTag = createCustomElement('span', 'price', `Total: $ ${sum}`);
-//   cartTag.appendChild(priceTag);
-//   return await priceTag;
-// }
-
-// totalPrice();
