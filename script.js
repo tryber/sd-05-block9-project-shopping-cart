@@ -1,6 +1,7 @@
 window.onload = function onload() { };
 
 // Variáveis globais
+const loading = document.querySelector('.loading');
 
 // Função fornecida
 function createProductImageElement(imageSource) {
@@ -114,12 +115,6 @@ window.onload = function onload() {
   emptyCartBtt.addEventListener('click', clearAll);
 };
 
-const loadingMessage = () => {
-  document
-    .getElementsByClassName('items')[0]
-    .appendChild(createCustomElement('span', 'loading', 'Loading!'));
-};
-
 setTimeout(() => {
-  document.querySelector('.loading').remove();
-}, 2700);
+  loading.remove();
+}, 3000);
