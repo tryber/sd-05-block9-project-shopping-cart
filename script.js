@@ -13,8 +13,9 @@ function createCustomElement(element, className, innerText) {
 }
 
 async function loadScreen() {
-  const loadingText = createCustomElement('h2', 'loading', 'loading...');
-  return loadingText;
+  const loadingText = createCustomElement('p', 'loading', 'loading...');
+  document.querySelector('.container').appendChild(loadingText);
+  setTimeout(() => { loadingText.remove(); }, 3000);
 }
 
 // function getSkuFromProductItem(item) {
