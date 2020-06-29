@@ -1,10 +1,8 @@
-// CONSTANTES  E VARIÁVEIS
+// SELETORES
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
-const cartArray = [];
-let cartTotalValue = 0;
 
 // FUNÇÕES
 // requisito 4. carrega o carrinho através do local storage
@@ -28,25 +26,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// função veio pronta
-function createProductItemElement({ id: sku, title: name, thumbnail: image, price: salePrice }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('span', 'item__price', salePrice));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  return section;
-}
-
-// função veio pronta
+// função veio pronta mas não usei pra nada
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
 // requisito 5. soma o valor total
 const sumTotal = (arr) => {
+  let cartTotalValue = 0;
   cartTotalValue = arr.reduce((acc, num) => acc + num.price, 0);
   totalPrice.innerText = cartTotalValue;
   return cartTotalValue;
@@ -61,9 +48,8 @@ function cartItemClickListener(event) {
   localStorage.setItem('cart', cartItems.innerHTML);
 }
 
-
-// função veio pronta
-function createCartItemElement({ name, salePrice, id}) {
+// função veio pronta e eu fiz alterações
+function createCartItemElement({ name, salePrice, id }) {
   const li = document.createElement('li');
   const span = document.createElement('span');
   li.className = 'cart__item';
@@ -72,6 +58,46 @@ function createCartItemElement({ name, salePrice, id}) {
   span.appendChild(li);
   span.addEventListener('click', cartItemClickListener);
   return span;
+}
+
+// requisito 6. botão limpar carrinho de compras
+clearButton.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  totalPrice.innerText = 0;
+  localStorage.setItem('cart', cartItems.innerHTML);
+});
+
+
+// requisito 2. função que cria um objeto para poder adicionar ao carrinho
+async function addToCart({ sku }) {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then((data) => {
+      const singleCartItem = {
+        sku: data.id,
+        name: data.title,
+        image: data.thumbnail,
+        salePrice: data.price,
+      };
+      cart.push(singleCartItem);
+      cartItems.appendChild(createCartItemElement(singleCartItem));
+    });
+  localStorage.setItem('cart', cartItems.innerHTML);
+  sumTotal();
+}
+
+// função veio pronta e eu fiz alterações
+function createProductItemElement({ id: sku, title: name, thumbnail: image, price: salePrice }) {
+  const section = document.createElement('section');
+  const buttonAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', salePrice));
+  section.appendChild(buttonAddToCart);
+  buttonAddToCart.addEventListener('click', addToCart({ sku }));
+  return section;
 }
 
 // requisito 1. função que gera uma lista de produtos a partir da API
@@ -87,8 +113,8 @@ async function generatesProducts(product) {
 }
 generatesProducts('computador');
 
-// requisito 2. função que cria um objeto para poder adicionar ao carrinho
-const objectCart = ({ id: sku, title: name, price: salePrice }) => {
+// como eu estava fazendo antes
+/* const objectCart = ({ id: sku, title: name, price: salePrice }) => {
   const singleCartItem = {
     id: sku,
     title: name,
@@ -102,7 +128,7 @@ const objectCart = ({ id: sku, title: name, price: salePrice }) => {
 let itemId;
 let apiItemURL = `https://api.mercadolibre.com/items/${itemId}`;
 const getItem = {
-  method: 'GET',
+  method: 'GET',  
 };
 items.addEventListener('click', (event) => {
   itemId = event.target.parentElement.firstElementChild.innerText;
@@ -116,10 +142,4 @@ items.addEventListener('click', (event) => {
     .then(() => localStorage.setItem('cart', cartItems.innerHTML))
     .catch(() => console.log('Error: Could not add product to cart'));
 });
-
-// requisito 6. botão limpar carrinho de compras
-clearButton.addEventListener('click', () => {
-  cartItems.innerHTML = '';
-  totalPrice.innerText = 0;
-  localStorage.setItem('cart', cartItems.innerHTML);
-});
+ */
