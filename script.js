@@ -17,6 +17,13 @@ function salvarDados() {
   localStorage.setItem('carrinho', dados);
 }
 
+function cartItemClickListener(event) {
+  evento = event.target;
+  evento.parentElement.removeChild(evento);
+  salvarDados();
+  totalPrice();
+}
+
 function carregarDados() {
   const dados = localStorage.carrinho;
   if (dados !== undefined) {
@@ -71,13 +78,6 @@ function createProductItemElement({ sku, name, image }) {
 // function getSkuFromProductItem(item) {
 // return item.querySelector('span.item__sku').innerText;
 // }
-
-function cartItemClickListener(event) {
-  evento = event.target;
-  evento.parentElement.removeChild(evento);
-  salvarDados();
-  totalPrice();
-}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
