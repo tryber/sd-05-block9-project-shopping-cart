@@ -55,7 +55,7 @@
   width: 100%;
 }
 
-.item .item__add {
+.item .item__add, .empty-cart {
   background-color: green;
   border: 0;
   cursor: pointer;

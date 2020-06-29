@@ -102,6 +102,13 @@ const loadingCartFromLocalStorage = () => {
   });
 };
 
+const cleanCartButton = document.querySelector('.empty-cart');
+
+cleanCartButton.addEventListener('click', () => {
+  document.querySelector('.cart__items').innerHTML = '';
+  saveCartToLocalStorage();
+} )
+
 window.onload = () => {
   insertProducts();
   if (localStorage.getItem('cartItems')) loadingCartFromLocalStorage();
