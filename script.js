@@ -85,7 +85,7 @@ function loadLocalStorage() {
 
 function clearChart() {
   const chartItemsContainer = document.querySelector('.cart__items');
-  const clearButton = document.querySelector('.empty-chart');
+  const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', function () {
     while (chartItemsContainer.firstChild) {
       removeLocalStorageKey(chartItemsContainer.lastChild.innerHTML.slice(5, 18));
