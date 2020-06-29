@@ -105,8 +105,7 @@ window.onload = async () => {
     // somaTotal = totalSum()
     // document.querySelector('.cart').classList.add('total-price')
     // totalSum();
-  }
-  else salvaCarrinho();
+  } else salvaCarrinho();
 };
 // const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
