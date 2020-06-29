@@ -17,6 +17,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const loadeando = () =>
+  document
+    .querySelector('.loading')
+    .appendChild(createCustomElement('span', 'loading', 'loading...'));
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clicou = event.target;
@@ -82,6 +87,10 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   });
 
 window.onload = function onload() {
+  loadeando();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 126);
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('CartLocal');
   if (localStorage.getItem('CartLocal') !== undefined) {
     const evento = document.querySelectorAll('.cart__item');
