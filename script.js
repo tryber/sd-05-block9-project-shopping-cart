@@ -3,7 +3,7 @@ function carrinhoCompras() {
 }
 
 async function clearStorageAndList(event) { // line 73
-  event.innerHTML = '';
+  event.innerHTML = ''; // eslint-disable-line no-param-reassign
   await localStorage.removeItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
@@ -66,7 +66,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function createBtnAndClickListener() {
-  let listaCart = document.getElementsByClassName('cart__items')[0];
+  const listaCart = document.getElementsByClassName('cart__items')[0];
   const section = document.createElement('section');
   section.className = 'cartItem';
 
