@@ -51,12 +51,12 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-const addElementos = (mapeiaData) => {
+const addElementos = (data) => {
   const section = document.getElementsByClassName('items')[0];
-  mapeiaData.forEach((elemento) => {
+  data.forEach((elemento) => {
     section.appendChild(createProductItemElement(elemento));
-  })
-}
+  });
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -77,8 +77,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const renderContent = (data) => {
   const mapData = mapeiaData(data);
-  addElementos(mapData)
-
+  addElementos(mapData);
 };
-
 fetchApi();
