@@ -5,7 +5,7 @@ function totalPrice() {
     const descricaoItem = item.innerText;
     total += Number(descricaoItem.substring(descricaoItem.indexOf('$') + 1));
   });
-  document.querySelector('.total-price').innerText = `${total.toFixed(2)}`;
+  document.querySelector('.total-price').innerText = `${total}`;
 }
 
 function salvarDados() {
@@ -15,13 +15,6 @@ function salvarDados() {
     dados.push(item.innerText);
   });
   localStorage.setItem('carrinho', dados);
-}
-
-function cartItemClickListener(event) {
-  evento = event.target;
-  evento.parentElement.removeChild(evento);
-  salvarDados();
-  totalPrice();
 }
 
 function carregarDados() {
@@ -78,6 +71,13 @@ function createProductItemElement({ sku, name, image }) {
 // function getSkuFromProductItem(item) {
 // return item.querySelector('span.item__sku').innerText;
 // }
+
+function cartItemClickListener(event) {
+  evento = event.target;
+  evento.parentElement.removeChild(evento);
+  salvarDados();
+  totalPrice();
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
