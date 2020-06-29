@@ -1,6 +1,7 @@
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
+  getAndSumPrices();
 }
 
 // Provided function, necessary for 2. and 3. to work
@@ -25,6 +26,7 @@ function addToCart({ sku }) {
       });
       cartItems.appendChild(newCartItem);
     });
+  getAndSumPrices();
 }
 
 // Provided function
@@ -70,6 +72,16 @@ function keepCartStored() {
   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
 }
 // does not work, work on progress, must be onload and fetch
+
+// 5. a) Get prices (to be accumulated) directly on html cart
+// b) sum all prices and show the result
+// c) write it with async await (still did not do that)
+const getAndSumPrices = () => {
+  const cartItens = document.querySelectorAll('.cart__item');
+  const priceArray = [...cartItens].map(item => item.innerHTML.match(/[\d.\d]+$/));
+  const totalPricePlace = document.getElementsByClassName('total-price')[0];
+  totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
+};
 
 // 1. Fetch the API on your html page
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
