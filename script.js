@@ -1,3 +1,7 @@
+let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
+const salvaCarrinho = () => localStorage
+.setItem('carrinho', JSON.stringify(carrinhoSalvo));
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
