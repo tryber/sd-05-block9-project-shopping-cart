@@ -4,7 +4,7 @@ const PRODUCT_ENDPOINT = 'https://api.mercadolibre.com/items/';
 async function myBill() {
   const cartItemsPrices = await document.querySelectorAll('.item_cart_price');
   let amount = 0;
-  cartItemsPrices.forEach(element => amount += Number(element.innerText));
+  cartItemsPrices.forEach(element => (amount += Number(element.innerText)));
   const totalPriceSpam = document.querySelector('.total-price');
   totalPriceSpam.innerText = `$${amount}`;
 }
@@ -105,5 +105,5 @@ const loadingCartFromLocalStorage = () => {
 window.onload = () => {
   insertProducts();
   if (localStorage.getItem('cartItems')) loadingCartFromLocalStorage();
-  myBill()
+  myBill();
 };
