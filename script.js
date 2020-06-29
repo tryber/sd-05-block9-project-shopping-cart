@@ -3,7 +3,7 @@ const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
-let cartArray = [];
+const cartArray = [];
 let cartTotalValue = 0;
 
 // FUNÇÕES
@@ -48,6 +48,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image, pric
 // requisito 5. soma o valor total
 const sumTotal = (arr) => {
   cartTotalValue = arr.reduce((acc, num) => acc + num.price, 0);
+  totalPrice.innerText = cartTotalValue;
   return cartTotalValue;
 };
 
@@ -62,12 +63,15 @@ function cartItemClickListener(event) {
 
 
 // função veio pronta
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ name, salePrice, id}) {
   const li = document.createElement('li');
+  const span = document.createElement('span');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  li.innerText = `${name} | R$${salePrice}`;
+  li.id = id;
+  span.appendChild(li);
+  span.addEventListener('click', cartItemClickListener);
+  return span;
 }
 
 // requisito 1. função que gera uma lista de produtos a partir da API
@@ -116,6 +120,6 @@ items.addEventListener('click', (event) => {
 // requisito 6. botão limpar carrinho de compras
 clearButton.addEventListener('click', () => {
   cartItems.innerHTML = '';
-  localStorage.setItem('cart', cartItems.innerHTML);
   totalPrice.innerText = 0;
+  localStorage.setItem('cart', cartItems.innerHTML);
 });
