@@ -1,17 +1,3 @@
-let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
-// let somaTotal = document.querySelector('.total-price').innerText;
-/*
-// console.log(carrinhoSalvo);
-const totalSum = function () {
-  let total = await `Total : ${carrinhoSalvo.reduce((soma, valor) => soma + valor.salePrice, 0)}`;
- console.log(total);
-return total ;
-};
-*/
-function salvaCarrinho() {
-  localStorage.setItem('carrinho', JSON.stringify(carrinhoSalvo));
-}
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -39,20 +25,11 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function cartItemClickListener(event) {
+  // const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
-  const filtro = [];
-  carrinhoSalvo.forEach((produto) => {
-    const { sku } = produto;
-  // pega localStorage ( carrinho) e exclui item clicado
-    if (!`${itemExcluido.innerHTML}`.includes(sku)) filtro.push(produto);
-    // console.log(salePrice);
-    // somaTotal = totalSum();
-  });
-  carrinhoSalvo = undefined;
-  carrinhoSalvo = filtro;
-  salvaCarrinho();
   // pega carrinho e exclui item clicado
-  document.getElementsByTagName('ol')[0].removeChild(itemExcluido);
+  const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
+  carrinhoDeCompras.removeChild(itemExcluido);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -70,35 +47,20 @@ function getSkuFromProductItem(item) {
   .then(response => response.json())
   .then(function (produtoAdicionado) {
     // quebrando em informacoes do produto o objeto convertido
-    const { id: sku, title: name, price: salePrice, thumbnail: image } = produtoAdicionado;
-    // criando objeto para guardar no localStorage
-    const novoItem = { sku, name, salePrice, image };
-    carrinhoSalvo.push(novoItem);
-    // console.log(carrinhoSalvo);
+    const { id: sku, title: name, price: salePrice/* thumbnail: image */ } = produtoAdicionado;
     const itemDoCarrinho = document.getElementsByTagName('ol')[0];
     // cria as informacoes do produto selecionado que serao exibidas
     const li = createCartItemElement({ sku, name, salePrice });
+    // const img = document.createElement('div');
+    // img.appendChild(createProductImageElement(image));
     // anexando o produto escolhido dentro do carrinho
-    itemDoCarrinho.appendChild(li);
-    // salvando no localStorage
-    // totalSum += salePrice;
-    salvaCarrinho();
-    // somaTotal = totalSum();
+    return itemDoCarrinho.appendChild(li);
+    // return itemDoCarrinho.appendChild(img).appendChild(li);
   });
   // return item.querySelector('span.item__sku').innerText;
 }
 
 window.onload = function onload() {
-  if (localStorage.getItem('carrinho') !== '') {
-    carrinhoSalvo = [];
-    carrinhoSalvo = (JSON.parse(localStorage.getItem('carrinho')));
-    carrinhoSalvo.forEach(produto => document
-      .getElementsByTagName('ol')[0].appendChild(createCartItemElement(produto)),
-    // somaTotal = totalSum()
-    );
-    // document.querySelector('.cart').classList.add('total-price')
-    // totalSum();
-  }
   const items = document.getElementsByClassName('items')[0];
   const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
