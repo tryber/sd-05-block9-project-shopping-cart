@@ -1,5 +1,5 @@
-const createProductImageElement = require('./script')
+const createProductImageElement = require('./script');
 
 test('make elem', () => {
-  expect(createProductImageElement()).toReturn("<img>");
-})
+  expect(createProductImageElement()).toReturn('<img>');
+});
