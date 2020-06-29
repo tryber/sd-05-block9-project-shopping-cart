@@ -107,6 +107,12 @@ const loadCartItems = () => {
   }
 };
 
+const removeLoading = () => {
+  const loading = document.querySelector('.loading');
+  loading.parentNode.removeChild(loading);
+};
+
+
 // ANCHOR fetchMercadoLivreComputadores
 
 const apiComputadorUrl =
@@ -135,12 +141,9 @@ const fetchMercadoLivre = () => {
 
         const btnItemAdd = document.getElementsByClassName('item__add')[index];
         index += 1;
-
         btnItemAdd.addEventListener('click', catchIDandCreateCartItemElement);
       });
-    })
-    .then(() => {
-      document.querySelector('.loading').innerHTML = '';
+      removeLoading();
     });
 };
 
