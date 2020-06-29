@@ -1,9 +1,7 @@
-window.onload = function onload() {};
-
 const adicionaLoading = () => {
   const elementoLoading = document.createElement('div');
   elementoLoading.className = 'loading';
-  elementoLoading.innerText = 'loading...';
+  elementoLoading.innerText = 'loading';
   const pegaWrapper = document.getElementsByClassName('loading-wrapper')[0];
   pegaWrapper.appendChild(elementoLoading);
 };
@@ -143,4 +141,12 @@ async function carregaItensPagina() {
   const pegaPosBotaoLimpar = document.querySelector('.empty-cart');
   pegaPosBotaoLimpar.addEventListener('click', limpaCarrinho);
 }
-carregaItensPagina();
+
+
+window.onload = function onload() {
+  adicionaLoading();
+  setTimeout(() => {
+    removeLoading();
+  }, 1500);
+  carregaItensPagina();
+};
