@@ -97,15 +97,16 @@ window.onload = async () => {
         return items.appendChild(div);
       });
     });
-  if (localStorage.getItem('carrinho') === '') salvaCarrinho();
-  else { 
+  if (localStorage.getItem('carrinho') !== '') {
+    carrinhoSalvo = [];
     carrinhoSalvo = JSON.parse(localStorage.getItem('carrinho'));
-    await carrinhoSalvo.forEach(produto => document.getElementsByTagName('ol')[0]
+    carrinhoSalvo.forEach(produto => document.getElementsByTagName('ol')[0]
     .appendChild(createCartItemElement(produto)));
     // somaTotal = totalSum()
     // document.querySelector('.cart').classList.add('total-price')
     // totalSum();
   }
+  else salvaCarrinho();
 };
 // const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
