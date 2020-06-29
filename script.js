@@ -88,7 +88,7 @@ const loadingCartFromLocalStorage = () => {
   document.querySelectorAll('.cart__item').forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
-}
+};
 
 window.onload = () => {
   insertProducts();
