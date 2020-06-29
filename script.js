@@ -1,7 +1,9 @@
 // VARIÁVEIS
 const cartItems = document.querySelector('.cart__items');
+const cartSingleItem = document.querySelector('.cart__item');
 const totalPrice = document.querySelector('.total-price');
 const clearButton = document.querySelector('.empty-cart');
+const loading = document.querySelector('.loading');
 
 // função veio pronta
 function createProductImageElement(imageSource) {
@@ -22,14 +24,14 @@ function createCustomElement(element, className, innerText) {
 // requisito 5. faz a soma total
 const sumTotal = () => {
   totalPrice[0].innerText = (
-    [...cartItems].map(item => item.innerHTML.match(/[\d.\d]+$/))
+    [...cartSingleItem].map(item => item.innerHTML.match(/[\d.\d]+$/))
     .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
 };
 
 // requisito 4. função que salva itens do carrinho
 const saveCart = () => {
   localStorage.setItem('Cart Items', cartItems.innerHTML);
-  localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
+  localStorage.setItem('Total Price', totalPrice.innerHTML);
 };
 
 // requisito 3. remove um item do carrinho quando clicado nele
@@ -109,3 +111,8 @@ window.onload = function onload() {
     })
     .catch(() => console.log('Error: Could not load the API'));
 };
+
+// requisito 7. função loading timeout
+setTimeout(() => {
+  loading.remove();
+}, 3000);
