@@ -1,6 +1,13 @@
 let carrinhoSalvo = [] || JSON.parse(localStorage.getItem('carrinho'));
+// let somaTotal = document.querySelector('.total-price').innerText;
+/*
 // console.log(carrinhoSalvo);
-// let total = 0;
+const totalSum = function () {
+  let total = await `Total : ${carrinhoSalvo.reduce((soma, valor) => soma + valor.salePrice, 0)}`;
+ console.log(total);
+return total ;
+};
+*/
 function salvaCarrinho() {
   localStorage.setItem('carrinho', JSON.stringify(carrinhoSalvo));
 }
@@ -35,10 +42,11 @@ function cartItemClickListener(event) {
   const itemExcluido = event.target;
   const filtro = [];
   carrinhoSalvo.forEach((produto) => {
-    const { sku, salePrice } = produto;
+    const { sku } = produto;
   // pega localStorage ( carrinho) e exclui item clicado
     if (!`${itemExcluido.innerHTML}`.includes(sku)) filtro.push(produto);
-  // total -= salePrice;
+    // console.log(salePrice);
+    // somaTotal = totalSum();
   });
   carrinhoSalvo = undefined;
   carrinhoSalvo = filtro;
@@ -73,8 +81,9 @@ function getSkuFromProductItem(item) {
     // anexando o produto escolhido dentro do carrinho
     itemDoCarrinho.appendChild(li);
     // salvando no localStorage
-    // total += salePrice;
+    // totalSum += salePrice;
     salvaCarrinho();
+    // somaTotal = totalSum();
   });
   // return item.querySelector('span.item__sku').innerText;
 }
@@ -85,7 +94,10 @@ window.onload = function onload() {
     carrinhoSalvo = (JSON.parse(localStorage.getItem('carrinho')));
     carrinhoSalvo.forEach(produto => document
       .getElementsByTagName('ol')[0].appendChild(createCartItemElement(produto)),
+    // somaTotal = totalSum()
     );
+    // document.querySelector('.cart').classList.add('total-price')
+    // totalSum();
   }
   const items = document.getElementsByClassName('items')[0];
   const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -107,7 +119,7 @@ window.onload = function onload() {
         return items.appendChild(div);
       });
     });
-}
+};
 // const Carrinho = cartItemClickListener(evento)
 // getSkuFromProductItem(item);
 // createCartItemElement({ sku, name, salePrice });
