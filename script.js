@@ -6,14 +6,15 @@ const fetchApi = () => {
     method: 'GET',
   };
   fetch(API_URL, myObject)
-    .then((response) => { response.json() })
+    .then((response) => response.json())
     .then((data) => {
       renderContent(data);
     });
 };
 
 const mapeiaData = (data) => {
-  const mapeiaAPI = data.results.map((elementos) => {
+  const { results } = data;
+  const mapeiaAPI = results.map((elementos) => {
     return {
       sku: elementos.id,
       name: elementos.title,
@@ -50,6 +51,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+const addElementos = (mapeiaData) => {
+  const section = document.getElementsByClassName('items')[0];
+  mapeiaData.forEach((elemento) => {
+    section.appendChild(createProductItemElement(elemento));
+  })
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -68,7 +76,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 
 const renderContent = (data) => {
-  mapeiaData(data);
+  const mapData = mapeiaData(data);
+  addElementos(mapData)
+
 };
 
 fetchApi();
