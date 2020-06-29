@@ -1,10 +1,11 @@
 window.onload = function onload() { };
 // Variáveis
 const loading = document.querySelector('.loading');
-const cartItems = document.querySelector('.cart__items');
 
 // Carrega o carrinho através do local storage
-cartItems.innerHTML = (localStorage.getItem('cart'));
+window.onload = function onload() {
+  document.querySelector('.cart__items').innerHTML = (localStorage.getItem('cart'));
+};
 
 // Função fornecida
 function createProductImageElement(imageSource) {
@@ -66,7 +67,7 @@ async function addToCart(sku) {
         sku: productData.id, name: productData.title, salePrice: productData.price,
       }),
     );
-  cartItems = ol.appendChild(product);
+  ol.appendChild(product);
   sumItens();
   saveCart();
 }
