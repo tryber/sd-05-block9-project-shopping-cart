@@ -1,12 +1,6 @@
-// 4. Created function, to maintain cart on localStorage
-function keepCartStored() {
-  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
-}
-
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
-  keepCartStored();
 }
 
 // Provided function, necessary for 2. and 3. to work
@@ -70,6 +64,12 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+
+// 4. Created function, to maintain cart on localStorage
+function keepCartStored() {
+  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+}
+// does not work, work on progress, must be onload and fetch
 
 // 1. Fetch the API on your html page
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
