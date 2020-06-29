@@ -2,11 +2,6 @@ window.onload = function onload() { };
 // Variáveis
 const loading = document.querySelector('.loading');
 
-// Carrega o carrinho através do local storage
-window.onload = function onload() {
-  document.querySelector('.cart__items').innerHTML = (localStorage.getItem('cart'));
-};
-
 // Função fornecida
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
