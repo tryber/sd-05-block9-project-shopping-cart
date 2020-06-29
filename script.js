@@ -73,12 +73,11 @@ const createCartObjectItems = ({ id: sku, title: name, price: salePrice }) => {
 async function createSum(arr) {
   totalValue = await arr.reduce((acc, num) => acc + num.price, 0);
   return totalValue;
-};
+}
 
 // 1 - function that creates a list of products
 async function createListOfProducts(product) {
   const API_URL_1 = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-  
   fetch(API_URL_1, getObject)
     .then(response => response.json())
     .then(data => data.results.forEach(item => document.querySelector('.items').appendChild(createProductItemElement(item))))
