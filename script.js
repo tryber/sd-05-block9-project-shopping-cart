@@ -34,6 +34,7 @@ function createProductItemElement({ sku, name, image }) {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
+
 // ANCHOR cartItemClickListener - Apaga o item clicado
 function cartItemClickListener(event) {
   const child = event.target;
@@ -43,7 +44,7 @@ function cartItemClickListener(event) {
   child.parentNode.removeChild(child);
   console.log(idDoItemDoCart);
 }
-// ANCHOR createCartItemElement
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -51,21 +52,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-
-// ANCHOR fetch specific item and Add to the cart
-// prettier-ignore
-const catchIDandCreateCartItemElement = (event) => {
-  const productID = event.target.parentNode.querySelector('.item__sku')
-    .innerHTML;
-    fetchItemToCart(productID);
-};
-
-const loadCartItems = () => {
-  for (var i = 0; i < localStorage.length; i+= 1) {
-    fetchItemToCart(localStorage.key(i));
-  }
-};
 
 const fetchItemToCart = (productSKU) => {
   fetch(`https://api.mercadolibre.com/items/${productSKU}`)
@@ -82,12 +68,29 @@ const fetchItemToCart = (productSKU) => {
     li.appendChild(span);
 
     const cartItems = document.getElementsByClassName('cart__items')[0];
-    
+
     cartItems.appendChild(li);
 
-    localStorage.setItem(productSKU, data.price)
+    localStorage.setItem(productSKU, data.price);
   });
-}
+};
+
+// ANCHOR createCartItemElement
+
+// ANCHOR fetch specific item and Add to the cart
+// prettier-ignore
+const catchIDandCreateCartItemElement = (event) => {
+  const productID = event.target.parentNode.querySelector('.item__sku')
+    .innerHTML;
+  fetchItemToCart(productID);
+};
+
+const loadCartItems = () => {
+  for (let i = 0; i < localStorage.length; i += 1) {
+    fetchItemToCart(localStorage.key(i));
+  }
+};
+
 
 // ANCHOR fetchMercadoLivreComputadores
 
