@@ -27,24 +27,25 @@ function getSkuFromProductItem(item) {
 }
 
 // Função para somar ou subtrair o preço dos produtos que estão no carrinho
-async function finalPrice(somar, price) {
+async function finalPrice(somar, getPrice) {
+  let price = getPrice;
   // resgata o preço atual no container de preço total e converte para número
   let totalPrice = document.querySelector('.total-price').innerText;
   if (typeof totalPrice !== 'number') {
-    totalPrice = parseInt((parseFloat(totalPrice)*100).toFixed(0))/100;
+    totalPrice = parseInt((parseFloat(totalPrice) * 100).toFixed(0), 10) / 100;
   }
   if (typeof price !== 'number') {
     price = parseFloat(price);
   }
   // se for pra somar o primeiro parâmetro na chamada deve ser 'true'
   if (somar) {
-    totalPrice = totalPrice + price;
-    totalPrice = parseInt((totalPrice*100).toFixed(0))/100;
+    totalPrice += price;
+    totalPrice = parseInt((totalPrice * 100).toFixed(0), 10) / 100;
     document.querySelector('.total-price').innerText = totalPrice;
   // se for 'false' diminui o preço do produto do preço total
-  } else { 
-    totalPrice = totalPrice - price;
-    totalPrice = parseInt((totalPrice*100).toFixed(0))/100;
+  } else {
+    totalPrice -= price;
+    totalPrice = parseInt((totalPrice * 100).toFixed(0), 10) / 100;
     document.querySelector('.total-price').innerText = totalPrice;
   }
 }
