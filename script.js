@@ -2,6 +2,11 @@ function carrinhoCompras() {
   localStorage.setItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
+async function clearStorageAndList(event) { // line 73
+  event.innerHTML = '';
+  await localStorage.removeItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,6 +18,7 @@ async function cartItemClickListener(event) {
   await event.remove();
   await carrinhoCompras();
 }
+
 
 function createCartItemElement(data) {
   // console.log(data);
@@ -59,11 +65,23 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
+function createBtnAndClickListener() {
+  let listaCart = document.getElementsByClassName('cart__items')[0];
+  const section = document.createElement('section');
+  section.className = 'cartItem';
+
+  section.appendChild(createCustomElement('button', 'empty-cart', 'Limpar Carrinho')).addEventListener('click', () => clearStorageAndList(listaCart));
+
+  return section;
+}
+
+// async function getPrice() {
+
 // }
 
 window.onload = function onload() {
+  const sectionCart = document.getElementsByClassName('cart')[0];
+  sectionCart.appendChild(createBtnAndClickListener());
   const sectionItens = document.getElementsByClassName('items')[0];
   const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(CPUlibre)
@@ -77,6 +95,6 @@ window.onload = function onload() {
       });
       sectionItens.appendChild(INFOproduct);
     }),
-  ); // pq o async não funciona sem const ou funções - line 81
+  );
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('li do carrinho');
 };
