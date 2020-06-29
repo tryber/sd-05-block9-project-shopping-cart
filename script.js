@@ -149,7 +149,7 @@ window.onload = function onload() {
 };
 
 // const somaPreco = async (productPrice) => {
-  //const totalPrice = document.querySelector('.total-price');
+// const totalPrice = document.querySelector('.total-price');
   // soma += productPrice;
   // soma = parseInt(productPrice);
 // soma +=
