@@ -1,6 +1,5 @@
 let soma = 0;
 
-
 // ANCHOR Cria a imagem no grid - Não devo mexer
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -62,39 +61,37 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-
 const somaPreco = async (productPrice) => {
   const totalPrice = document.querySelector('.total-price');
   // soma += productPrice;
   // soma = parseInt(productPrice);
-  soma += await Math.round((parseFloat(productPrice, 10)).toFixed(2) * 100) / 100;
+  soma +=
+    (await Math.round(parseFloat(productPrice, 10).toFixed(2) * 100)) / 100;
   totalPrice.innerHTML = soma;
 };
 
-
 const fetchItemToCart = (productSKU) => {
   fetch(`https://api.mercadolibre.com/items/${productSKU}`)
-  .then(response => response.json())
-  .then((data) => {
-    const li = createCartItemElement({
-      sku: data.id,
-      name: data.title,
-      salePrice: data.price,
+    .then(response => response.json())
+    .then((data) => {
+      const li = createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      });
+
+      const span = document.createElement('span');
+      span.className = productSKU;
+      li.appendChild(span);
+
+      const cartItems = document.getElementsByClassName('cart__items')[0];
+
+      cartItems.appendChild(li);
+
+      somaPreco(data.price);
+      localStorage.setItem(productSKU, data.price);
     });
-
-    const span = document.createElement('span');
-    span.className = productSKU;
-    li.appendChild(span);
-
-    const cartItems = document.getElementsByClassName('cart__items')[0];
-
-    cartItems.appendChild(li);
-
-    somaPreco(data.price);
-    localStorage.setItem(productSKU, data.price);
-  });
 };
-
 
 // ANCHOR fetch specific item and Add to the cart
 // prettier-ignore
@@ -110,12 +107,10 @@ const loadCartItems = () => {
   }
 };
 
-
 // ANCHOR fetchMercadoLivreComputadores
 
 const apiComputadorUrl =
   'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-
 
 // ANCHOR Adiciona os produtos à página
 // prettier-ignore
@@ -147,6 +142,17 @@ const fetchMercadoLivre = () => {
 };
 
 window.onload = function onload() {
+  const cartItems = document.getElementsByClassName('cart__items')[0];
+  const btnClear = document.getElementsByClassName('empty-cart')[0];
+  const totalPriec = document.querySelector('.total-price');
   fetchMercadoLivre();
   loadCartItems();
+
+  // // ANCHOR esvaziar carrinho
+
+  btnClear.addEventListener('click', () => {
+    cartItems.innerHTML = '';
+    totalPriec.innerHTML = '';
+    localStorage.clear();
+  });
 };
