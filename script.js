@@ -27,7 +27,7 @@ function createCustomElement(element, className, innerText) {
 // Faz a soma total
 const sumItens = () => {
   const Itens = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].innerText = Math.round(
+  document.getElementsByClassName('total-price')[0].innerText =(
     [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
     .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
 };
