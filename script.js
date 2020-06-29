@@ -16,9 +16,9 @@ function createCustomElement(element, className, innerText) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-// function cartItemClickListener(event) {
-//   // code
-// }
+function cartItemClickListener(event) {
+  console.log(event);
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
