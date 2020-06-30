@@ -88,7 +88,7 @@ function getSkuFromProductItem(item) {
 const emptyCart = () => {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(item => item.remove());
-}
+};
 
 // 1. Fetch the API on your html page
 // 7. Loading text until API is available
