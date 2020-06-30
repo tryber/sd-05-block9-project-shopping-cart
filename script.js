@@ -141,7 +141,7 @@ const fetchMercadoLivre = () => {
       });
     })
     .then(() => {
-      setTimeout(removeLoading, 5000);
+      setTimeout(removeLoading, 3000);
     });
 };
 
