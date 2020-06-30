@@ -152,10 +152,10 @@ window.onload = function onload() {
   const btnClear = document.getElementsByClassName('empty-cart')[0];
   const totalPriec = document.querySelector('.total-price');
 
-  // const div = document.createElement('div');
-  // div.className = 'loading';
-  // div.innerHTML = 'loading...';
-  // document.body.appendChild(div);
+  const div = document.createElement('p');
+  div.className = 'loading';
+  div.innerHTML = 'loading...';
+  document.body.appendChild(div);
 
   fetchMercadoLivre();
   loadCartItems();
