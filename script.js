@@ -115,7 +115,7 @@ window.onload = function onload() {
   items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
   if (document.getElementsByClassName('item').length >= 0) {
     setInterval(() => {
-    document.querySelector('.loading').remove();
+      document.querySelector('.loading').remove();
     }, 500);
   // document.querySelector('.loading').remove();
   }
