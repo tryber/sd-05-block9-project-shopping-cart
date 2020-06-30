@@ -107,5 +107,6 @@ window.onload = async function onload() {
     }),
   );
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('li do carrinho');
+  document.querySelectorAll('li').forEach(elem => elem.addEventListener('click', () => cartItemClickListener(elem)));
   await sumPrices();
 };
