@@ -95,6 +95,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(botaoItem);
   items.appendChild(section);
   document.querySelector('.items').insertBefore(section, span);
+  setInterval(() => {
+    document.querySelector('.loading').remove();
+  }, 3000);
   // return items
 }
 
