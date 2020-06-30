@@ -8,7 +8,6 @@ const salvaCarrinho = () => {
   const carrinhoSalvo = document.getElementsByTagName('ol')[0].innerHTML;
   localStorage.setItem('carrinho', carrinhoSalvo);
 };
-
 const somaPrice = () => {
   const total = (soma - subtracao);
   totalPrice.innerText = `${total}`;
@@ -111,17 +110,15 @@ fetch(source)
       return createProductItemElement({ sku, name, image });
     });
   });
-setInterval(() => {
-  document.querySelector('.loading').remove();
-}, 500);
+
 window.onload = function onload() {
   items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
-  if (document.getElementsByClassName('item').length > 0) {
+  if (document.getElementsByClassName('item').length >= 0) {
     document.querySelector('.loading').remove();
   }
   /* setInterval(() => {
     document.querySelector('.loading').remove();
-  }, 3000);
+  }, 500);
   */
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
@@ -135,7 +132,6 @@ window.onload = function onload() {
     });
     soma = carregaValor;
     somaPrice();
-// document.querySelector('.total-price').innerText =  `TOTAL:  $${carregaValor.toFixed(2)}`;;
   }
 };
 // const Carrinho = cartItemClickListener(evento)
