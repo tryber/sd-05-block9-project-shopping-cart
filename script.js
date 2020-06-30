@@ -84,17 +84,14 @@ function getSkuFromProductItem(item) {
 // }
 // does not work, work on progress, must be on onload and fetch
 
-// 6. Created function to empty cart
-// const emptyCart = () => {
-//   const cartItems = document.querySelectorAll('.cart__item');
-//   cartItems.innerHTML = null;
-// }
-// const emptyButton = document.getElementsByClassName('empty-cart');
-// emptyButton.addEventListener('click', emptyCart);
-// not working, error saying emptyButton.addEventListener is not a function
+// 6. Created function to empty cart, event listener in window load
+const emptyCart = () => {
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(item => item.remove());
+}
 
 // 1. Fetch the API on your html page
-// 2. Loading text until API is available
+// 7. Loading text until API is available
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 window.onload = function onload() {
   fetch(API_URL)
@@ -110,5 +107,6 @@ window.onload = function onload() {
         classItems.appendChild(newProduct);
       });
     })
-    .then(setTimeout(() => document.querySelector('.loading').remove(), 1000));
+    .then(setTimeout(() => document.querySelector('.loading').remove(), 1000))
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart));
 };
