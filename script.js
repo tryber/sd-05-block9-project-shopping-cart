@@ -85,6 +85,7 @@ function getSkuFromProductItem(item) {
 const emptyCart = () => {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(item => item.remove());
+  document.getElementsByClassName('total-price')[0].innerHTML = 0;
 };
 
 // 1. Fetch the API on your html page
