@@ -76,7 +76,7 @@ function cartItemClickListener(event) {
   const productSKU = tagToBeRemoved.innerHTML.slice(5, 18);
   removeLocalStorageKey(productSKU);
   tagToBeRemoved.remove();
-  totalPrice();
+  // totalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -98,7 +98,7 @@ function addToCart(event) {
     const cart = document.getElementsByClassName('cart__items')[0];
     cart.appendChild(cartItemElement);
     addLocalStorageKey(sku);
-    totalPrice();
+    // totalPrice();
   });
 }
 
@@ -127,7 +127,7 @@ function clearCart() {
       removeLocalStorageKey(cartItemsContainer.lastChild.innerHTML.slice(5, 18));
       cartItemsContainer.removeChild(cartItemsContainer.lastChild);
     }
-    totalPrice();
+    // totalPrice();
   });
 }
 
@@ -158,6 +158,6 @@ window.onload = function onload() {
   .then(() => {
     loadLocalStorage();
   })
-  .then(() => clearCart())
-  .then(() => totalPrice());
+  .then(() => clearCart());
+  // .then(() => totalPrice());
 };
