@@ -119,7 +119,7 @@ window.onload = function onload() {
   } */
   setInterval(() => {
     document.querySelector('.loading').remove();
-  }, 500);
+  }, 3000);
 
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
