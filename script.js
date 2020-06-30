@@ -94,6 +94,8 @@ function getSkuFromProductItem(item) {
 // not working, error saying emptyButton.addEventListener is not a function
 
 // 1. Fetch the API on your html page
+// 2. Loading text until API is available
+const load = document.querySelector('.loading');
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 window.onload = function onload() {
   fetch(API_URL)
@@ -109,5 +111,5 @@ window.onload = function onload() {
         classItems.appendChild(newProduct);
       });
     })
-    .then(document.querySelector('.loading').remove());
+    .then(load.remove());
 };
