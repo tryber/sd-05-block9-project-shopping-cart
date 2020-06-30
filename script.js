@@ -17,7 +17,7 @@ function createProductImageElement(imageSource) {
 async function sumPrices() {
   const carrinho = await document.querySelectorAll('.cart__item');
   const numPrice = await [...carrinho].map(elem => elem.textContent.match(/[0-9.0-9]+$/))
-  .reduce((accumul, valor) => accumul + parseFloat(valor), 0).toFixed(2);
+  .reduce((accumul, valor) => accumul + parseFloat(valor), 0);
   document.querySelector('.total-price').innerHTML = `${numPrice}`;
 }
 
