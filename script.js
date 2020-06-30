@@ -96,9 +96,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(botaoItem);
   items.appendChild(section);
   document.querySelector('.items').insertBefore(section, span);
-  if (document.getElementsByClassName('item').length > 0) {
-    span.innerText = '';
-  }
   // return items
 }
 
@@ -117,6 +114,11 @@ fetch(source)
   });
 
 window.onload = function onload() {
+  const span = document.querySelector('.loading');
+
+  if (document.getElementsByClassName('item').length > 0) {
+    span.remove();
+  }
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
     let carregaValor = 0;
