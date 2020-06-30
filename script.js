@@ -26,20 +26,12 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function deleteCart() {
-  document.querySelectorAll('.cart__items').forEach(product => product.remove());
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-function saveCart() {
-  localStorage.setItem('Cart Items', document.querySelectorAll('.cart__item').innerHTML);
 }
 
 function addProduct({ sku }) {
@@ -80,10 +72,6 @@ window.onload = async function onload() {
         });
         document.querySelector('.items').appendChild(eachProduct);
       });
-    })
-  .catch(() => console.log('Failed to load data'));
-  const deleteButton = document.querySelector('.empty-cart');
-  deleteButton.addEventListener('click', deleteCart());
+    });
   loadScreen();
-  saveCart();
 };
