@@ -1,24 +1,36 @@
-async function getPrice() {
-  let sum = 0;
-  const localStorageKeys = Object.keys(localStorage);
-  for (item of localStorageKeys) {
-    const response = await fetch(`https://api.mercadolibre.com/items/${item}`);
-    const data = await response.json();
-    const itemPrice = data.price;
-    sum += Number(localStorage.getItem(item)) * itemPrice;
-  }
-  return sum;
-}
+// async function getPrice() {
+//   let sum = 0;
+//   const localStorageKeys = Object.keys(localStorage);
+//   for (item of localStorageKeys) {
+//     const response = await fetch(`https://api.mercadolibre.com/items/${item}`);
+//     const data = await response.json();
+//     const itemPrice = data.price;
+//     sum += Number(localStorage.getItem(item)) * itemPrice;
+//   }
+//   return sum;
+// }
 
-async function totalPrice() {
-  const price = await getPrice();
-  const cartTag = document.querySelector('.cart');
-  cartTag.classList.add('total-price');
-  const priceTag = document.querySelector('.price');
-  priceTag.innerHTML = `${price}`;
-  cartTag.insertBefore(priceTag, document.querySelector('.empty-cart'));
-  return priceTag;
-}
+// async function getPrice() {
+//   let sum = 0;
+//   const localStorageKeys = Object.keys(localStorage);
+//   for (let i = 0; i < localStorageKeys.length; i += 1) {
+//     const response = await fetch(`https://api.mercadolibre.com/items/${localStorageKeys[i]}`);
+//     const data = await response.json();
+//     const itemPrice = data.price;
+//     sum += Number(localStorage.getItem(localStorageKeys[i])) * itemPrice;
+//   }
+//   return sum;
+// }
+
+// async function totalPrice() {
+//   const price = await getPrice();
+//   const cartTag = document.querySelector('.cart');
+//   cartTag.classList.add('total-price');
+//   const priceTag = document.querySelector('.price');
+//   priceTag.innerHTML = `${price}`;
+//   cartTag.insertBefore(priceTag, document.querySelector('.empty-cart'));
+//   return priceTag;
+// }
 
 function addLocalStorageKey(productSKU) {
   if (localStorage.getItem(productSKU) === null) return localStorage.setItem(productSKU, 1);
@@ -119,7 +131,16 @@ function clearCart() {
   });
 }
 
+function loading() {
+  const loadingTag = createCustomElement('div', 'loading', 'Carregando');
+  const cart = document.querySelector('.cart__title');
+  cart.appendChild(loadingTag);
+}
+
+
 window.onload = function onload() {
+  loading();
+  setTimeout(() => document.querySelector('.loading').remove(), 500);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
