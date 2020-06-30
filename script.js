@@ -124,12 +124,8 @@ const fetchMercadoLivre = () => {
   fetch(apiComputadorUrl)
     .then(response => response.json())
     .then((data) => {
-      const allProducts = data.results;
-      return allProducts;
-    })
-    .then((produtos) => {
       let index = 0;
-      produtos.forEach((produto) => {
+      data.results.forEach((produto) => {
         const obj = {
           sku: produto.id,
           name: produto.title,
@@ -143,19 +139,23 @@ const fetchMercadoLivre = () => {
         index += 1;
         btnItemAdd.addEventListener('click', catchIDandCreateCartItemElement);
       });
-      removeLoading();
+    })
+    .then(() => {
+      setTimeout(removeLoading, 5000);
     });
 };
+
+// setTimeout(() => { loadingText.remove(); }, 3000);
 
 window.onload = function onload() {
   const cartItems = document.getElementsByClassName('cart__items')[0];
   const btnClear = document.getElementsByClassName('empty-cart')[0];
   const totalPriec = document.querySelector('.total-price');
 
-  const div = document.createElement('div');
-  div.className = 'loading';
-  div.innerHTML = 'loading...';
-  document.body.appendChild(div);
+  // const div = document.createElement('div');
+  // div.className = 'loading';
+  // div.innerHTML = 'loading...';
+  // document.body.appendChild(div);
 
   fetchMercadoLivre();
   loadCartItems();
