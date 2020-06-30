@@ -35,7 +35,7 @@ async function addToCart({ sku }) {
   });
   cartItems.appendChild(newCartItem);
   getAndSumPrices();
-};
+}
 
 // Provided function
 function createProductImageElement(imageSource) {
