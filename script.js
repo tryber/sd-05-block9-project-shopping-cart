@@ -39,7 +39,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 //
-items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
 //
 function cartItemClickListener(event) {
   // const itemExcluido = event.target.parent;
@@ -114,10 +113,9 @@ fetch(source)
   });
 
 window.onload = function onload() {
-  const span = document.querySelector('.loading');
-
+  items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
   if (document.getElementsByClassName('item').length > 0) {
-    span.remove();
+    document.querySelector('.loading').remove();
   }
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
