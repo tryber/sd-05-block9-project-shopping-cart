@@ -114,13 +114,13 @@ fetch(source)
 
 window.onload = function onload() {
   items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
-  /* if (document.getElementsByClassName('item').length > 0) {
+  if (document.getElementsByClassName('item').length > 0) {
     document.querySelector('.loading').remove();
-  } */
-  setInterval(() => {
+  }
+  /* setInterval(() => {
     document.querySelector('.loading').remove();
   }, 3000);
-
+  */
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
     let carregaValor = 0;
