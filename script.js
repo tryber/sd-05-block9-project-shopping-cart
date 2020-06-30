@@ -1,13 +1,12 @@
 // 5. a) Get prices (to be accumulated) directly on html cart
 // b) sum all prices and show the result
-// c) write it with async await (still did not do that)
+// c) write addToCart as async await to get rid of the delay
 const getAndSumPrices = () => {
   const cartItens = document.querySelectorAll('.cart__item');
   const priceArray = [...cartItens].map(item => item.innerHTML.match(/[\d.\d]+$/));
   const totalPricePlace = document.getElementsByClassName('total-price')[0];
   totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
 };
-// partially working with a delay (-1 item on cart), investigate that
 
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
@@ -25,20 +24,18 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 // 2. Created function to add ids of products in cart
-function addToCart({ sku }) {
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(response => response.json())
-    .then((data) => {
-      const cartItems = document.querySelector('.cart__items');
-      const newCartItem = createCartItemElement({
-        sku: data.id,
-        name: data.title,
-        salePrice: data.price,
-      });
-      cartItems.appendChild(newCartItem);
-    });
+async function addToCart({ sku }) {
+  const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+  const data = await response.json();
+  const cartItems = document.querySelector('.cart__items');
+  const newCartItem = createCartItemElement({
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  });
+  cartItems.appendChild(newCartItem);
   getAndSumPrices();
-}
+};
 
 // Provided function
 function createProductImageElement(imageSource) {
@@ -78,7 +75,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// 4. Created function, to maintain cart on localStorage
+// 4. Created function, to maintain cart content on localStorage
 // function keepCartStored() {
 //   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
 // }
