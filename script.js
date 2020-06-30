@@ -95,9 +95,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(botaoItem);
   items.appendChild(section);
   document.querySelector('.items').insertBefore(section, span);
-  setInterval(() => {
-    document.querySelector('.loading').remove();
-  }, 3000);
   // return items
 }
 
@@ -114,7 +111,9 @@ fetch(source)
       return createProductItemElement({ sku, name, image });
     });
   });
-
+setInterval(() => {
+  document.querySelector('.loading').remove();
+}, 500);
 window.onload = function onload() {
   items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
   if (document.getElementsByClassName('item').length > 0) {
