@@ -117,7 +117,7 @@ cleanCartButton.addEventListener('click', () => {
 
 function waitLoading() {
   document.querySelector('.container')
-    .appendChild(createCustomElement('spam', 'loading', 'loading...'))
+    .appendChild(createCustomElement('spam', 'loading', 'loading...'));
 }
 
 window.onload = () => {
