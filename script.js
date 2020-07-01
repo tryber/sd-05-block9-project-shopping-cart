@@ -16,7 +16,7 @@ function getPrice() {
   const localStorageValues = Object.values(localStorage);
   for (let i = 0; i < localStorageKeys.length; i += 1) {
     promisesArrFetch.push(fetch(`https://api.mercadolibre.com/items/${localStorageKeys[i]}`));
-    for(let j = 0; j < Number(localStorageValues[i]) - 1; j += 1) {
+    for (let j = 0; j < Number(localStorageValues[i]) - 1; j += 1) {
       promisesArrFetch.push(fetch(`https://api.mercadolibre.com/items/${localStorageKeys[i]}`));
     }
   }
