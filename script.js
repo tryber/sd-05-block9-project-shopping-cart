@@ -115,7 +115,16 @@ cleanCartButton.addEventListener('click', () => {
   myBill();
 });
 
+function waitLoading() {
+  document.querySelector('.container')
+    .appendChild(createCustomElement('spam', 'loading', 'loading...'))
+}
+
 window.onload = () => {
+  waitLoading();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 3000);
   insertProducts();
   if (localStorage.getItem('cartItems')) loadingCartFromLocalStorage();
   myBill();
