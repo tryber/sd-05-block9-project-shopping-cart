@@ -115,7 +115,7 @@ window.onload = function onload() {
   // if (document.querySelectorAll('.item').length >= 50) {
   //  document.querySelector('.loading').remove();
   //  }
-  setInterval(() => {
+  setTimeout(() => {
     document.querySelector('.loading').remove();
   }, 500);
 
