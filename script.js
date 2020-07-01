@@ -1,7 +1,5 @@
 const container = document.querySelector('.container');
 const items = document.querySelector('.items');
-container.insertBefore(createCustomElement('div', 'loading', 'LOADING...'), items);
-
 const botaocarregaProdutoss = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
 let soma = 0;
@@ -40,10 +38,10 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-//
+container.insertBefore(createCustomElement('div', 'loading', 'LOADING...'), items);
 //
 function cartItemClickListener(event) {
-  // const itemExcluido = event.target.parent;
+// const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
   const valor = itemExcluido.innerText;
   subtracao += Number(valor.slice(valor.indexOf('$') + 1));
@@ -85,7 +83,7 @@ function getSkuFromProductItem(item) {
 function createProductItemElement({ sku, name, image }) {
 //
   const section = document.createElement('section');
-  //const span = document.querySelector('.loading');
+  //  const span = document.querySelector('.loading');
   //
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -113,10 +111,10 @@ fetch(source)
     });
   });
 
-window.onload = function onload() {  
- // if (document.querySelectorAll('.item').length >= 50) {
+window.onload = function onload() {
+  // if (document.querySelectorAll('.item').length >= 50) {
   //  document.querySelector('.loading').remove();
-//  }
+  //  }
   setInterval(() => {
     document.querySelector('.loading').remove();
   }, 500);
