@@ -1,11 +1,11 @@
-// VARIÁVEIS
+// seletores
 const cartItems = document.querySelector('.cart__items');
-const cartSingleItem = document.querySelector('.cart__item');
-const totalPrice = document.querySelector('.total-price');
+const cartSingleItem = document.querySelectorAll('.cart__item');
+const totalPrice = document.getElementsByClassName('.total-price');
 const clearButton = document.querySelector('.empty-cart');
 const loading = document.querySelector('.loading');
 
-// função veio pronta
+// função fornecida
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,7 +13,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// função veio pronta
+// função fornecida
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
