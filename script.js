@@ -10,7 +10,7 @@ const salvaCarrinho = () => {
 };
 const somaPrice = () => {
   const total = (soma - subtracao);
-  totalPrice.innerText = `${total.toFixed(2)}`;
+  totalPrice.innerText = `${total}`;
   if (total === 0) totalPrice.innerText = '';
   return total;
 };
@@ -118,10 +118,6 @@ window.onload = function onload() {
     document.querySelector('.loading').remove();
   }
   */
-  setTimeout(() => {
-    document.querySelector('.loading').remove();
-  }, 700);
-//
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
     let carregaValor = 0;
@@ -135,6 +131,9 @@ window.onload = function onload() {
     soma = carregaValor;
     somaPrice();
   }
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 700);
 };
 /*
 */
