@@ -1,4 +1,4 @@
-const container = document.querySelector('.container');
+// const container = document.querySelector('.container');
 const items = document.querySelector('.items');
 const botaocarregaProdutoss = document.querySelector('.empty-cart');
 const totalPrice = document.querySelector('.total-price');
@@ -38,7 +38,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-container.insertBefore(createCustomElement('div', 'loading', 'LOADING...'), items);
+// container.insertBefore(createCustomElement('div', 'loading', 'LOADING...'), items);
 //
 function cartItemClickListener(event) {
 // const itemExcluido = event.target.parent;
