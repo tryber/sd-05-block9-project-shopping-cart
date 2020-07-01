@@ -11,7 +11,7 @@ async function myBill() {
     const productDetailResponse = await queryProductById(item);
     const { price } = await productDetailResponse.json();
     amount += await price;
-    totalPriceSpam.innerText = `$${amount}`;
+    totalPriceSpam.innerText = `${amount}`;
   });
 }
 
@@ -91,13 +91,6 @@ function getSkuFromProductItem(item) {
 function queryProducts(term = 'computador') {
   return fetch(`${API_URL}${term}`);
 }
-
-// const loadingTime = (element) => {
-//   element.innerHTML = '';
-//   const spamLoading = createCustomElement('spam', 'loading', 'loading...');
-//   element.innerHTML = spamLoading;
-//   console.log('to loadando...', element);
-// };
 
 async function insertProducts() {
   const itemSection = document.querySelector('.items');
