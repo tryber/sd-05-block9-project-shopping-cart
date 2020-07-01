@@ -41,3 +41,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// jest.config.js
+module.exports = {
+  verbose: true,
+};
