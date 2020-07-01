@@ -1,6 +1,6 @@
 {
-    "name": "my-project",
-    "jest": {
-      "verbose": true
-    }
+  "name": "my-project",
+  "scripts": {
+    "test": "jest"
   }
+}
