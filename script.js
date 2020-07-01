@@ -1,5 +1,5 @@
 // seletores
-const cartItems = document.querySelector('.cart__items');
+const cartItems = document.getElementsByClassName('cart__items');
 const cartSingleItem = document.querySelectorAll('.cart__item');
 const totalPrice = document.getElementsByClassName('.total-price');
 const clearButton = document.querySelector('.empty-cart');
@@ -59,7 +59,7 @@ const getProductInfo = async (itemId) => {
 
 // requisito 2. função que adiciona ao carrinho
 async function addToCart(sku) {
-  const ol = document.getElementsByClassName('cart__items')[0];
+  const ol = cartItems[0];
   const product = await getProductInfo(sku)
     .then(productData =>
       createCartItemElement({
