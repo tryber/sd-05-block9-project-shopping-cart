@@ -32,6 +32,10 @@ const loadCart = () => {
 
 window.onload = function onload() {
   loadCart();
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', function () {
+    document.querySelector('.cart__items').innerText = [];
+  });
 };
 
 function createProductImageElement(imageSource) {
