@@ -10,7 +10,7 @@ const salvaCarrinho = () => {
 };
 const somaPrice = () => {
   const total = (soma - subtracao);
-  totalPrice.innerText = `${total.toFixed(0)}`;
+  totalPrice.innerText = `${total.toFixed(2)}`;
   if (total === 0) totalPrice.innerText = '';
   return total;
 };
