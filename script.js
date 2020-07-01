@@ -29,7 +29,7 @@ function getPrice() {
 
 async function totalPrice() {
   const price = await getPrice();
-  const priceTag = document.querySelector('.price');
+  const priceTag = document.querySelector('.total-price');
   priceTag.innerHTML = `${price}`;
   return priceTag;
 }
