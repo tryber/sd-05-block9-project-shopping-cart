@@ -6,11 +6,11 @@ const queryProductById = sku => fetch(`${PRODUCT_ENDPOINT}${sku}`);
 
 async function myBill() {
   let amount = 0;
+  const totalPriceSpam = document.querySelector('.total-price');
   itemsInCart.forEach(async (item) => {
     const productDetailResponse = await queryProductById(item);
     const { price } = await productDetailResponse.json();
-    amount += await price
-    const totalPriceSpam = document.querySelector('.total-price');
+    amount += await price;
     totalPriceSpam.innerText = `$${amount}`;
   });
 }
@@ -123,8 +123,6 @@ cleanCartButton.addEventListener('click', () => {
 });
 
 window.onload = () => {
-  const items = document.querySelector('.items');
-  // loadingTime(items.innerHTML);
   insertProducts();
   if (localStorage.getItem('cartItems')) loadingCartFromLocalStorage();
   myBill();
