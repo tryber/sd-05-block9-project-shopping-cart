@@ -29,11 +29,8 @@ function getPrice() {
 
 async function totalPrice() {
   const price = await getPrice();
-  const cartTag = document.querySelector('.cart');
-  cartTag.classList.add('total-price');
   const priceTag = document.querySelector('.price');
   priceTag.innerHTML = `${price}`;
-  cartTag.appendChild(priceTag);
   return priceTag;
 }
 
