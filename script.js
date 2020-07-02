@@ -1,3 +1,12 @@
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+  const sku = getSkuFromProductItem(event.target.parentElement);
+  console.log(sku);
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -7,16 +16,16 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const getProduct = (sku) => {
-  const API_product = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
+  const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
   const myProduct = {
     method: 'GET',
   };
-  fetch(API_product, myProduct)
+  fetch(API_PRODUCT, myProduct)
     .then(response => response.json())
     .then((data) => {
       console.log(data);
     });
-}
+};
 
 const mapeiaData = (data) => {
   const { results } = data;
@@ -29,15 +38,6 @@ const mapeiaData = (data) => {
   console.log(mapeiaAPI);
   return mapeiaAPI;
 };
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  const sku = getSkuFromProductItem(event.target.parentElement);
-  console.log(sku);
-}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
