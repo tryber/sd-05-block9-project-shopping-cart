@@ -8,6 +8,12 @@ const getAndSumPrices = () => {
   totalPricePlace.innerHTML = priceArray.reduce((acc, num) => acc + parseFloat(num), 0);
 };
 
+// 4. Created function, to maintain cart content on localStorage
+function keepCartStored() {
+  const cart = document.getElementsByClassName('cart__items')[0];
+  localStorage.setItem('Itens do Carrinho', cart.innerHTML);
+}
+
 // 3. Remove items from cart when you click on it
 function cartItemClickListener(event) {
   event.target.remove();
@@ -22,12 +28,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-// 4. Created function, to maintain cart content on localStorage
-function keepCartStored() {
-  const cart = document.getElementsByClassName('cart__items')[0];
-  localStorage.setItem('Itens do Carrinho', cart.innerHTML);
 }
 
 // 2. Created function to add ids of products in cart
