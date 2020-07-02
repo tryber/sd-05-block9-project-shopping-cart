@@ -1,3 +1,9 @@
+const container = document.querySelector('.container');
+div = document.createElement('div');
+div.className = 'loading';
+div.innerText = 'Loading...';
+container.appendChild(div);
+
 function cartItemClickListener(event) {
   const remove = event.target;
   remove.parentNode.removeChild(remove);
@@ -99,3 +105,5 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
       });
     }
   });
+
+div.innerText = '';
