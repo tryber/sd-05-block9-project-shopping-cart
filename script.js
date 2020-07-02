@@ -1,3 +1,16 @@
+// requisito 4. função que carrega o carrinho com itens salvos
+const getCart = () => {
+  const newCart = JSON.parse(localStorage.getItem('cart'));
+  return newCart || [];
+};
+
+let cart = getCart();
+
+// requisito 4. função que salva itens do carrinho
+const saveCart = () => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
+
 // função fornecida
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,8 +28,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 // requisito 5. faz a soma total
-
-// requisito 4. função que salva itens do carrinho
 
 // requisito 3. remove um item do carrinho quando clicado nele
 function cartItemClickListener(event) {
