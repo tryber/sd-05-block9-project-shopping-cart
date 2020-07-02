@@ -1,8 +1,21 @@
-const container = document.querySelector('.container');
-div = document.createElement('div');
-div.className = 'loading';
-div.innerText = 'Loading...';
-container.appendChild(div);
+const div = document.createElement('div');
+div.className = 'total-price';
+const prices = [];
+const sum = (array) => {
+  array.reduce(((accumulator, current) => accumulator + current), 0);
+};
+
+const sumPrices = () => {
+  for (i = 0; i < 30; i += 1) {
+    const storage = localStorage.getItem(`product${i}`);
+    if (storage !== null) {
+      fetch(`https://api.mercadolibre.com/items/${storage}`)
+        .then(response => response.json())
+        .then(data => prices.push(data.price));
+    }
+  }
+  div.innerText = `Total : R$${Math.round(sum(prices))}`;
+};
 
 function cartItemClickListener(event) {
   const remove = event.target;
@@ -42,6 +55,10 @@ window.onload = function onload() {
   clearButton.addEventListener('click', function () {
     document.querySelector('.cart__items').innerText = [];
   });
+  const section = document.querySelector('.cart');
+  section.appendChild(div);
+  sumPrices();
+  div.innerText = `Total : R$${Math.round(sum(prices))}`;
 };
 
 function createProductImageElement(imageSource) {
@@ -105,5 +122,3 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
       });
     }
   });
-
-div.innerText = '';
