@@ -25,23 +25,38 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // 4. Created function, to maintain cart content on localStorage
 function keepCartStored() {
-  localStorage.setItem('Carrinho', document.querySelector('.cart__items')[0].innerHTML);
+  const cart = document.getElementsByClassName('cart__items')[0];
+  localStorage.setItem('Itens do Carrinho', cart.innerHTML);
 }
 
-// 2. Created function to add ids of products in cart
 async function addToCart({ sku }) {
-  const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-  const data = await response.json();
-  const cartItems = document.querySelector('.cart__items');
-  const newCartItem = createCartItemElement({
-    sku: data.id,
-    name: data.title,
-    salePrice: data.price,
-  });
-  cartItems.appendChild(newCartItem);
-  getAndSumPrices();
-  keepCartStored();
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then((data) => {
+      const cartItems = document.querySelector('.cart__items');
+      const newCartItem = createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      });
+      cartItems.appendChild(newCartItem);
+      getAndSumPrices();
+      keepCartStored();
+    });
 }
+
+// function saveCart() {
+//   const myCart = document.getElementsByClassName('cart__items')[0];
+//   localStorage.setItem('My Cart', myCart.innerHTML);
+// }
+
+// 2. Created function to add ids of products in cart
+// async function addToCart({ sku }) {
+//   const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+//   const data = await response.json();
+//   const cartItems = document.querySelector('.cart__items');
+
+// }
 
 // Provided function
 function createProductImageElement(imageSource) {
