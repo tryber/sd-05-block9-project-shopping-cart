@@ -19,7 +19,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 const addProdutosHtml = (param) => {
   const elementoOl = document.getElementsByClassName('cart__items')[0];
   elementoOl.appendChild(param);
-}
+};
 
 const mapeiaProduct = (data) => {
   const mapeiaApiProduct = ({
@@ -29,7 +29,7 @@ const mapeiaProduct = (data) => {
   });
 
   return mapeiaApiProduct;
-}
+};
 
 const getProduct = (sku) => {
   const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
