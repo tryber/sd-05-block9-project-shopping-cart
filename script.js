@@ -7,9 +7,9 @@ let cart = getCart();
 */
 
 // requisito 4. função que salva itens do carrinho
-const saveCart = () => {
+/* const saveCart = () => {
   localStorage.setItem('cart', JSON.stringify(cart));
-};
+}; */
 
 // função fornecida
 function createProductImageElement(imageSource) {
@@ -26,7 +26,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-/* 
+/*
 // requisito 3. remove um item do carrinho quando clicado nele
 function cartItemClickListener(event) {
   event.target.remove();
@@ -46,7 +46,7 @@ function createCartItemElement({ name, salePrice, id }) {
   span.appendChild(li);
   return span;
 }
-/* 
+/*
 // requisito 5. faz a soma total
 const sumTotal = async () => {
   const total = document.querySelector('.total-price');
@@ -62,23 +62,24 @@ const loadCart = () => {
   });
   sumTotal();
 };
- */
+*/
+
 // requisito 2. função que adiciona ao carrinho
-async function addToCart({ sku }) {
+async function addToCart(sku) {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then(response => response.json())
-  .then((data) => {
-    const newCartItem = {
-      sku: data.id,
-      name: data.title,
-      salePrice: data.price,
-      id: Math.floor(Math.random() * 9999999),
-    };
-    cart.push(newCartItem);
-    document.getElementsByClassName('.cart__items').appendChild(createCartItemElement(newCartItem));
-  });
- // saveCart();
- // sumTotal();
+    .then(response => response.json())
+    .then((data) => {
+      const newCartItem = {
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+        id: Math.floor(Math.random() * 9999999),
+      };
+      const cartItems = document.getElementsByClassName('cart__items')[0];
+      cartItems.appendChild(createCartItemElement(newCartItem));
+    });
+  // saveCart();
+  // sumTotal();
 }
 
 // função fornecida mas fiz modificações
@@ -97,7 +98,8 @@ function createProductItemElement({ sku, name, image }) {
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 } */
-/* 
+/*
+
 // requisito 6. botão que limpa o carrinho
 async function clearCart() {
   const cartItems = document.getElementsByClassName('.cart-items');
@@ -110,6 +112,7 @@ async function clearCart() {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', clearCart);
  */
+
 // requisito 1. gerar lista de produtos
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
