@@ -1,7 +1,7 @@
 // requisito 4. função que gera o carrinho
 const getCart = () => {
   const newCart = JSON.parse(localStorage.getItem('myCart'));
-  return newCart;
+  return newCart || [];
 };
 let cart = getCart();
 
@@ -26,6 +26,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// requisito 5. faz a soma total
+const sumTotal = async () => {
+  const total = document.querySelector('.total-price');
+  total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
+};
+
 // requisito 3. remove um item do carrinho quando clicado nele
 function cartItemClickListener(event) {
   event.target.remove();
@@ -45,18 +51,12 @@ function createCartItemElement({ name, salePrice, id }) {
   return li;
 }
 
-// requisito 5. faz a soma total
-const sumTotal = async () => {
-  const total = document.querySelector('.total-price');
-  total.innerText = cart.reduce((total, item) => total + item.salePrice, 0);
-};
-
 // requisito 4. carrega o carrinho a partir do local storage
 const loadCart = () => {
   getCart()
     .map(products => createCartItemElement(products))
     .forEach((singleProduct) => {
-      document.getElementsByClassName('.cart__items').appendChild(singleProduct);
+      document.getElementsByClassName('cart__items').appendChild(singleProduct);
     });
   sumTotal();
 };
@@ -70,7 +70,7 @@ async function addToCart({ sku }) {
       const newCartItem = {
         name: data.title,
         salePrice: data.price,
-        id: data.sku,
+        id: sku,
       };
       cart.push(newCartItem);
       const cartItems = document.getElementsByClassName('cart__items')[0];
@@ -95,13 +95,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
 // requisito 6. botão que limpa o carrinho
 async function clearCart() {
-  const cartItems = document.getElementsByClassName('.cart-items');
+  const cartItems = document.getElementsByClassName('cart___items')[0];
   cartItems.innerHTML = '';
   cart = [];
   saveCart();
