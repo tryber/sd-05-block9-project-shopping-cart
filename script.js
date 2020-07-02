@@ -18,7 +18,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// função fornecida
+// função
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -56,7 +56,7 @@ const loadCart = () => {
   getCart()
     .map(products => createCartItemElement(products))
     .forEach((singleProduct) => {
-      document.getElementsByClassName('cart__items').appendChild(singleProduct);
+      document.getElementsByClassName('cart__items')[0].appendChild(singleProduct);
     });
   sumTotal();
 };
