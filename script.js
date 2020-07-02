@@ -108,7 +108,7 @@ window.onload = function onload() {
         });
         document.querySelector('.items').appendChild(itemInfo);
         const cartSave = localStorage.getItem('Cart Items');
-        document.getElementsByClassName('cart_items')[0].innerHTML = cartSave;
+        document.getElementsByClassName('cart__items')[0].innerHTML = cartSave;
       });
     })
   .catch(() => console.log('API apresenta erro!'));
