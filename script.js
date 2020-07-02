@@ -110,8 +110,18 @@ async function clearCart() {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', clearCart);
 
+// requisito 7. função que cria o texto 'loading'
+const loading = () =>
+  document
+    .querySelector('.load-container')
+    .appendChild(createCustomElement('span', 'loading', 'loading...'));
+
 // requisito 1. gerar lista de produtos
 window.onload = function onload() {
+  loading();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 1000);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then((data) => {
