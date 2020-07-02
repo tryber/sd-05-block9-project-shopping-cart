@@ -1,5 +1,5 @@
-// 5. a) Get prices (to be accumulated) directly on html cart
-// b) sum all prices and show the result
+// 5. a) Get prices (to be accumulated) directly on html cart spotting with regex
+// b) sum all prices with reduce and show the result in html div
 // c) write addToCart as async await to get rid of the delay
 const getAndSumPrices = () => {
   const cartItens = document.querySelectorAll('.cart__item');
@@ -23,6 +23,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// 4. Created function, to maintain cart content on localStorage
+function keepCartStored() {
+  localStorage.setItem('Carrinho', document.querySelector('.cart__items')[0].innerHTML);
+}
+
 // 2. Created function to add ids of products in cart
 async function addToCart({ sku }) {
   const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
@@ -35,6 +40,7 @@ async function addToCart({ sku }) {
   });
   cartItems.appendChild(newCartItem);
   getAndSumPrices();
+  keepCartStored();
 }
 
 // Provided function
@@ -70,16 +76,10 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Provided function, looks like it could have been of use for requirement 2.
+// Provided function
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-// 4. Created function, to maintain cart content on localStorage
-// function keepCartStored() {
-//   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
-// }
-// does not work, work on progress, must be on onload and fetch
 
 // 6. Created function to empty cart, event listener in window load
 const emptyCart = () => {
