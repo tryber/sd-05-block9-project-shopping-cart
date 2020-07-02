@@ -101,7 +101,7 @@ function createProductItemElement({ sku, name, image }) {
 
 // requisito 6. botão que limpa o carrinho
 async function clearCart() {
-  const cartItems = document.getElementsByClassName('cart___items')[0];
+  const cartItems = document.getElementsByClassName('cart__items')[0];
   cartItems.innerHTML = '';
   cart = [];
   saveCart();
