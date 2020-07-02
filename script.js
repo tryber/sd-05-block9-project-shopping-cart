@@ -28,6 +28,10 @@ function createCustomElement(element, className, innerText) {
 }
 
 // requisito 5. faz a soma total
+const sumTotal = async () => {
+  const total = document.querySelector('.total-price');
+  total.innerText = cart.reduce((total, item) => total + item.salePrice, 0);
+};
 
 // requisito 3. remove um item do carrinho quando clicado nele
 function cartItemClickListener(event) {
