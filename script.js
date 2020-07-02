@@ -40,13 +40,17 @@ function cartItemClickListener(event) {
   sumTotal();
 }
 
-// função veio pronta
-function createCartItemElement({ sku, name, salePrice }) {
+// função veio pronta e fiz alterações
+function createCartItemElement({ name, salePrice, id }) {
   const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.className = 'span__item';
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = id;
+  li.innerText = `SKU: ${id} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  span.appendChild(li);
+  return span;
 }
 
 // requisito 2. função que adiciona ao carrinho
