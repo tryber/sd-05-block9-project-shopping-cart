@@ -1,10 +1,3 @@
-// seletores
-const cartItems = document.getElementsByClassName('cart__items');
-const cartSingleItem = document.querySelectorAll('.cart__item');
-const totalPrice = document.getElementsByClassName('.total-price');
-const clearButton = document.querySelector('.empty-cart');
-const loading = document.querySelector('.loading');
-
 // função fornecida
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -23,6 +16,8 @@ function createCustomElement(element, className, innerText) {
 
 // requisito 5. faz a soma total
 const sumTotal = () => {
+  const cartSingleItem = document.querySelectorAll('.cart__item');
+  const totalPrice = document.getElementsByClassName('.total-price');
   totalPrice[0].innerText = (
     [...cartSingleItem].map(item => item.innerHTML.match(/[\d.\d]+$/))
     .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
@@ -30,8 +25,8 @@ const sumTotal = () => {
 
 // requisito 4. função que salva itens do carrinho
 const saveCart = () => {
-  localStorage.setItem('Cart Items', cartItems.innerHTML);
-  localStorage.setItem('Total Price', totalPrice.innerHTML);
+  localStorage.setItem('Cart Items', document.querySelectorAll('.cart__item').innerHTML);
+  localStorage.setItem('Total Price', document.getElementsByClassName('.total-price').innerHTML);
 };
 
 // requisito 3. remove um item do carrinho quando clicado nele
@@ -59,7 +54,8 @@ const getProductInfo = async (itemId) => {
 
 // requisito 2. função que adiciona ao carrinho
 async function addToCart(sku) {
-  const ol = cartItems[0];
+  let totalPrice = document.getElementsByClassName('.total-price');
+  const ol = document.getElementsByClassName('cart__items')[0];
   const product = await getProductInfo(sku)
     .then(productData =>
       createCartItemElement({
@@ -67,7 +63,11 @@ async function addToCart(sku) {
       }),
     );
   ol.appendChild(product);
-  sumTotal();
+  if (document.getElementsByClassName('cart__items').length = 1) {
+    let totalPrice = product.price;    
+  } else {
+    let totalPrice = sumTotal();
+  }
   saveCart();
 }
 
@@ -89,10 +89,12 @@ function createProductItemElement({ sku, name, image }) {
 
 // requisito 5. botão que limpa o carrinho
 async function clearAll() {
-  cartItems.innerHTML = '';
+  document.getElementsByClassName('cart__items').innerHTML = '';
   saveCart();
   sumTotal();
 }
+
+const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', clearAll);
 
 // requisito 1. gerar lista de produtos
@@ -113,6 +115,7 @@ window.onload = function onload() {
 };
 
 // requisito 7. função loading timeout
+const loading = document.querySelector('.loading');
 setTimeout(() => {
   loading.remove();
 }, 3000);
