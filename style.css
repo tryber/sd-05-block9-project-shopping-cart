@@ -71,6 +71,12 @@
 
 .cart .cart__title {
   flex-basis: 1;
-  font-size: 16pt;
+  font-size: 20pt;
   text-align: center;
+  margin-bottom: 20px;
+}
+
+ol li {
+  margin-bottom: 15px;
+  cursor: pointer;
 }
