@@ -40,7 +40,7 @@ function cartItemClickListener(event) {
   sumTotal();
 }
 
-// requisito 4.
+// requisito 4. carrega o carrinho a partir do local storage
 const loadCart = () => {
   getCart()
   .map(products => createCartItemElement(products))
@@ -64,7 +64,22 @@ function createCartItemElement({ name, salePrice, id }) {
 }
 
 // requisito 2. função que adiciona ao carrinho
-
+async function addToCart({ sku }) {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+  .then(response => response.json())
+  .then((data) => {
+    const newCartItem = {
+      sku: data.id,
+      name: data.title,
+      salePrice: data.price,
+      id: Math.floor(Math.random() * 9999999),
+    };
+    cart.push(newCartItem);
+    document.getElementsByClassName('.cart__items').appendChild(createCartItemElement(newCartItem));
+  })
+  saveCart();
+  sumTotal();
+}
 
 // função veio pronta e eu fiz modificações
 function createProductItemElement({ sku, name, image }) {
