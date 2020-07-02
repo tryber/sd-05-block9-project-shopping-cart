@@ -68,15 +68,17 @@ function createProductItemElement({ sku, name, image }) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
-// requisito 5. botão que limpa o carrinho
-async function clearAll() {
-  document.getElementsByClassName('cart__items').innerHTML = '';
+// requisito 6. botão que limpa o carrinho
+async function clearCart() {
+  const cartItems = document.getElementsByClassName(.'cart-items');
+  cartItems.innerHTML = '';
+  cart = [];
   saveCart();
   sumTotal();
 }
 
 const clearButton = document.querySelector('.empty-cart');
-clearButton.addEventListener('click', clearAll);
+clearButton.addEventListener('click', clearCart);
 
 // requisito 1. gerar lista de produtos
 window.onload = function onload() {
@@ -94,5 +96,3 @@ window.onload = function onload() {
     })
     .catch(() => console.log('Error: Could not load the API'));
 };
-
-// requisito 7. função loading timeout
