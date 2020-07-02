@@ -2,6 +2,12 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function cartItemClickListener(event) {
+  const sku = getSkuFromProductItem(event.target.parentElement);
+  console.log(sku);
+  getProduct(sku);
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,12 +45,6 @@ const getProduct = (sku) => {
       addProdutosHtml(elementosCriados);
     });
 };
-
-function cartItemClickListener(event) {
-  const sku = getSkuFromProductItem(event.target.parentElement);
-  console.log(sku);
-  getProduct(sku);
-}
 
 const mapeiaData = (data) => {
   const { results } = data;
