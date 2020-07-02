@@ -12,6 +12,7 @@ const getAndSumPrices = () => {
 function cartItemClickListener(event) {
   event.target.remove();
   getAndSumPrices();
+  keepCartStored();
 }
 
 // Provided function, necessary for 2. and 3. to work
@@ -89,6 +90,7 @@ const emptyCart = () => {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(item => item.remove());
   document.getElementsByClassName('total-price')[0].innerHTML = 0;
+  keepCartStored();
 };
 
 // 1. Fetch the API on your html page
@@ -106,6 +108,8 @@ window.onload = function onload() {
         });
         const classItems = document.querySelector('.items');
         classItems.appendChild(newProduct);
+        const keepCart = localStorage.getItem('Itens do Carrinho');
+        document.getElementsByClassName('cart__items')[0].innerHTML = keepCart;
       });
     })
     .then(setTimeout(() => document.querySelector('.loading').remove(), 1000))
