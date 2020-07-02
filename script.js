@@ -16,21 +16,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const getProduct = (sku) => {
-  const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
-  const myProduct = {
-    method: 'GET',
-  };
-  fetch(API_PRODUCT, myProduct)
-    .then(response => response.json())
-    .then((data) => {
-      console.log(data);
-      const produtoMapeado = mapeiaProduct(data);
-      const elementosCriados = createCartItemElement(produtoMapeado);
-      addProdutosHtml(elementosCriados);
-    });
-};
-
 const addProdutosHtml = (param) => {
   const elementoOl = document.getElementsByClassName('cart__items')[0];
   elementoOl.appendChild(param);
@@ -45,6 +30,21 @@ const mapeiaProduct = (data) => {
 
   return mapeiaApiProduct;
 }
+
+const getProduct = (sku) => {
+  const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
+  const myProduct = {
+    method: 'GET',
+  };
+  fetch(API_PRODUCT, myProduct)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      const produtoMapeado = mapeiaProduct(data);
+      const elementosCriados = createCartItemElement(produtoMapeado);
+      addProdutosHtml(elementosCriados);
+    });
+};
 
 const mapeiaData = (data) => {
   const { results } = data;
