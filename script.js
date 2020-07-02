@@ -110,29 +110,8 @@ async function clearCart() {
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', clearCart);
  */
-
-// requisito 7. loading
-const loading = () => {
-  const load = document.querySelector('.load-container');
-  load.appendChild(createCustomElement('span', 'loading', 'loading'));
-};
-
-// requisito 4. carrega itens salvos do carrinho
-window.onload = function onload() {
-  loading();
-  setTimeout(() => {
-    document.querySelector('.loading').remove();
-  }, 1000);
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
-  if (localStorage.getItem('cart') !== undefined) {
-    const eventAdder = document.querySelectorAll('.cart__item');
-    eventAdder.forEach(item => item.addEventListener('click', cartItemClickListener));
-  }
-  sumTotal();
-};
-
 // requisito 1. gerar lista de produtos
-function getProductsList() {
+window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then((data) => {
