@@ -4,7 +4,6 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const sku = getSkuFromProductItem(event.target.parentElement);
-  console.log(sku);
   getProduct(sku);
 }
 
@@ -16,11 +15,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const addProdutosHtml = (param) => {
-  const elementoOl = document.getElementsByClassName('cart__items')[0];
-  elementoOl.appendChild(param);
-};
-
 const mapeiaProduct = (data) => {
   const mapeiaApiProduct = ({
     sku: data.id,
@@ -29,6 +23,11 @@ const mapeiaProduct = (data) => {
   });
 
   return mapeiaApiProduct;
+};
+
+const addProdutosHtml = (param) => {
+  const elementoOl = document.getElementsByClassName('cart__items')[0];
+  elementoOl.appendChild(createCartItemElement(param));
 };
 
 const getProduct = (sku) => {
@@ -41,8 +40,7 @@ const getProduct = (sku) => {
     .then((data) => {
       console.log(data);
       const produtoMapeado = mapeiaProduct(data);
-      const elementosCriados = createCartItemElement(produtoMapeado);
-      addProdutosHtml(elementosCriados);
+      addProdutosHtml(produtoMapeado);
     });
 };
 
