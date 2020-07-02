@@ -42,12 +42,16 @@ function cartItemClickListener() {
     fetch(`https://api.mercadolibre.com/items/${myret}`)
     .then(response => response.json())
     .then((data) => {
+      console.log(data);
+      console.log(data.price);
+      console.log(data.id);
+      console.log(data.title);
       const mycart = createCartItemElement({
         sku: data.id,
         name: data.title,
         salePrice: data.price,
       });
-      document.querySelector('.cart__items').appendChild(mycart);
+      document.getElementsByClassName('.cart__items').appendChild(mycart);
     });
   });
   // coloque seu código aqui
