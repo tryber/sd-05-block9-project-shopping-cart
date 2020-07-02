@@ -63,7 +63,6 @@ const loadCart = () => {
 
 // requisito 2. função que adiciona ao carrinho
 async function addToCart({ sku }) {
-  console.log(sku);
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
     .then((data) => {
