@@ -1,4 +1,4 @@
-// requisito 4. função que carrega o carrinho com itens salvos
+// requisito 4. função que gera o carrinho
 const getCart = () => {
   const newCart = JSON.parse(localStorage.getItem('cart'));
   return newCart || [];
@@ -37,6 +37,16 @@ const sumTotal = async () => {
 function cartItemClickListener(event) {
   event.target.remove();
   saveCart();
+  sumTotal();
+}
+
+// requisito 4.
+const loadCart = () => {
+  getCart()
+  .map(products => createCartItemElement(products))
+  .forEach((singleProduct) => {
+    document.getElementsByClassName('.cart__items').appendChild(singleProduct);
+  });
   sumTotal();
 }
 
@@ -99,4 +109,5 @@ window.onload = function onload() {
       });
     })
     .catch(() => console.log('Error: Could not load the API'));
+  loadCart();
 };
