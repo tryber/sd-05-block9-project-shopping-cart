@@ -1,29 +1,43 @@
-window.onload = function onload() {};
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`; // criar elementos carrinho
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
 
-const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-const fetchApi = () => {
-  const myObject = {
+const getProduct = (sku) => {
+  const API_product = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
+  const myProduct = {
     method: 'GET',
   };
-  fetch(API_URL, myObject)
-    .then((response) => response.json())
+  fetch(API_product, myProduct)
+    .then(response => response.json())
     .then((data) => {
-      renderContent(data);
+      console.log(data);
     });
-};
+}
 
 const mapeiaData = (data) => {
   const { results } = data;
-  const mapeiaAPI = results.map((elementos) => {
-    return {
-      sku: elementos.id,
-      name: elementos.title,
-      image: elementos.thumbnail,
-    };
-  });
+  const mapeiaAPI = results.map(elementos => ({
+    sku: elementos.id,
+    name: elementos.title,
+    image: elementos.thumbnail,
+  }));
+
   console.log(mapeiaAPI);
   return mapeiaAPI;
 };
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+  const sku = getSkuFromProductItem(event.target.parentElement);
+  console.log(sku);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -46,8 +60,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', cartItemClickListener);
+  section.appendChild(button);
   return section;
 }
 
@@ -58,25 +73,28 @@ const addElementos = (data) => {
   });
 };
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-
 const renderContent = (data) => {
   const mapData = mapeiaData(data);
   addElementos(mapData);
 };
-fetchApi();
+
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const fetchApi = () => {
+  const myObject = {
+    method: 'GET',
+  };
+  fetch(API_URL, myObject)
+    .then(response => response.json())
+    .then((data) => {
+      renderContent(data);
+    });
+};
+
+window.onload = function onload() {
+  fetchApi();
+};
+
+/*
+  Quando eu crio elementos no HTML e preciso colocar um
+  evento de click, eu acrescento na função que está criando os elementos.
+*/
