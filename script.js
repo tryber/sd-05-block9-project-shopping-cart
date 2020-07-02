@@ -15,19 +15,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 // requisito 5. faz a soma total
-const sumTotal = () => {
-  const cartSingleItem = document.querySelectorAll('.cart__item');
-  const totalPrice = document.getElementsByClassName('.total-price');
-  totalPrice[0].innerText = (
-    [...cartSingleItem].map(item => item.innerHTML.match(/[\d.\d]+$/))
-    .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
-};
 
 // requisito 4. função que salva itens do carrinho
-const saveCart = () => {
-  localStorage.setItem('Cart Items', document.querySelectorAll('.cart__item').innerHTML);
-  localStorage.setItem('Total Price', document.getElementsByClassName('.total-price').innerHTML);
-};
 
 // requisito 3. remove um item do carrinho quando clicado nele
 function cartItemClickListener(event) {
@@ -45,31 +34,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// requsisito 2. função que que pega infos sobre itens do carrinho
-const getProductInfo = async (itemId) => {
-  const product = await fetch(`https://api.mercadolibre.com/items/${itemId}`);
-  const productJson = await product.json();
-  return productJson;
-};
-
 // requisito 2. função que adiciona ao carrinho
-async function addToCart(sku) {
-  let totalPrice = document.getElementsByClassName('.total-price');
-  const ol = document.getElementsByClassName('cart__items')[0];
-  const product = await getProductInfo(sku)
-    .then(productData =>
-      createCartItemElement({
-        sku: productData.id, name: productData.title, salePrice: productData.price,
-      }),
-    );
-  ol.appendChild(product);
-  if (document.getElementsByClassName('cart__items').length = 1) {
-    let totalPrice = product.price;    
-  } else {
-    let totalPrice = sumTotal();
-  }
-  saveCart();
-}
+
 
 // função veio pronta e eu fiz modificações
 function createProductItemElement({ sku, name, image }) {
@@ -115,7 +81,3 @@ window.onload = function onload() {
 };
 
 // requisito 7. função loading timeout
-const loading = document.querySelector('.loading');
-setTimeout(() => {
-  loading.remove();
-}, 3000);
