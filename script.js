@@ -80,6 +80,6 @@ window.onload = async function onload() {
         getSection.appendChild(createObj);
       });
     });
-    loadingAPI();
+  loadingAPI();
     // loadedCart();
 };
