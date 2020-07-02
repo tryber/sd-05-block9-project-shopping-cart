@@ -51,7 +51,7 @@ function cartItemClickListener() {
         name: data.title,
         salePrice: data.price,
       });
-      document.getElementsByClassName('.cart__items').appendChild(mycart);
+      document.querySelector('.cart__items').appendChild(mycart);
     });
   });
   // coloque seu código aqui
