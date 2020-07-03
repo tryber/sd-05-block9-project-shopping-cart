@@ -1,3 +1,12 @@
+// salvar objeto carrinho
+function salvar() {
+  localStorage.clear('carrinho');
+  const cartSave = document.getElementsByTagName('ol')[0].innerHTML;
+  console.log(cartSave);
+  localStorage.setItem('carrinho', cartSave);
+}
+
+// carregando a foto para o produto
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -5,6 +14,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// carregando as informações para o produto
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -12,6 +22,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Formato dos produtos da carregados
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -24,17 +35,15 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
+// Romação de item do carrinho
 function cartItemClickListener(event) {
   event.target.classList.contains('select');
   event.target.classList.add('select');
   event.target.remove('select');
+  salvar();
 }
 
-
+// Formato do itrm do carrinho
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -43,8 +52,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function criarObjetoCar(sku) {
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
+// carregar itens de produtos no carrinho após apertarem o botão.
+function getSkuFromProductItem(item) {
+  fetch(`https://api.mercadolibre.com/items/${item}`)
   .then(response => response.json())
   .then((data) => {
     const productAdd = {
@@ -54,10 +64,13 @@ function criarObjetoCar(sku) {
     };
     const cartPai = document.getElementsByClassName('cart__items')[0];
     cartPai.appendChild(createCartItemElement(productAdd));
+
+    salvar();
   });
 }
 
-window.onload = function onload() {
+// Carregar lista de produtos na pagina
+function ciateList() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then((data) => {
@@ -70,9 +83,30 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
       });
     })
+    // colocando item no carrinho ao apertar o botão
     .then(() => {
       document.querySelectorAll('.item__add').forEach(addItem => addItem
-      .addEventListener('click', () => criarObjetoCar(addItem
-      .parentElement.querySelector('span.item__sku').innerText)));
+      .addEventListener('click', () => {
+        getSkuFromProductItem(addItem.parentElement.querySelector('span.item__sku').innerText);
+      }));
     });
+}
+
+// limpar carrinho
+// function limparAll() {
+//   const limparAll = document.querySelectorAll('.empty-cart');
+//   for(let la of limparAll){
+//   la.addEventListener('click', function() {
+//     console.log(document.querySelectorAll('li'))
+//   });
+//   }
+// }
+
+// chamar a função no final
+window.onload = function onload() {
+  if (localStorage.getItem('carrinho') !== undefined) {
+    document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
+    document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
+  }
+  ciateList();
 };
