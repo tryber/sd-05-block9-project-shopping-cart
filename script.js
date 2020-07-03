@@ -54,6 +54,14 @@ function cartItemClickListener() {
       document.querySelector('.cart__items').appendChild(mycart);
     });
   });
+  // adicionar item ^
+  // remover item
+  const myRemCart = document.querySelector('.cart__items');
+  myRemCart.addEventListener('click', (envent) => {
+    console.log(event.target);
+    document.querySelector('.cart__items').removeChild(envent.target);
+  });
+
   // coloque seu código aqui
 }
 //----------------------------------------------------------------------
