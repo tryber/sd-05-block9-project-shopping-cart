@@ -47,6 +47,5 @@ window.onload = function onload() {
   .then(response => response.json())
   .then(dados => dados.results.forEach(produto =>
     document.querySelector('.items').appendChild(
-    createProductItemElement({ sku: produto.id, name: produto.title, image: produto.thumbnail })
-    )));
+    createProductItemElement({ sku: produto.id, name: produto.title, image: produto.thumbnail }))));
 };
