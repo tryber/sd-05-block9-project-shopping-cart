@@ -92,21 +92,20 @@ function ciateList() {
     });
 }
 
-// limpar carrinho
-// function limparAll() {
-//   const limparAll = document.querySelectorAll('.empty-cart');
-//   for(let la of limparAll){
-//   la.addEventListener('click', function() {
-//     console.log(document.querySelectorAll('li'))
-//   });
-//   }
-// }
-
 // chamar a função no final
 window.onload = function onload() {
+  // retornar localStoreg
   if (localStorage.getItem('carrinho') !== undefined) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
     document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
   }
+
+  // limpar carrinho
+  document.querySelectorAll('.empty-cart').forEach(empty => empty
+  .addEventListener('click', () => {
+    document.querySelector('ol').innerHTML = '';
+    localStorage.removeItem('carrinho');
+  }));
+
   ciateList();
 };
