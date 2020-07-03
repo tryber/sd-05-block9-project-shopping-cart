@@ -3,8 +3,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const sku = getSkuFromProductItem(event.target.parentElement);
-  getProduct(sku);
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -15,6 +14,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const addProdutosHtml = (param) => {
+  const elementoOl = document.getElementsByClassName('cart__items')[0];
+  elementoOl.appendChild(createCartItemElement(param));
+};
+
 const mapeiaProduct = (data) => {
   const mapeiaApiProduct = ({
     sku: data.id,
@@ -23,11 +27,6 @@ const mapeiaProduct = (data) => {
   });
 
   return mapeiaApiProduct;
-};
-
-const addProdutosHtml = (param) => {
-  const elementoOl = document.getElementsByClassName('cart__items')[0];
-  elementoOl.appendChild(createCartItemElement(param));
 };
 
 const getProduct = (sku) => {
@@ -43,6 +42,11 @@ const getProduct = (sku) => {
       addProdutosHtml(produtoMapeado);
     });
 };
+
+function addtoCartClickListener(event) {
+  const sku = getSkuFromProductItem(event.target.parentElement);
+  getProduct(sku);
+}
 
 const mapeiaData = (data) => {
   const { results } = data;
@@ -78,7 +82,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.addEventListener('click', cartItemClickListener);
+  button.addEventListener('click', addtoCartClickListener);
   section.appendChild(button);
   return section;
 }
