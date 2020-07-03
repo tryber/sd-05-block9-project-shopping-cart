@@ -10,8 +10,7 @@ const removeElementosComClick = () => {
 function cartItemClickListener(event) {
   const li = document.querySelector('li');
   const elementoQueGerouOEvento = event.target;
-  li.remove() = elementoQueGerouOEvento;
-
+  li.remove(elementoQueGerouOEvento);
 }
 
 
