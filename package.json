@@ -2,5 +2,8 @@
   "name": "my-project",
   "scripts": {
     "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
   }
 }
