@@ -1,21 +1,23 @@
-const div = document.createElement('div');
-div.className = 'total-price';
-const prices = [];
-const sum = (array) => {
-  array.reduce(((accumulator, current) => accumulator + current), 0);
-};
+async function sum() {
+  div = document.createElement('div');
+  section = document.querySelector('.cart__items');
+  const sumAll = await prices.reduce((ac, cur) => Math.round(ac + cur), 0);
+  section.appendChild(div);
+  div.innerHTML = `Total: ${sumAll}`;
+}
 
-const sumPrices = () => {
+prices = [];
+async function foundPrices(array) {
   for (i = 0; i < 30; i += 1) {
-    const storage = localStorage.getItem(`product${i}`);
-    if (storage !== null) {
-      fetch(`https://api.mercadolibre.com/items/${storage}`)
-        .then(response => response.json())
-        .then(data => prices.push(data.price));
+    const product = localStorage.getItem(`product${i}`);
+    if (product !== null) {
+      await fetch(`https://api.mercadolibre.com/items/${product}`)
+      .then(response => response.json())
+      .then(data => array.push(data.price));
     }
   }
-  div.innerText = `Total : R$${Math.round(sum(prices))}`;
-};
+  sum();
+}
 
 function cartItemClickListener(event) {
   const remove = event.target;
@@ -30,12 +32,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const loadCart = () => {
+async function loadCart() {
   const cart = document.querySelector('.cart__items');
   for (i = 0; i < 30; i += 1) {
     const storage = localStorage.getItem(`product${i}`);
     if (localStorage.getItem(`product${i}`) !== null) {
-      fetch(`https://api.mercadolibre.com/items/${storage}`)
+      await fetch(`https://api.mercadolibre.com/items/${storage}`)
       .then(response => response.json())
       .then((dataSave) => {
         const product = {
@@ -47,7 +49,8 @@ const loadCart = () => {
       });
     }
   }
-};
+  foundPrices(prices);
+}
 
 window.onload = function onload() {
   loadCart();
@@ -55,10 +58,6 @@ window.onload = function onload() {
   clearButton.addEventListener('click', function () {
     document.querySelector('.cart__items').innerText = [];
   });
-  const section = document.querySelector('.cart');
-  section.appendChild(div);
-  sumPrices();
-  div.innerText = `Total : R$${Math.round(sum(prices))}`;
 };
 
 function createProductImageElement(imageSource) {
