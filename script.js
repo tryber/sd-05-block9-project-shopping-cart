@@ -43,8 +43,6 @@ function cartItemClickListener() {
     .then(response => response.json())
     .then((data) => {
       console.log(data);
-      console.log(data.price);
-      console.log(data.id);
       console.log(data.title);
       const mycart = createCartItemElement({
         sku: data.id,
@@ -52,24 +50,30 @@ function cartItemClickListener() {
         salePrice: data.price,
       });
       document.querySelector('.cart__items').appendChild(mycart);
+      saveObj = [];
+      const obj = document.querySelector('.cart__items').cloneNode(true);
+      saveObj.push(obj.outerHTML);
+      localStorage.saveObject = JSON.stringify(saveObj);
     });
   });
-  // adicionar item ^
-  // remover item
+}
+function rem() {
   const myRemCart = document.querySelector('.cart__items');
   myRemCart.addEventListener('click', (envent) => {
     console.log(event.target);
     document.querySelector('.cart__items').removeChild(envent.target);
+    removeobj = [];
+    const remotion = document.querySelector('.cart__items').cloneNode(true);
+    removeobj.push(remotion.outerHTML);
+    localStorage.saveObject = JSON.stringify(removeobj);
   });
-
-  // coloque seu código aqui
 }
 //----------------------------------------------------------------------
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
-// foreach para criar cada produto
+    // foreach para criar cada produto
     data.results.forEach((item) => {
       const product = createProductItemElement({
         sku: item.id,
@@ -80,7 +84,16 @@ window.onload = function onload() {
     });
     // aqui acaba o foreach
   });
-// aqui acaba o segundo then
-// aqui começa o req 2
+  // aqui acaba o segundo then
+  // aqui começa o req 2
+  const init = () => {
+    if (localStorage.length === 1) {
+      document.querySelector('.cart').innerHTML += `${JSON.parse(localStorage.saveObject)}`;
+    } else {
+      document.querySelector('.cart').innerHTML += '<ol class="cart__items"></ol>';
+    }
+  };
+  init();
   cartItemClickListener();
+  rem();
 };
