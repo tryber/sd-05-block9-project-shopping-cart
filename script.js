@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 async function loadingAPI() {
-  const loading = createCustomElement('p', 'loading', 'loading products...');
+  const loading = createCustomElement('p', 'loading', 'carregando produtos...');
   document.querySelector('.container').appendChild(loading);
   setTimeout(() => loading.remove(), 2000);
 }
@@ -28,9 +28,14 @@ function cartItemClickListener(event) {
   getProducts.removeChild(event.target);
 }
 
-// function loadedCart() {
-//   localStorage.setItem('Cart Items', document.querySelectorAll('.cart__items').innerHTML);
-// }
+function storedCart() {
+  const getCart = document.getElementsByClassName('cart__items')[0];
+  localStorage.setItem('Cart Items', getCart.innerHTML);
+}
+
+const emptyCart = () => {
+  document.querySelectorAll('.cart__item').forEach(item => item.remove());
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -41,7 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function addProductToCart({ sku }) {
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
     .then((data) => {
       const createItem = {
@@ -49,7 +54,9 @@ async function addProductToCart({ sku }) {
         name: data.title,
         salePrice: data.price,
       };
-      document.querySelector('.cart__items').appendChild(createCartItemElement(createItem));
+      document.querySelector('.cart__items')
+      .appendChild(createCartItemElement(createItem));
+      storedCart();
     });
 }
 
@@ -78,8 +85,10 @@ window.onload = async function onload() {
           image: item.thumbnail,
         });
         getSection.appendChild(createObj);
+        const keepCartItems = localStorage.getItem('Cart Items');
+        document.getElementsByClassName('cart__items')[0].innerHTML = keepCartItems;
       });
-    });
-  loadingAPI();
-    // loadedCart();
+    })
+    .then(loadingAPI())
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart));
 };
