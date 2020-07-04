@@ -41,10 +41,10 @@ function cartItemClickListener(event) {
   const itemToRemove = event.target;
   itemToRemove.classList = 'removing';
   const removingItem = document.getElementsByClassName('removing');
-  const text = event.target.innerHTML;
+  const text = removingItem[0].innerHTML;
   const value = text.substring(text.indexOf('PRICE: $') + 8);
   updatePrice(-parseFloat(value));
-  event.target.parentNode.removeChild(removingItem[0]);
+  removingItem[0].parentNode.removeChild(removingItem[0]);
   localStorage.setItem('cartPrice', document.getElementById('total-price').innerHTML);
   localStorage.setItem('cartItem', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
@@ -93,7 +93,7 @@ window.onload = function onload() {
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cartItem');
         document.getElementById('total-price').innerHTML = localStorage.getItem('cartPrice');
       } else {
-        localStorage.setItem('cartPrice', '0.00');
+        localStorage.setItem('cartPrice', '0');
       }
     });
 };
