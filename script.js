@@ -103,7 +103,7 @@ const remAll = () => {
 };
 
 function loading(condition) {
-  const body = document.querySelector('body');
+  const body = document.querySelector('.items');
   if (condition) {
     const div = document.createElement('div');
     div.className = 'loading';
@@ -111,9 +111,8 @@ function loading(condition) {
     console.log('carregando');
     body.appendChild(div);
   } else {
-    const myDiv = document.querySelector('.loading');
     console.log('carregado');
-    body.removeChild(myDiv);
+    body.removeChild(document.querySelector('.loading'));
   }
 }
 
