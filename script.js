@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -41,7 +41,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = function onload() {
-  fetch('"https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
     data.results.forEach((result) => {
@@ -52,9 +52,13 @@ window.onload = function onload() {
       });
       document.querySelector('.items').appendChild(product);
     });
+  })
+  .then(() => {
+    document.querySelectorAll('.item__add').forEach(add => add.addEventListener('click', () => {
+      getSkuFromProductItem(add.parentElement.querySelector('span.item__sku').innerText);
+    }));
   });
 };
-// jest.config.js
 module.exports = {
   verbose: true,
 };
