@@ -35,11 +35,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const vlSoma = (valor) => {
-  let vlTotal = 0;
-  vlTotal += valor;
-  return vlTotal;
-};
+function espera(x) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function somando(valor) {
+  const vlT = 0;
+  return vlT + await espera(valor);
+}
 
 function cartItemClickListener() {
   const myAddCart = document.querySelector('.items');
@@ -56,12 +63,12 @@ function cartItemClickListener() {
         name: data.title,
         salePrice: data.price,
       });
-      let sum  = await vlSoma(data.price);
       document.querySelector('.cart__items').appendChild(mycart);
       saveObj = [];
       const obj = document.querySelector('.cart__items').cloneNode(true);
       saveObj.push(obj.outerHTML);
       localStorage.saveObject = JSON.stringify(saveObj);
+      sum += await somando(data.price);
       document.querySelector('.total-price').innerText = `Valor Total: $${sum}`;
     });
   });
