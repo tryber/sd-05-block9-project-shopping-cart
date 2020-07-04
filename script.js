@@ -101,27 +101,28 @@ const remAll = () => {
     document.querySelector('.total-price').innerText = '';
   });
 };
+
 function loading(condition) {
   const body = document.querySelector('body');
   if (condition) {
     const div = document.createElement('div');
     div.className = 'loading';
     div.innerText = 'Carregando...';
-    // console.log("carregando");
+    console.log("carregando");
     body.appendChild(div);
   } else {
     const myDiv = document.querySelector('.loading');
-    // console.log("carregado");
+    console.log("carregado");
     body.removeChild(myDiv);
   }
 }
 
-
-window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+function loadAPI(){
+  let a = loading(true);
+  a;
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador',)
   .then(response => response.json())
   .then((data) => {
-    loading(true);
     data.results.forEach((item) => {
       const product = createProductItemElement({
         sku: item.id,
@@ -130,8 +131,15 @@ window.onload = function onload() {
       });
       document.querySelector('.items').appendChild(product);
     });
-    loading(false);
   });
+  a = loading(false);
+
+}
+
+
+window.onload = function onload() {
+  let ToF = true;
+  loadAPI();
   initCa();
   rem();
   remAll();
