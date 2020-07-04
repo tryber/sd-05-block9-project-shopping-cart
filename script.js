@@ -48,22 +48,22 @@ async function somando(valor) {
   return vlT + await espera(valor);
 }
 
-function cartItemClickListener() {
+async function cartItemClickListener(a) {
   const myAddCart = document.querySelector('.items');
-  let sum = 0;
-  myAddCart.addEventListener('click', (evento) => {
+  let sum = a;
+  await myAddCart.addEventListener('click', (evento) => {
     const myret = evento.target.parentElement.querySelectorAll('span')[0].innerText;
     fetch(`https://api.mercadolibre.com/items/${myret}`)
     .then(response => response.json())
     .then(async (data) => {
       console.log(data);
       console.log(data.title);
-      sum += await somando(data.price);
       const mycart = createCartItemElement({
         sku: data.id,
         name: data.title,
         salePrice: data.price,
       });
+      sum += await somando(data.price);
       document.querySelector('.cart__items').appendChild(mycart);
       saveObj = [];
       const obj = document.querySelector('.cart__items').cloneNode(true);
@@ -73,6 +73,7 @@ function cartItemClickListener() {
     });
   });
 }
+
 function rem() {
   const myRemCart = document.querySelector('.cart__items');
   myRemCart.addEventListener('click', (envent) => {
@@ -88,11 +89,25 @@ function rem() {
 //----------------------------------------------------------------------
 
 const initCa = () => {
+  const paste = '<span class="cart__title">Carrinho de compras</span>';
   if (localStorage.length === 1) {
-    document.querySelector('.cart1').innerHTML += `${JSON.parse(localStorage.saveObject)}`;
+    document.querySelector('.cart1').innerHTML =
+    `${paste}
+    ${JSON.parse(localStorage.saveObject)}`;
   } else {
-    document.querySelector('.cart1').innerHTML += '<ol class="cart__items"></ol>';
+    document.querySelector('.cart1').innerHTML =
+  `${paste}
+  <ol class="cart__items"></ol>`;
   }
+};
+
+const remAll = () => {
+  const btnDel = document.querySelector('.empty-cart');
+  btnDel.addEventListener('click', () => {
+    localStorage.clear();
+    initCa();
+    document.querySelector('.total-price').innerText = '';
+  });
 };
 
 window.onload = function onload() {
@@ -113,6 +128,7 @@ window.onload = function onload() {
   // aqui acaba o segundo then
   // aqui começa o req 2
   initCa();
-  cartItemClickListener();
   rem();
+  remAll();
+  cartItemClickListener(0);
 };
