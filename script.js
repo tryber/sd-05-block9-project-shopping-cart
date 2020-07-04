@@ -35,7 +35,7 @@ function storedCart() {
 
 const emptyCart = () => {
   document.querySelectorAll('.cart__item').forEach(item => item.remove());
-}
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
