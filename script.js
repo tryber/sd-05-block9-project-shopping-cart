@@ -88,9 +88,9 @@ window.onload = function onload() {
   // aqui começa o req 2
   const init = () => {
     if (localStorage.length === 1) {
-      document.querySelector('.cart').innerHTML += `${JSON.parse(localStorage.saveObject)}`;
+      document.querySelector('.cart1').innerHTML += `${JSON.parse(localStorage.saveObject)}`;
     } else {
-      document.querySelector('.cart').innerHTML += '<ol class="cart__items"></ol>';
+      document.querySelector('.cart1').innerHTML += '<ol class="cart__items"></ol>';
     }
   };
   init();
