@@ -61,7 +61,7 @@ function cartItemClickListener() {
       const obj = document.querySelector('.cart__items').cloneNode(true);
       saveObj.push(obj.outerHTML);
       localStorage.saveObject = JSON.stringify(saveObj);
-      sum += vlSoma(data.price);
+      sum += await vlSoma(data.price);
       document.querySelector('.total-price').innerText = `Valor Total: $${sum}`;
     });
   });
