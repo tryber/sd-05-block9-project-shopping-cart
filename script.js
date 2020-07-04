@@ -41,10 +41,10 @@ function cartItemClickListener(event) {
   const itemToRemove = event.target;
   itemToRemove.classList = 'removing';
   const removingItem = document.getElementsByClassName('removing');
-  const text = removingItem[0].innerHTML;
+  const text = event.target.innerHTML;
   const value = text.substring(text.indexOf('PRICE: $') + 8);
   updatePrice(-parseFloat(value));
-  removingItem[0].parentNode.removeChild(removingItem[0]);
+  event.target.parentNode.removeChild(removingItem[0]);
   localStorage.setItem('cartPrice', document.getElementById('total-price').innerHTML);
   localStorage.setItem('cartItem', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
