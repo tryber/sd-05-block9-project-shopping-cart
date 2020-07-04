@@ -31,7 +31,7 @@ function getSkuFromProductItem(item) {
 async function updatePrice(preco) {
   const totalPrice = document.getElementById('total-price');
   const tempPrice = parseFloat(totalPrice.innerHTML) + preco;
-  totalPrice.innerHTML = (Math.round(tempPrice * 100) / 100).toFixed(2);
+  totalPrice.innerHTML = (Math.round(tempPrice * 100) / 100);
 }
 
 function cartItemClickListener(event) {
