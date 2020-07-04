@@ -39,7 +39,7 @@ function espera(x) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(x);
-    }, 2000);
+    }, 0);
   });
 }
 
@@ -51,20 +51,20 @@ async function somando(valor) {
 async function cartItemClickListener(a) {
   const myAddCart = document.querySelector('.items');
   let sum = a;
-  await myAddCart.addEventListener('click', (evento) => {
+  myAddCart.addEventListener('click', (evento) => {
     const myret = evento.target.parentElement.querySelectorAll('span')[0].innerText;
     fetch(`https://api.mercadolibre.com/items/${myret}`)
     .then(response => response.json())
     .then(async (data) => {
       console.log(data);
       console.log(data.title);
-      const mycart = createCartItemElement({
+      const mycart = await createCartItemElement({
         sku: data.id,
         name: data.title,
         salePrice: data.price,
       });
-      sum += await somando(data.price);
       document.querySelector('.cart__items').appendChild(mycart);
+      sum += await somando(data.price);
       saveObj = [];
       const obj = document.querySelector('.cart__items').cloneNode(true);
       saveObj.push(obj.outerHTML);
