@@ -58,6 +58,7 @@ function cartItemClickListener() {
     .then(async (data) => {
       console.log(data);
       console.log(data.title);
+      sum += await somando(data.price);
       const mycart = createCartItemElement({
         sku: data.id,
         name: data.title,
@@ -68,7 +69,6 @@ function cartItemClickListener() {
       const obj = document.querySelector('.cart__items').cloneNode(true);
       saveObj.push(obj.outerHTML);
       localStorage.saveObject = JSON.stringify(saveObj);
-      sum += await somando(data.price);
       document.querySelector('.total-price').innerText = `${sum}`;
     });
   });
