@@ -35,17 +35,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function espera(x) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(x);
-    }, 0);
-  });
-}
-
-async function somando(valor) {
+function somando(valor) {
   const vlT = 0;
-  return vlT + await espera(valor);
+  return vlT + valor;
 }
 
 async function cartItemClickListener(a) {
@@ -64,7 +56,7 @@ async function cartItemClickListener(a) {
         salePrice: data.price,
       });
       document.querySelector('.cart__items').appendChild(mycart);
-      sum += await somando(data.price);
+      sum += somando(data.price);
       saveObj = [];
       const obj = document.querySelector('.cart__items').cloneNode(true);
       saveObj.push(obj.outerHTML);
