@@ -69,7 +69,7 @@ function cartItemClickListener() {
       saveObj.push(obj.outerHTML);
       localStorage.saveObject = JSON.stringify(saveObj);
       sum += await somando(data.price);
-      document.querySelector('.total-price').innerText = `Valor Total: $${sum}`;
+      document.querySelector('.total-price').innerText = `${sum}`;
     });
   });
 }
