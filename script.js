@@ -53,12 +53,4 @@ window.onload = function onload() {
       document.querySelector('.items').appendChild(product);
     });
   })
-  .then(() => {
-    document.querySelectorAll('.item__add').forEach(add => add.addEventListener('click', () => {
-      getSkuFromProductItem(add.parentElement.querySelector('span.item__sku').innerText);
-    }));
-  });
-};
-module.exports = {
-  verbose: true,
 };
