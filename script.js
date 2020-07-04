@@ -48,7 +48,7 @@ function cartItemClickListener() {
     const myret = evento.target.parentElement.querySelectorAll('span')[0].innerText;
     fetch(`https://api.mercadolibre.com/items/${myret}`)
     .then(response => response.json())
-    .then((data) => {
+    .then(async (data) => {
       console.log(data);
       console.log(data.title);
       const mycart = createCartItemElement({
