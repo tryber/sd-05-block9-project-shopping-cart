@@ -52,5 +52,5 @@ window.onload = function onload() {
       });
       document.querySelector('.items').appendChild(product);
     });
-  })
+  });
 };
