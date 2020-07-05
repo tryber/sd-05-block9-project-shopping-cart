@@ -30,8 +30,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+function cartItemClickListener() {
+ /* const cartlist = document.getElementById('cart_list')
+  for (let i in cartlist) {
+    if ( i === event.target) {
+      cartlist.removeChild(i)
+    }
+  }
+  */
+  const item = event.target;
+  item.classList = 'removing';
+  const removingItem = document.getElementsByClassName('removing');
+  while (removingItem.length > 0) {
+    removingItem[0].parentNode.removeChild(removingItem[0]);
+  }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
