@@ -12,6 +12,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function textoLoading() {
+  const novoLoading = createCustomElement('h2', 'loading', 'loading...');
+  document.querySelector('.container').appendChild(novoLoading);
+  setTimeout(() => { novoLoading.remove(); }, 1500);
+}
+
 function guardandoLocal() {
   const itensSalvos = document.getElementsByClassName('cart__items')[0];
   localStorage.setItem('itensSalvos', itensSalvos.innerHTML);
@@ -82,5 +88,6 @@ window.onload = async function onload() {
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itensSalvos');
       });
     })
-  .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', limpandoCarrinho));
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', limpandoCarrinho))
+    .then(textoLoading());
 };
