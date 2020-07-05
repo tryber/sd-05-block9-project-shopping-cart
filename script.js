@@ -1,3 +1,4 @@
+const selectItems = document.getElementsByClassName('items')[0];
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,7 +14,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ sku, name, image }) {
-  const selectItems = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
