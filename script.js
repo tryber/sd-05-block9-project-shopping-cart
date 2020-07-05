@@ -54,7 +54,8 @@ fetch(initializing)
     });
   });
 
-getSkuFromProductItem();
+// getSkuFromProductItem();
+
 createCartItemElement();
 
 // window.onload = function onload() {};
