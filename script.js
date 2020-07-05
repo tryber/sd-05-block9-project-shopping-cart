@@ -1,3 +1,7 @@
+let valStorage = 0;
+let soma = 0;
+let subtração = 0;
+
 // salvar objeto carrinho
 function salvar() {
   localStorage.clear('carrinho');
@@ -36,6 +40,24 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+// Criar valor total
+async function somaAll() {
+  const totalPrice = await document.querySelector('.total-price');
+
+  if (localStorage.carrinho === undefined || localStorage.carrinho === '') {
+    totalPrice.innerHTML = 0;
+    console.log(localStorage);
+    salvar();
+  } else {
+    totalPrice.innerHTML = (parseInt(valStorage, 10) + soma + subtração).toFixed(2);
+    console.log(totalPrice.innerHTML);
+    console.log(valStorage);
+    console.log(soma);
+    console.log(subtração);
+    salvar();
+  }
+}
+
 // Romação de item do carrinho
 function cartItemClickListener(event) {
   event.target.classList.contains('select');
@@ -46,8 +68,8 @@ function cartItemClickListener(event) {
   const priceSelect = eventSplit[eventSplit.length - 1];
   const priceSel = priceSelect.split('$');
   subtração -= priceSel[1];
-  console.log(subtração)
-  somaAll()
+  console.log(subtração);
+  somaAll();
 }
 
 // Formato do itrm do carrinho
@@ -73,8 +95,8 @@ function getSkuFromProductItem(item) {
     cartPai.appendChild(createCartItemElement(productAdd));
     salvar();
     soma += data.price;
-    console.log(soma)
-    somaAll()
+    console.log(soma);
+    somaAll();
   });
 }
 
@@ -98,28 +120,7 @@ function ciateList() {
       .addEventListener('click', () => {
         getSkuFromProductItem(addItem.parentElement.querySelector('span.item__sku').innerText);
       }));
-    })
-}
-
-// Criar valor total
-let valStorage = 0;
-let soma = 0;
-let subtração = 0;
-async function somaAll() {
-  const totalPrice = await document.querySelector('.total-price');
-
-  if (localStorage.carrinho === undefined || localStorage.carrinho === "") {
-    totalPrice.innerHTML = 0;
-    console.log(localStorage);
-    salvar();
-  } else {
-    totalPrice.innerHTML = (parseInt(valStorage) + soma + subtração).toFixed(2);
-    
-    console.log(totalPrice.innerHTML);
-    console.log(soma);
-    console.log(subtração);
-    salvar();
-  }
+    });
 }
 
 // chamar a função no final
@@ -138,11 +139,12 @@ window.onload = function onload() {
   .addEventListener('click', () => {
     document.querySelector('ol').innerHTML = '';
     localStorage.removeItem('carrinho');
+    valStorage = 0;
     soma = 0;
     subtração = 0;
-    salvar()
+    salvar();
     somaAll();
   }));
-  
+
   ciateList();
-}
+};
