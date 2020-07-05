@@ -57,8 +57,8 @@ fetch(initializing)
   .then(response => response.json())
   .then(function (obj) {
     obj.results.map((objProducts) => {
-      const { id: sku, title: name, thumbnail: image } = objProducts;
-      return createProductItemElement({ sku, name, image });
+      const { id, title, thumbnail } = objProducts;
+      return createProductItemElement({ id, title, thumbnail });
     });
   });
 
