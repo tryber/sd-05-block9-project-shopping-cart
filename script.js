@@ -40,6 +40,8 @@ function addToCart(sku) {
       salePrice: data.price,
     });
     cItem.appendChild(addCItem);
+    const savedItems = document.getElementsByClassName('cart__items')[0];
+    localStorage.setItem('savedItems', savedItems.innerHTML);
   });
 }
 
@@ -71,5 +73,6 @@ fetch(apiUrl)
         image: data.results[i].thumbnail,
       };
       addItem.appendChild(createProductItemElement(product));
+      document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('savedItems');
     }
   });
