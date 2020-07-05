@@ -33,7 +33,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  console.log(event);
+  const father = event.target.parentNode;
+  father.removeChild(event.target);
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -52,7 +53,6 @@ function getClickList(event) {
     .then((data) => {
       const ol = document.getElementsByClassName('cart__items')[0];
       ol.appendChild(createCartItemElement(data));
-      console.log(data);
     });
   }
 }
