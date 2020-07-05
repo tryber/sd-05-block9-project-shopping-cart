@@ -46,15 +46,10 @@ async function somaAll() {
 
   if (localStorage.carrinho === undefined || localStorage.carrinho === '') {
     totalPrice.innerHTML = 0;
-    console.log(localStorage);
     salvar();
   } else {
     totalPrice.innerHTML = Math.round(((Math.round(valStorage * 100) / 100)
     + (Math.round(soma * 100) / 100) + (Math.round(subtração * 100) / 100)) * 100) / 100;
-    console.log(totalPrice.innerHTML);
-    console.log(valStorage);
-    console.log(soma);
-    console.log(subtração);
     salvar();
   }
 }
@@ -69,7 +64,6 @@ function cartItemClickListener(event) {
   const priceSelect = eventSplit[eventSplit.length - 1];
   const priceSel = priceSelect.split('$');
   subtração -= priceSel[1];
-  console.log(subtração);
   somaAll();
 }
 
@@ -96,7 +90,6 @@ function getSkuFromProductItem(item) {
     cartPai.appendChild(createCartItemElement(productAdd));
     salvar();
     soma += data.price;
-    console.log(soma);
     somaAll();
   });
 }
@@ -126,12 +119,14 @@ function ciateList() {
 
 // chamar a função no final
 window.onload = function onload() {
+  // Menssagem 'loding...' ao carregar o API
+  document.querySelector('.items').appendChild(createCustomElement('span', 'loading', 'loading...'));
+
   // retornar localStoreg
   if (localStorage.getItem('carrinho') !== undefined) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
     document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
     document.querySelector('.total-price').innerHTML = localStorage.getItem('price');
-    console.log(document.querySelector('.total-price').innerHTML);
     valStorage = document.querySelector('.total-price').innerHTML;
   }
 
@@ -146,6 +141,10 @@ window.onload = function onload() {
     salvar();
     somaAll();
   }));
+
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 1000);
 
   ciateList();
 };
