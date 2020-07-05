@@ -5,12 +5,19 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function sumPrices(price) {
+  const preco = document.querySelector('.total-price');
+  preco.innerHTML = (parseFloat(preco.innerHTML) + price).toFixed(2);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const price = parseFloat(event.target.innerHTML.substr(event.target.innerHTML.indexOf('PRICE: $') + 8));
   const father = event.target.parentNode;
   father.removeChild(event.target);
   const ol = document.querySelector('.cart__items');
   localStorage.setItem('carrinho', ol.innerHTML);
+  sumPrices(-price);
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -18,6 +25,7 @@ function createCartItemElement({ id, title, price }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
+  sumPrices(price);
   return li;
 }
 
