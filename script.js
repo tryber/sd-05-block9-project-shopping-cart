@@ -92,4 +92,9 @@ const fetchList = () => fetch(apiUrl)
 window.onload = function onload() {
   fetchList();
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinhosalvo');
+  document.querySelectorAll('.cart__item').forEach(li => li.addEventListener('click', cartItemClickListener));
+  document.getElementsByClassName('container')[0].appendChild(createCustomElement('p', 'loading', 'loading...'));
+  setTimeout(() => {
+    document.getElementsByClassName('loading')[0].remove();
+  }, 3000);
 };
