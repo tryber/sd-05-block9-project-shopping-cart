@@ -25,9 +25,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  //return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
@@ -57,4 +57,4 @@ fetch(initializing)
 getSkuFromProductItem();
 createCartItemElement();
 
-//window.onload = function onload() {};
+// window.onload = function onload() {};
