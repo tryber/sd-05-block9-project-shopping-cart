@@ -49,7 +49,8 @@ async function somaAll() {
     console.log(localStorage);
     salvar();
   } else {
-    totalPrice.innerHTML = (parseInt(valStorage, 10) + soma + subtração).toFixed(2);
+    totalPrice.innerHTML = Math.round(((Math.round(valStorage * 100) / 100)
+    + (Math.round(soma * 100) / 100) + (Math.round(subtração * 100) / 100)) * 100) / 100;
     console.log(totalPrice.innerHTML);
     console.log(valStorage);
     console.log(soma);
