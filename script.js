@@ -76,7 +76,7 @@ window.onload = function onload() {
     ol.innerHTML = '';
     localStorage.setItem('carrinho', ol.innerHTML);
     document.querySelector('.total-price').innerHTML = '0.00';
-  }
+  },
   );
 
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
