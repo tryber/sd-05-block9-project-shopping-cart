@@ -50,8 +50,8 @@ window.onload = function onload() {
       produto.name = product.title;
       produto.image = product.thumbnail;
       const div = createProductItemElement(produto);
-      const section = document.querySelector(".items");
-      return section.appendChild(div)
+      const section = document.querySelector('.items');
+      return section.appendChild(div);
     });
   });
 };
