@@ -10,7 +10,7 @@ function* generatorId() {
 
 async function changeValues(price) {
   const valueNow = document.getElementsByClassName('total-price')[0];
-  valueNow.innerHTML = (parseFloat(valueNow.innerHTML) + price).toFixed(2);
+  valueNow.innerHTML = (parseFloat(valueNow.innerHTML) + price);
 }
 
 function createProductImageElement(imageSource) {
@@ -107,7 +107,7 @@ window.onload = function onload() {
   const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
   botaoLimpar.addEventListener('click', () => {
     ol.innerHTML = '';
-    document.getElementsByClassName('total-price')[0].innerHTML = '0.00';
+    document.getElementsByClassName('total-price')[0].innerHTML = '0';
     updateOl();
   });
   const sectionProducts = document.getElementsByClassName('items')[0];
