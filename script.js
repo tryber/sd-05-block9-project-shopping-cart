@@ -1,3 +1,10 @@
+const emptyCart = () => {
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(li => li.remove());
+};
+
+document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart);
+
 const salvarCarrinho = () => {
   const carrinho = document.getElementById('cart_list').innerHTML;
   localStorage.setItem('carrinhosalvo', carrinho);
