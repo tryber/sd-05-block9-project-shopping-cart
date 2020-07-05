@@ -2,8 +2,9 @@
 function salvar() {
   localStorage.clear('carrinho');
   const cartSave = document.getElementsByTagName('ol')[0].innerHTML;
-  console.log(cartSave);
+  const priceSave = document.querySelector('.total-price').innerHTML;
   localStorage.setItem('carrinho', cartSave);
+  localStorage.setItem('price', priceSave);
 }
 
 // carregando a foto para o produto
@@ -41,6 +42,12 @@ function cartItemClickListener(event) {
   event.target.classList.add('select');
   event.target.remove('select');
   salvar();
+  eventSplit = event.target.innerText.split(' ');
+  const priceSelect = eventSplit[eventSplit.length - 1];
+  const priceSel = priceSelect.split('$');
+  subtração -= priceSel[1];
+  console.log(subtração)
+  somaAll()
 }
 
 // Formato do itrm do carrinho
@@ -64,8 +71,10 @@ function getSkuFromProductItem(item) {
     };
     const cartPai = document.getElementsByClassName('cart__items')[0];
     cartPai.appendChild(createCartItemElement(productAdd));
-
     salvar();
+    soma += data.price;
+    console.log(soma)
+    somaAll()
   });
 }
 
@@ -89,7 +98,28 @@ function ciateList() {
       .addEventListener('click', () => {
         getSkuFromProductItem(addItem.parentElement.querySelector('span.item__sku').innerText);
       }));
-    });
+    })
+}
+
+// Criar valor total
+let valStorage = 0;
+let soma = 0;
+let subtração = 0;
+async function somaAll() {
+  const totalPrice = await document.querySelector('.total-price');
+
+  if (localStorage.carrinho === undefined || localStorage.carrinho === "") {
+    totalPrice.innerHTML = 0;
+    console.log(localStorage);
+    salvar();
+  } else {
+    totalPrice.innerHTML = (parseInt(valStorage) + soma + subtração).toFixed(2);
+    
+    console.log(totalPrice.innerHTML);
+    console.log(soma);
+    console.log(subtração);
+    salvar();
+  }
 }
 
 // chamar a função no final
@@ -98,6 +128,9 @@ window.onload = function onload() {
   if (localStorage.getItem('carrinho') !== undefined) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
     document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
+    document.querySelector('.total-price').innerHTML = localStorage.getItem('price');
+    console.log(document.querySelector('.total-price').innerHTML);
+    valStorage = document.querySelector('.total-price').innerHTML;
   }
 
   // limpar carrinho
@@ -105,7 +138,11 @@ window.onload = function onload() {
   .addEventListener('click', () => {
     document.querySelector('ol').innerHTML = '';
     localStorage.removeItem('carrinho');
+    soma = 0;
+    subtração = 0;
+    salvar()
+    somaAll();
   }));
-
+  
   ciateList();
-};
+}

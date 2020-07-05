@@ -80,3 +80,9 @@ ol li {
   margin-bottom: 15px;
   cursor: pointer;
 }
+
+P {
+  font-size: 26px;
+  text-align: center;
+  margin: 15px 0 0;
+}
