@@ -21,6 +21,10 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
+function limpandoCarrinho() {
+  document.querySelectorAll('.cart__item').forEach(item => item.remove());
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -77,5 +81,6 @@ window.onload = async function onload() {
         document.querySelector('.items').appendChild(produtos);
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itensSalvos');
       });
-    });
+    })
+  .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', limpandoCarrinho));
 };
