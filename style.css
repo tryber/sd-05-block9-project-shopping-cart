@@ -75,6 +75,8 @@
   text-align: center;
 }
 
-section {
-  border: 1px red solid;
+.price {
+  flex-basis: 1;
+  font-size: 16pt;
+  text-align: center;
 }
