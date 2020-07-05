@@ -75,6 +75,7 @@ window.onload = function onload() {
   botao.addEventListener('click', () => {
     ol.innerHTML = '';
     localStorage.setItem('carrinho', ol.innerHTML);
+    
   });
 
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
