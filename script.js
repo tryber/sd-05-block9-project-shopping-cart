@@ -31,13 +31,12 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener() {
- /* const cartlist = document.getElementById('cart_list')
-  for (let i in cartlist) {
-    if ( i === event.target) {
-      cartlist.removeChild(i)
-    }
-  }
-  */
+  // const cartlist = document.getElementById('cart_list')
+  // for (let i in cartlist) {
+    // if ( i === event.target) {
+      // cartlist.parentNode.removeChild(i)
+    // }
+  // }
   const item = event.target;
   item.classList = 'removing';
   const removingItem = document.getElementsByClassName('removing');
