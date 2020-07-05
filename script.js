@@ -1,3 +1,4 @@
+/*
 function* generatorId() {
   let id = 1;
   while (true) {
@@ -5,6 +6,7 @@ function* generatorId() {
     id += 1;
   }
 }
+*/
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,15 +19,11 @@ function createCustomElement(element, className, innerText, id) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-  if (id !== undefined) e.id = id;
-  if (element === 'button') {
-    e.addEventListener('click', () => {})
+  if (id !== undefined) {
+    e.id = id;
   }
   return e;
 }
-
-
-
 
 function getSkuFromProductItem(item) {
   const id = item.querySelector('span.item__sku').innerText;
