@@ -13,22 +13,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  selectItems.appendChild(section);
-  return section;
-}
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const eventClick = event;
@@ -42,6 +26,30 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+function idProducts(item) {
+  const callOl = document.querySelector('.cart__items');
+  const url = `https://api.mercadolibre.com/items/${item}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(function (clickButoon) {
+      const { id: sku, title: name, price: salePrice } = clickButoon;
+      callOl.appendChild(createCartItemElement({ sku, name, salePrice }));
+    });
+}
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const addEvent = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  addEvent.addEventListener('click', () => idProducts(sku));
+  section.appendChild(addEvent);
+  selectItems.appendChild(section);
+  return section;
+}
 
 const initializing =
   'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -54,7 +62,7 @@ fetch(initializing)
     });
   });
 
-// getSkuFromProductItem();
+// idProducts();
 
 createCartItemElement();
 
