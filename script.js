@@ -7,7 +7,11 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const father = event.target.parentNode;
+  // console.log(father);
+  father.removeChild(event.target);
 }
+
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
