@@ -5,8 +5,10 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function cartItemClickListener() {
+function cartItemClickListener(event) {
   // coloque seu código aqui
+  const father = event.target.parentNode;
+  father.removeChild(event.target);
 }
 
 function createCartItemElement({ id, title, price }) {
