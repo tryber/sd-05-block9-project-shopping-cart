@@ -12,6 +12,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function guardandoLocal() {
+  const itensSalvos = document.getElementsByClassName('cart__items')[0];
+  localStorage.setItem('itensSalvos', itensSalvos.innerHTML);
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
 }
@@ -36,6 +41,7 @@ async function incrementandoCarrinho({ sku }) {
       document
         .querySelector('.cart__items')
         .appendChild(createCartItemElement(produto));
+      guardandoLocal();
     });
 }
 
@@ -69,6 +75,7 @@ window.onload = async function onload() {
           image: item.thumbnail,
         });
         document.querySelector('.items').appendChild(produtos);
+        document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itensSalvos');
       });
     });
 };
