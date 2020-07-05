@@ -7,7 +7,7 @@ function createProductImageElement(imageSource) {
 
 async function sumPrices(price) {
   const preco = document.querySelector('.total-price');
-  preco.innerHTML = (parseFloat(preco.innerHTML) + price).toFixed(2);
+  preco.innerHTML = (parseFloat(preco.innerHTML) + price);
 }
 
 function cartItemClickListener(event) {
