@@ -129,7 +129,7 @@ function loadAPI() {
       document.querySelector('.items').appendChild(product);
     });
   })
-  .then(setTimeout(() => document.querySelector('.loading').remove(), 1000))
+  .then(setTimeout(() => document.querySelector('.loading').remove(), 1000));
 }
 
 window.onload = function onload() {
