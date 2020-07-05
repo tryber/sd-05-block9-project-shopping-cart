@@ -51,6 +51,6 @@ window.onload = function onload() {
       produto.image = product.thumbnail;
       const div = createProductItemElement(produto);
       return DataTransferItemList.appendChild(div);
-    })
-  })
+    });
+  });
 };
