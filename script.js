@@ -74,7 +74,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 // prettier-ignore
 window.onload = function onload() {
-  setTimeout(() => {document.querySelector('.loading').remove()}, 500);
+  setTimeout(() => { document.querySelector('.loading').remove(); }, 500);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(data =>
