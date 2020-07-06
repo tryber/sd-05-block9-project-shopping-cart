@@ -21,13 +21,13 @@ async function valor(price) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  atualizandoStorage();
   const father = event.target.parentNode;
   // console.log(event.target);
   let price = event.target.innerHTML;
   price = parseFloat(price.substr(price.indexOf('PRICE: $') + 8));
   valor(-price);
   father.removeChild(event.target);
+  atualizandoStorage();
 }
 
 function createCartItemElement({ id, title, price }) {
