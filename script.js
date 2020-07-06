@@ -52,7 +52,7 @@ const recuperaListaDoLocalStorage = () => {
       ol.appendChild(li);
     }
   }
-}
+};
 
 const getProduct = (sku) => {
   const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
