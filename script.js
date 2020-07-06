@@ -59,13 +59,12 @@ window.onload = function onload() {
   loading();
   setTimeout(() => {
     (document.querySelector('.loading').remove());
-  }, 1000);< !--
+  }, 1000);
 
-    document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('SavedCart');
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('SavedCart');
   if (localStorage.getItem('SavedCart') !== undefined) {
     const addEvent = document.querySelectorAll('.cart__item');
     addEvent.forEach(item => item.addEventListener('click', cartItemClickListener));
   }
   sumProducts();
-}; urn li;
-}
+};
