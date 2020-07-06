@@ -30,6 +30,7 @@ function cartItemClickListener(event) {
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = id;
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   totalPrice(price);
@@ -77,7 +78,9 @@ window.onload = function onload() {
     refreshLocalStorage();
   });
   cart.innerHTML = localStorage.getItem('cart');
-  total.innerHTML = localStorage.getItem('totalCart');
+  if (localStorage.getItem('totalCart') !== null) {
+    total.innerHTML = localStorage.getItem('totalCart');
+  }
   if (cart.children.length > 0) {
     for (let i = 0; i < cart.children.length; i += 1) {
       cart.children[i].addEventListener('click', cartItemClickListener);
