@@ -1,3 +1,5 @@
+const items = document.querySelector('.items');
+
 const apagarTodosOsItensDoCarrinho = () => {
   const ol = document.querySelector('ol');
   while (ol.hasChildNodes()) {
@@ -136,20 +138,6 @@ const renderContent = (data) => {
 };
 
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-const carregando = () => {
-  const container = document.querySelector('.container');
-  const loading = document.createElement('section');
-  loading.className = 'loading';
-  loading.innerText = 'loading...';
-  container.appendChild(loading);
-};
-
-const pronto = () => {
-  const container = document.querySelector('.container');
-  const loading = document.querySelector('.loading');
-  container.removeChild(loading);
-};
-
 const fetchApi = () => {
   const myObject = {
     method: 'GET',
@@ -163,8 +151,11 @@ const fetchApi = () => {
 };
 
 window.onload = function onload() {
-  carregando();
+  items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
   fetchApi();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 700);
 };
 
 recuperaListaDoLocalStorage();
