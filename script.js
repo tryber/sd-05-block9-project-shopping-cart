@@ -79,7 +79,6 @@ window.onload = function onload() {
     atualizandoStorage();
   });
   ol.innerHTML = localStorage.getItem('carrinho');
-  prices.innerHTML = localStorage.getItem('Soma da compra');
   if (localStorage.getItem('Soma da compra') !== null) {
     prices.innerHTML = localStorage.getItem('Soma da compra');
   }
