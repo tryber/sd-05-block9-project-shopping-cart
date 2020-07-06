@@ -50,6 +50,7 @@ const salvarLocalStorage = () => {
   }
   const listaEmTexto = JSON.stringify(lista);
   localStorage.setItem('lista', listaEmTexto);
+  console.log('ls',listaEmTexto);
 };
 
 const recuperaListaDoLocalStorage = () => {
@@ -139,29 +140,31 @@ const renderContent = (data) => {
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const carregando = () => {
   const loading = document.querySelector('.loading');
-  loading.style.visibility = 'visible';
-};
+  if (loading.style.visibility === 'hidden') {
+    loading.style.visibility = 'visible';
+  } else {
+    loading.style.visibility = 'hidden';
+  }
+}
 
 const pronto = () => {
   const loading = document.querySelector('.loading');
   loading.style.visibility = 'hidden';
-};
+}
 
 const fetchApi = () => {
   const myObject = {
     method: 'GET',
   };
-
-  carregando();
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then((data) => {
-      pronto();
       renderContent(data);
     });
 };
 
 window.onload = function onload() {
+  carregando();
   fetchApi();
 };
 

@@ -80,12 +80,7 @@
   justify-content: center;
 }
 
-.container-loading {
-  align-items: center;
-  background-color: gainsboro;
-  display: flex;
-  justify-content: center;
-  height: 100%;
+.loading {
   position: absolute;
   width: 100%;
 }
