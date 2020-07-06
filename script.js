@@ -143,7 +143,6 @@ const fetchApi = () => {
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then((data) => {
-      pronto();
       renderContent(data);
     });
 };
