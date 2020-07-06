@@ -33,13 +33,26 @@ const mapeiaProduct = (data) => {
 
 const salvarLocalStorage = () => {
   const lista = [];
-  const ol = document.getElementsByClassName('cart__items')[0];
-  for (let i = 0; i < ol.length; i += 1) {
-    lista.push(ol[i].innerHTML);
+  const li = document.getElementsByClassName('cart__item');
+  for (let i = 0; i < li.length; i += 1) {
+    lista.push(li[i].innerHTML);
   }
   const listaEmTexto = JSON.stringify(lista);
   localStorage.setItem('lista', listaEmTexto);
 };
+
+const recuperaListaDoLocalStorage = () => {
+  const listaEmTexto = localStorage.getItem('lista');
+  if (listaEmTexto != null) {
+    const list = JSON.parse(listaEmTexto);
+    for (let i = 0; i < list.length; i += 1) {
+      const ol = document.querySelector('ol');
+      const li = document.createElement('li');
+      li.innerHTML = list[i];
+      ol.appendChild(li);
+    }
+  }
+}
 
 const getProduct = (sku) => {
   const API_PRODUCT = `https://api.mercadolibre.com/items/${sku}`; // fetch sku
@@ -127,6 +140,8 @@ const fetchApi = () => {
 window.onload = function onload() {
   fetchApi();
 };
+
+recuperaListaDoLocalStorage();
 
 /*
   Quando eu crio elementos no HTML e preciso colocar um
