@@ -90,7 +90,7 @@ const loadCart = () => {
       document.getElementsByClassName('cart__items')[0].appendChild(singleProduct);
     });
   sumTotal();
-}
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
