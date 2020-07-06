@@ -12,7 +12,7 @@ const somaPrice = () => {
   const total = (soma - subtracao);
   totalPrice.innerText = `${total}`;
   return total;
-}
+};
 
 const limparCarrinho = () => {
   document.getElementsByTagName('ol')[0].innerHTML = '';
