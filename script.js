@@ -70,7 +70,6 @@ function getClickList(event) {
     fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((data) => {
-      
       const ol = document.getElementsByClassName('cart__items')[0];
       ol.appendChild(createCartItemElement(data));
     })
