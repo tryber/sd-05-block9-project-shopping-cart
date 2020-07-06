@@ -8,13 +8,9 @@ const apagarTodosOsItensDoCarrinho = () => {
 const btnApagarTodosOsElementosDaLista = document.querySelector('.empty-cart');
 btnApagarTodosOsElementosDaLista.addEventListener('click', apagarTodosOsItensDoCarrinho);
 
-const somarTodosOsValores = () => {
-
-}
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+};
 
 function cartItemClickListener(event) {
   const ol = document.querySelector('ol');
@@ -54,7 +50,6 @@ const salvarLocalStorage = () => {
   }
   const listaEmTexto = JSON.stringify(lista);
   localStorage.setItem('lista', listaEmTexto);
-  console.log('ls',listaEmTexto);
 };
 
 const recuperaListaDoLocalStorage = () => {
@@ -150,7 +145,7 @@ const carregando = () => {
 const pronto = () => {
   const loading = document.querySelector('.loading');
   loading.style.visibility = 'hidden';
-}
+};
 
 const fetchApi = () => {
   const myObject = {
