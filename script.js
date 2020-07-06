@@ -1,6 +1,8 @@
 function atualizandoStorage() {
   const ol = document.getElementsByClassName('cart__items')[0];
   localStorage.setItem('carrinho', ol.innerHTML);
+  const prices = document.querySelector('.total-price');
+  localStorage.setItem('Soma da compra', prices.innerHTML);
 }
 
 function createProductImageElement(imageSource) {
@@ -10,12 +12,22 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function valor(price) {
+  const dinheirinho = document.querySelector('.total-price');
+  // console.log(dinheirinho);
+  dinheirinho.innerHTML = parseFloat(dinheirinho.innerHTML) + price;
+  // console.log(dinheirinho);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  const father = event.target.parentNode;
-  // console.log(father);
-  father.removeChild(event.target);
   atualizandoStorage();
+  const father = event.target.parentNode;
+  // console.log(event.target);
+  let price = event.target.innerHTML;
+  price = parseFloat(price.substr(price.indexOf('PRICE: $') + 8));
+  valor(-price);
+  father.removeChild(event.target);
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -23,6 +35,7 @@ function createCartItemElement({ id, title, price }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
+  valor(price);
   return li;
 }
 
@@ -56,13 +69,18 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+
 window.onload = function onload() {
   const ol = document.getElementsByClassName('cart__items')[0];
+  const prices = document.querySelector('.total-price');
   document.querySelector('.empty-cart').addEventListener('click', () => {
     ol.innerHTML = '';
+    prices.innerHTML = 0;
     atualizandoStorage();
   });
   ol.innerHTML = localStorage.getItem('carrinho');
+  prices.innerHTML = localStorage.getItem('Soma da compra');
+
   if (ol.children.length > 0) {
     for (let i = 0; i < ol.children.length; i += 1) {
       ol.children[i].addEventListener('click', this.cartItemClickListener);
