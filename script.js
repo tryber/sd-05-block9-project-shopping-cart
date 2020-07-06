@@ -70,11 +70,12 @@ function getClickList(event) {
     fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((data) => {
-      loadingSpan();
+      
       const ol = document.getElementsByClassName('cart__items')[0];
       ol.appendChild(createCartItemElement(data));
     })
-    .then(() => updateOl());
+    .then(() => updateOl())
+    .then(() => loadingSpan());
   }
 }
 
@@ -121,12 +122,13 @@ window.onload = function onload() {
   loadingSpan();
   fetch(url)
   .then((data) => {
-    loadingSpan();
+    
     return data.json();
   })
   .then(data => data.results.forEach((result) => {
     sectionProducts.appendChild(createProductItemElement(result));
     resultSummom.push(result);
   }))
-  .then(data => data);
+  .then(data => data)
+  .then(() => loadingSpan());
 };
