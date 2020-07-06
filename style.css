@@ -16,18 +16,6 @@
   align-items: flex-start;
   display: flex;
 }
-.empty-cart{
-  background-color: rgb(231, 231, 231);
-  border: 0;
-  cursor: pointer;
-  margin: 0;
-  padding: 15px;
-  border-radius: 20px;
-}
-
- .empty-cart:hover{
-  background-color: rgb(163, 13, 13);
-}
 
 .container {
   display: flex;
@@ -68,7 +56,7 @@
 }
 
 .item .item__add {
-  background-color: rgb(231, 231, 231);
+  background-color: rgb( 231 , 231 , 231 );
   border: 0;
   cursor: pointer;
   margin: 0;
