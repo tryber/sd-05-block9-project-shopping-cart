@@ -8,6 +8,10 @@ const apagarTodosOsItensDoCarrinho = () => {
 const btnApagarTodosOsElementosDaLista = document.querySelector('.empty-cart');
 btnApagarTodosOsElementosDaLista.addEventListener('click', apagarTodosOsItensDoCarrinho);
 
+const somarTodosOsValores = () => {
+
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -23,6 +27,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`; // criar elementos carrinho
   li.addEventListener('click', cartItemClickListener);
+  console.log('li', li);
   return li;
 }
 
@@ -49,6 +54,7 @@ const salvarLocalStorage = () => {
   }
   const listaEmTexto = JSON.stringify(lista);
   localStorage.setItem('lista', listaEmTexto);
+  console.log('ls',listaEmTexto);
 };
 
 const recuperaListaDoLocalStorage = () => {
@@ -136,13 +142,26 @@ const renderContent = (data) => {
 };
 
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const carregando = () => {
+  const loading = document.querySelector('.loading');
+  loading.style.visibility = 'visible';
+}
+
+const pronto = () => {
+  const loading = document.querySelector('.loading');
+  loading.style.visibility = 'hidden';
+}
+
 const fetchApi = () => {
   const myObject = {
     method: 'GET',
   };
+
+  carregando();
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then((data) => {
+      pronto();
       renderContent(data);
     });
 };
