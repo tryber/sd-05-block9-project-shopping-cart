@@ -81,7 +81,7 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
       }),
     );
-    load();
-    document.querySelectorAll('.cart__item').forEach( item => 
-      item.addEventListener('click', cartItemClickListener));
+  load();
+  document.querySelectorAll('.cart__item').forEach(item =>
+    item.addEventListener('click', cartItemClickListener));
 };
