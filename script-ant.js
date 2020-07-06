@@ -67,7 +67,7 @@
 //       document.querySelector('.cart__items').appendChild(cartItem);
 //       updatePrice(salePrice);
 //       localStorage.setItem('cartPrice', document.getElementById('total-price').innerHTML);
-//       localStorage.setItem('cartItem', document.getElementsByClassName('cart__items')[0].innerHTML);
+//       localStorage.setItem('cartItem', document.querySelector('.cart__items').innerHTML);
 //     });
 // }
 
@@ -90,7 +90,8 @@
 //     })
 //     .then(() => {
 //       if (localStorage.getItem('cartItem') != null) {
-//         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cartItem');
+//         document.getElementsByClassName('cart__items')[0]
+//         .innerHTML = localStorage.getItem('cartItem');
 //         document.getElementById('total-price').innerHTML = localStorage.getItem('cartPrice');
 //       } else {
 //         localStorage.setItem('cartPrice', '0');
