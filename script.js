@@ -79,14 +79,14 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const botaoItem= createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  const botaoItem = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   botaoItem.addEventListener('click', () => getSkuFromProductItem(sku));
   section.appendChild(botaoItem);
   items.appendChild(section);
   document.querySelector('.items').insertBefore(section, span);
   if (document.getElementsByClassName('item').length > 0) {
     span.innerText = '';
-  };
+  }
 }
 
 const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
