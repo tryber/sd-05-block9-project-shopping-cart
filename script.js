@@ -14,8 +14,8 @@ function removerItens() {
 removeapps.addEventListener('click', removerItens);
 
 function saveLocalStorage() {
-  const saveLocal = document.querySelector('.cart__items');
-  localStorage.setItem('cart', saveLocal);
+  const ol = document.querySelector('.cart__items');
+  localStorage.setItem('cart', ol.innerHTML);
 }
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -33,9 +33,9 @@ function cartItemClickListener(event) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  li.addEventListener('click', cartItemClickListener);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 function idProducts(item) {
@@ -46,6 +46,7 @@ function idProducts(item) {
     .then(function (clickButoon) {
       const { id: sku, title: name, price: salePrice } = clickButoon;
       callOl.appendChild(createCartItemElement({ sku, name, salePrice }));
+      saveLocalStorage();
     });
 }
 
@@ -67,9 +68,20 @@ function createProductItemElement({ sku, name, image }) {
 // function idProducts(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-const initializing =
-  'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-fetch(initializing)
+const initializing = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+
+
+// idProducts();
+window.onload = function onload() {
+  
+  if (localStorage.getItem('cart') !== null) {
+    document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('cart');
+    const receive = document.querySelectorAll('.cart__item');
+    receive.forEach((loading) => {
+      loading.addEventListener('click', cartItemClickListener);
+    });
+  }
+  fetch(initializing)
   .then(response => response.json())
   .then(function (obj) {
     obj.results.map((objProducts) => {
@@ -77,14 +89,5 @@ fetch(initializing)
       return createProductItemElement({ sku, name, image });
     });
   });
-
-// idProducts();
-window.onload = function onload() {
-  document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('cart');
-  if (localStorage.getItem('cart')) {
-    const receive = document.querySelectorAll('.cart__item');
-    receive.forEach((loading) => {
-      loading.addEventListener('click', cartItemClickListener);
-    });
-  }
+  
 };
