@@ -3,7 +3,7 @@ const apagarTodosOsItensDoCarrinho = () => {
   while (ol.hasChildNodes()) {
     ol.removeChild(ol.firstChild);
   }
-}
+};
 
 const btnApagarTodosOsElementosDaLista = document.querySelector('.empty-cart');
 btnApagarTodosOsElementosDaLista.addEventListener('click', apagarTodosOsItensDoCarrinho);
