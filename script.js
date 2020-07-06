@@ -3,6 +3,18 @@ async function changeValues(price) {
   valueNow.innerHTML = (parseFloat(valueNow.innerHTML) + price);
 }
 
+function loadingSpan() {
+  if (document.getElementsByClassName('loading').length === 0) {
+    const spanLoading = document.createElement('span');
+    spanLoading.innerHTML = 'loading...';
+    spanLoading.className = 'loading';
+    document.getElementsByClassName('cart')[0].appendChild(spanLoading);
+  } else {
+    const spanLoading = document.getElementsByClassName('loading')[0];
+    spanLoading.parentElement.removeChild(spanLoading);
+  }
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -54,9 +66,11 @@ function createCartItemElement({ id, title, price }) {
 function getClickList(event) {
   if (event.target.className === 'item__add') {
     const id = getSkuFromProductItem(event.target.parentNode);
+    loadingSpan();
     fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((data) => {
+      loadingSpan();
       const ol = document.getElementsByClassName('cart__items')[0];
       ol.appendChild(createCartItemElement(data));
     })
@@ -92,7 +106,6 @@ function beginnig() {
 }
 
 window.onload = function onload() {
-  const loading = document.getElementsByClassName('loading')[0];
   const ol = document.getElementsByClassName('cart__items')[0];
   beginnig();
   const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
@@ -105,10 +118,10 @@ window.onload = function onload() {
   const sectionProducts = document.getElementsByClassName('items')[0];
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${key}`;
   const resultSummom = [];
-  loading.innerHTML = 'loading...';
+  loadingSpan();
   fetch(url)
   .then((data) => {
-    loading.innerHTML = '';
+    loadingSpan();
     return data.json();
   })
   .then(data => data.results.forEach((result) => {
