@@ -1,5 +1,5 @@
 const selectItems = document.getElementsByClassName('items')[0];
-const removeapps = document.querySelector('.remove-items');
+const removeapps = document.querySelector('.empty-cart');
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
