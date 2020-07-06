@@ -6,11 +6,10 @@ const { promises } = require('fs');
 
 const testing = (parameter) => {
   describe(`${parameter}`, () => {
-    test("true assert!", () => {
+    test('true assert!', () => {
       expect(typeof parameter).toBe('function');
-    })()
-  })
-}
+    })();
+  });
+};
 
-testing(scriptFunctionsTest)
-
+testing(scriptFunctionsTest);
