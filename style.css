@@ -74,3 +74,13 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.btn {
+  display: flex;
+  justify-content: center;
+}
+
+.loading {
+  position: absolute;
+  width: 100%;
+}
