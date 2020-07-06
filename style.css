@@ -80,3 +80,13 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.cabeca {
+  background-color: teal;
+  display: flex;
+  flex-basis: 1;
+  font-size: 2em;
+  justify-content: space-between;
+  height: 3em;
+  padding: 1em;
+}

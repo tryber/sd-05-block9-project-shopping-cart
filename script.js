@@ -1,13 +1,3 @@
-/*
-function* generatorId() {
-  let id = 1;
-  while (true) {
-    yield id;
-    id += 1;
-  }
-}
-*/
-
 async function changeValues(price) {
   const valueNow = document.getElementsByClassName('total-price')[0];
   valueNow.innerHTML = (parseFloat(valueNow.innerHTML) + price);
@@ -102,6 +92,7 @@ function beginnig() {
 }
 
 window.onload = function onload() {
+  const loading = document.getElementsByClassName('loading')[0];
   const ol = document.getElementsByClassName('cart__items')[0];
   beginnig();
   const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
@@ -110,11 +101,16 @@ window.onload = function onload() {
     document.getElementsByClassName('total-price')[0].innerHTML = '0';
     updateOl();
   });
+  const key = 'computador';
   const sectionProducts = document.getElementsByClassName('items')[0];
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${key}`;
   const resultSummom = [];
+  loading.innerHTML = 'loading...';
   fetch(url)
-  .then(data => data.json())
+  .then((data) => {
+    loading.innerHTML = '';
+    return data.json();
+  })
   .then(data => data.results.forEach((result) => {
     sectionProducts.appendChild(createProductItemElement(result));
     resultSummom.push(result);
