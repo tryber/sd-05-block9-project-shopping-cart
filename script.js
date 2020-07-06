@@ -138,11 +138,12 @@ const renderContent = (data) => {
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const carregando = () => {
   const loading = document.querySelector('.loading');
-  if (loading.style.visibility === 'hidden') {
-    loading.style.visibility = 'visible';
-  } else {
-    loading.style.visibility = 'hidden';
-  }
+  loading.style.visibility = 'visible';
+};
+
+const pronto = () => {
+  const loading = document.querySelector('.loading');
+  loading.style.visibility = 'hidden';
 };
 
 const fetchApi = () => {
@@ -152,6 +153,7 @@ const fetchApi = () => {
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then((data) => {
+      pronto();
       renderContent(data);
     });
 };
