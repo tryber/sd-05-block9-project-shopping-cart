@@ -73,6 +73,9 @@ const initializing =
 
 // idProducts();
 window.onload = function onload() {
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 1000);
   if (localStorage.getItem('cart') !== null) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('cart');
     const receive = document.querySelectorAll('.cart__item');
