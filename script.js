@@ -59,7 +59,7 @@ function getSkuFromProductItem(item) {
 window.onload = function onload() {
   const ol = document.getElementsByClassName('cart__items')[0];
   ol.innerHTML = localStorage.getItem('carrinho');
-  if(ol.children.length > 0) {
+  if (ol.children.length > 0) {
     for (let i = 0; i < ol.children.length; i += 1) {
       ol.children[i].addEventListener('click', this.cartItemClickListener);
     }
