@@ -1,7 +1,27 @@
+const botaoExcluirItems = document.querySelector('.empty-cart');
+const totalPrice = document.querySelector('.total-price');
+let soma = 0;
+let subtracao = 0;
+
 const salvaCarrinho = () => {
   const carrinhoSalvo = document.getElementsByTagName('ol')[0].innerHTML;
   localStorage.setItem('carrinho', carrinhoSalvo);
 };
+
+const somaPrice = () => {
+  const total = (soma - subtracao);
+  totalPrice.innerText = `${total}`;
+  return total;
+}
+
+const limparCarrinho = () => {
+  document.getElementsByTagName('ol')[0].innerHTML = '';
+  localStorage.setItem('carrinho', '');
+  soma = 0;
+  somaPrice();
+};
+
+botaoExcluirItems.addEventListener('click', limparCarrinho);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -18,9 +38,13 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // const itemExcluido = event.target.parent;
   const itemExcluido = event.target;
-  // pega carrinho e exclui item clicado
+  const valor = itemExcluido.innerText;
+  subtracao += Number(valor.slice(valor.indexOf('$') + 1));
+  if (somaPrice() === 0) {
+    soma = 0;
+    subtracao = 0;
+  }
   const carrinhoDeCompras = document.getElementsByTagName('ol')[0];
   carrinhoDeCompras.removeChild(itemExcluido);
   salvaCarrinho();
@@ -42,6 +66,8 @@ function getSkuFromProductItem(item) {
     const itemDoCarrinho = document.getElementsByTagName('ol')[0];
     itemDoCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }));
     salvaCarrinho();
+    soma += salePrice;
+    somaPrice();
   });
 }
 
@@ -74,7 +100,14 @@ fetch(source)
 window.onload = function onload() {
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
-    const excluiItem = document.querySelectorAll('.cart__item');
-    excluiItem.forEach(item => item.addEventListener('click', cartItemClickListener));
+    let carregaValor = 0;
+    const excluirItems = document.getElementsByClassName('cart__item');
+    Array.from(excluiItem).forEach(async (item) => {
+      item.addEventListener('click', cartItemClickListener);
+      const valor = item.innerText;
+      carregaValor += Number(valor.slice(valor.indexOf('$') + 1));
+    });
+    soma = carregaValor;
+    somaPrice();
   }
 };
