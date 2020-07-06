@@ -10,7 +10,7 @@ btnApagarTodosOsElementosDaLista.addEventListener('click', apagarTodosOsItensDoC
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-};
+}
 
 function cartItemClickListener(event) {
   const ol = document.querySelector('ol');
@@ -140,7 +140,7 @@ const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const carregando = () => {
   const loading = document.querySelector('.loading');
   loading.style.visibility = 'visible';
-}
+};
 
 const pronto = () => {
   const loading = document.querySelector('.loading');
