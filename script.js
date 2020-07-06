@@ -61,7 +61,7 @@ window.onload = function onload() {
   const cartItem = document.querySelector('.cart__items');
   cartItem.innerHTML = localStorage.getItem('cart');
   if (cartItem.children.length > 0) {
-    for(let i = 0; i < cartItem.children.length; i += 1) {
+    for (let i = 0; i < cartItem.children.length; i += 1) {
       cartItem.children[i].addEventListener('click', cartItemClickListener);
     }
   }
