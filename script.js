@@ -3,7 +3,7 @@ window.onload = function onload() {
     method: 'GET',
     headers: { 'Accept': 'application/json' }
   };
-
+  // API request
   fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador", myObject)
     .then(responde => responde.json())
     .then(data => {
@@ -15,13 +15,42 @@ window.onload = function onload() {
         });
         document.querySelectorAll(".items")[0].appendChild(createProduct);
       });
+
     })
 };
 
-function cartItemClickListener(event) {
-  event.target.remove();
+const loading = () =>
+  document
+    .querySelector('.load-container')
+    .appendChild(createCustomElement('span', 'loading', 'loading...'));
+
+
+
+// getItem from localStorage
+const getItem = () => {
+  const newCart = JSON.parse(localStorage.getItem('myCart'));
+  return newCart || [];
+};
+
+let cart = getItem();
+
+// save localStorage
+const saveCart = async () => {
+  localStorage.setItem('myCart', JSON.stringify(cart));
+};
+
+const sum = async () => {
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerText = cart.reduce((a, b) => a + b.salePrice, 0)
 }
 
+function cartItemClickListener(event) {
+  event.target.remove();
+  saveCart()
+  sum()
+}
+
+//function to create image to product
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,6 +58,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// function to create custom element with class and text
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -36,6 +66,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// function to create product item by json
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -50,10 +81,33 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+const loadCart = () => {
+  getCart()
+    .map(products => createCartItemElement(products))
+    .forEach((singleProduct) => {
+      document.getElementsByClassName('cart__items')[0].appendChild(singleProduct);
+    });
+  sumTotal();
+};
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// function to clean cart
+async function clearCart() {
+  const cartItems = document.getElementsByClassName('cart__items')[0];
+  cartItems.innerHTML = '';
+  cart = [];
+  saveCart();
+  sumTotal();
+}
+
+const clearButton = document.querySelector('.empty-cart');
+clearButton.addEventListener('click', clearCart);
+
+
+// fucntion to create element by json
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -72,5 +126,13 @@ async function addToCArt({ sku }) {
     name: data.title,
     salePrice: data.price,
   })
-  cart_item.appendChild(addNewCArtItem);
+  cart_item.appendChild(addNewCArtItem)
+  sum()
+  saveCart()
 }
+
+
+
+
+
+
