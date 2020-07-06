@@ -8,6 +8,11 @@ function load() {
   document.querySelector('.cart__items').innerHTML = cart;
 }
 
+function clearCart() {
+  document.querySelector('.cart__items').innerHTML = '';
+}
+document.querySelector('.empty-cart').addEventListener('click', clearCart);
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
