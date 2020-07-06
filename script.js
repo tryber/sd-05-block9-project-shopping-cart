@@ -1,3 +1,13 @@
+const apagarTodosOsItensDoCarrinho = () => {
+  const ol = document.querySelector('ol');
+  while (ol.hasChildNodes()) {
+    ol.removeChild(ol.firstChild);
+  }
+}
+
+const btnApagarTodosOsElementosDaLista = document.querySelector('.empty-cart');
+btnApagarTodosOsElementosDaLista.addEventListener('click', apagarTodosOsItensDoCarrinho);
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
