@@ -121,10 +121,7 @@ window.onload = function onload() {
   const resultSummom = [];
   loadingSpan();
   fetch(url)
-  .then((data) => {
-    
-    return data.json();
-  })
+  .then(data => data.json())
   .then(data => data.results.forEach((result) => {
     sectionProducts.appendChild(createProductItemElement(result));
     resultSummom.push(result);
