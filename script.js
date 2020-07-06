@@ -87,9 +87,8 @@ window.onload = function onload() {
       cart.children[i].addEventListener('click', cartItemClickListener);
     }
   }
-  loading.innerHTML = 'loading...';
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(response => {
+  .then((response) => {
     document.getElementsByClassName('loading')[0].parentNode.removeChild(loading);
     return response.json();
   })
