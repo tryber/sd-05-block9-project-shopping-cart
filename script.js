@@ -138,7 +138,7 @@ const renderContent = (data) => {
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const carregando = () => {
   const container = document.querySelector('.container');
-  const loading  = document.createElement('section');
+  const loading = document.createElement('section');
   loading.className = 'loading';
   loading.innerText = 'loading...';
   container.appendChild(loading);
@@ -146,7 +146,7 @@ const carregando = () => {
 
 const pronto = () => {
   const container = document.querySelector('.container');
-  const loading  = document.querySelector('.loading');
+  const loading = document.querySelector('.loading');
   container.removeChild(loading);
 };
 
