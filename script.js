@@ -81,7 +81,7 @@ window.onload = function onload() {
   ol.innerHTML = localStorage.getItem('carrinho');
   prices.innerHTML = localStorage.getItem('Soma da compra');
   if (localStorage.getItem('Soma da compra') !== null) {
-    prices.innerHTML = localStorage.getItem('Soma da compra')
+    prices.innerHTML = localStorage.getItem('Soma da compra');
   }
   if (ol.children.length > 0) {
     for (let i = 0; i < ol.children.length; i += 1) {
