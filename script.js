@@ -23,7 +23,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`; // criar elementos carrinho
   li.addEventListener('click', cartItemClickListener);
-  console.log('li', li);
   return li;
 }
 
@@ -50,7 +49,6 @@ const salvarLocalStorage = () => {
   }
   const listaEmTexto = JSON.stringify(lista);
   localStorage.setItem('lista', listaEmTexto);
-  console.log('ls',listaEmTexto);
 };
 
 const recuperaListaDoLocalStorage = () => {
@@ -145,12 +143,7 @@ const carregando = () => {
   } else {
     loading.style.visibility = 'hidden';
   }
-}
-
-const pronto = () => {
-  const loading = document.querySelector('.loading');
-  loading.style.visibility = 'hidden';
-}
+};
 
 const fetchApi = () => {
   const myObject = {
