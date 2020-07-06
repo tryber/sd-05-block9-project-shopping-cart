@@ -19,7 +19,7 @@ function loading() {
   document.querySelector('.items').appendChild(load);
   setTimeout(() => {
     load.remove();
-  },2000);
+  }, 2000);
 }
 
 function cartItemClickListener(event) {
