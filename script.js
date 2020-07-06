@@ -15,8 +15,7 @@ function cartItemClickListener(event) {
   const pai = event.target.parentNode;
   pai.removeChild(event.target);
   // event.target.parentNode.removeChild(event.target);
-  const acessaItem = document.querySelector('.cart__items');
-  localStorage.setItem('carrinho', acessaItem.innerHTML);
+  atualizaStorage();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -61,6 +60,11 @@ function getSkuFromProductItem(item) {
 
 window.onload = function onload() {
   const acessaItem = document.querySelector('.cart__items');
+  const botao = document.querySelector('.empty-cart');
+  botao.addEventListener('click', () => {
+    acessaItem.innerHTML = null;
+    atualizaStorage();
+  }); // htmlelement.addEventListener('evento que estou esperando', função que devo realizar)
   acessaItem.innerHTML = localStorage.getItem('carrinho');
   if (acessaItem.children.length > 0) {
     for (let i = 0; i < acessaItem.children.length; i += 1) {
