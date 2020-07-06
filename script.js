@@ -21,7 +21,14 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  const addCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(addCart);
+  addCart.addEventListener('click', function () {
+    searchProduct(sku);
+  });
+  const sectionElement = document.getElementsByClassName('items')[0];
+  sectionElement.appendChild(section);
 
   return section;
 }
@@ -30,14 +37,34 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  .then(response => response.json())
+  .then((data) => {
+    data.results.forEach((element) => {
+      const produto = {
+        sku: element.id,
+        name: element.title,
+        image: element.thumbnail,
+      };
+      createProductItemElement(produto);
+    });
+  });
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+const loading = () => {
+  const load = document.querySelector('.load-container');
+  load.appendChild(createCustomElement('span', 'loading', 'loading...'));
+};
+
+window.onload = function onload() {
+  loading();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 1000);
+
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('SavedCart');
+  if (localStorage.getItem('SavedCart') !== undefined) {
+    const addEvent = document.querySelectorAll('.cart__item');
+    addEvent.forEach(item => item.addEventListener('click', cartItemClickListener));
+  }
+  sumProducts();
+};
