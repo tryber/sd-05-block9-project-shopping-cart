@@ -7,9 +7,9 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function removerItens (){
-   document.getElementsByClassName('cart__items')[0].innerHTML = '';
-   localStorage.setItem('cart', '')
+function removerItens() {
+  document.getElementsByClassName('cart__items')[0].innerHTML = '';
+  localStorage.setItem('cart', '');
 }
 removeapps.addEventListener('click', removerItens);
 
@@ -81,10 +81,10 @@ fetch(initializing)
 // idProducts();
 window.onload = function onload() {
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('cart');
-   const receive = document.querySelectorAll('.cart__item');
-   if(localStorage.getItem('cart')){
-     receive.forEach((loading) => {
-       loading.addEventListener( 'click',cartItemClickListener);
-     })
-   }
+  if (localStorage.getItem('cart')) {
+    const receive = document.querySelectorAll('.cart__item');
+    receive.forEach((loading) => {
+      loading.addEventListener('click', cartItemClickListener);
+    });
+  }
 };
