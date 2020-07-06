@@ -1,5 +1,3 @@
-const items = document.querySelector('.items');
-
 const apagarTodosOsItensDoCarrinho = () => {
   const ol = document.querySelector('ol');
   while (ol.hasChildNodes()) {
@@ -151,6 +149,7 @@ const fetchApi = () => {
 };
 
 window.onload = function onload() {
+  const items = document.querySelector('.items');
   items.appendChild(createCustomElement('span', 'loading', 'LOADING...'));
   fetchApi();
   setTimeout(() => {
