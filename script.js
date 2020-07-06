@@ -58,9 +58,9 @@ function getSkuFromProductItem(item) {
 }
 
 function emptyCart() {
-  refreshLocalStorage();
   const cart = document.querySelector('.cart__items');
-  cart.innerHTML = localStorage.getItem('cart');
+  cart.innerHTML = '';
+  refreshLocalStorage();
 }
 
 window.onload = function onload() {
