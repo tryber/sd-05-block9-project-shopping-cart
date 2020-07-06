@@ -14,6 +14,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function loading() {
+  const load = createCustomElement('h1', 'loading', 'Carregando...');
+  document.querySelector('.items').appendChild(load);
+  setTimeout(() => {
+    load.remove();
+  },2000);
+}
+
 function cartItemClickListener(event) {
   const target = event.target;
   if (target.classList.contains('cart__item')) {
@@ -81,5 +89,6 @@ window.onload = async function onload() {
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('savedItems');
       }
     })
-    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearCart));
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearCart))
+    .then(loading());
 };
