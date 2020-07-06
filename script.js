@@ -5,6 +5,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function totalPrice(price) {
+  const total = document.getElementById('total-price');
+  total.innerHTML = parseFloat(total.innerHTML) + price;
+}
+
 function refreshLocalStorage() {
   const cart = document.querySelector('.cart__items');
   const total = document.getElementById('total-price');
@@ -63,16 +68,12 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-async function totalPrice(price) {
-  const total = document.getElementById('total-price');
-  total.innerHTML = parseFloat(total.innerHTML) + price;
-}
-
 window.onload = function onload() {
   const cart = document.querySelector('.cart__items');
   const total = document.getElementById('total-price');
   document.getElementById('empty-cart').addEventListener('click', () => {
     cart.innerHTML = '';
+    total.innerHTML = 0;
     refreshLocalStorage();
   });
   cart.innerHTML = localStorage.getItem('cart');
