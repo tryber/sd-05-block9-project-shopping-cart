@@ -77,4 +77,4 @@ window.onload = function onload() {
     const excluiItem = document.querySelectorAll('.cart__item');
     excluiItem.forEach(item => item.addEventListener('click', cartItemClickListener));
   }
-}
+};
