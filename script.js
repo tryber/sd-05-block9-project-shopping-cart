@@ -5,6 +5,13 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function atualizaDados() {
+  const ol = document.querySelector('.cart__items');
+  localStorage.setItem('carrinho', ol.innerHTML);
+  const valorAtual = document.querySelector('.total-price');
+  localStorage.setItem('valor', valorAtual.innerHTML);
+}
+
 async function sumPrices(price) {
   const preco = document.querySelector('.total-price');
   preco.innerHTML = (parseFloat(preco.innerHTML) + price);
@@ -15,9 +22,8 @@ function cartItemClickListener(event) {
   const price = parseFloat(event.target.innerHTML.substr(event.target.innerHTML.indexOf('PRICE: $') + 8));
   const father = event.target.parentNode;
   father.removeChild(event.target);
-  const ol = document.querySelector('.cart__items');
-  localStorage.setItem('carrinho', ol.innerHTML);
   sumPrices(-price);
+  atualizaDados();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -41,7 +47,7 @@ function createCustomElement(element, className, innerText, id) {
       .then(dados => createCartItemElement(dados))
       .then(li => ol.appendChild(li))
       .then(() => {
-        localStorage.setItem('carrinho', ol.innerHTML);
+        atualizaDados();
       });
     });
   }
@@ -66,6 +72,7 @@ function getSkuFromProductItem(item) {
 window.onload = function onload() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = localStorage.getItem('carrinho');
+  document.querySelector('.total-price').innerHTML = localStorage.getItem('valor');
   if (ol.children.length > 0) {
     for (let i = 0; i < ol.children.length; i += 1) {
       ol.children[i].addEventListener('click', cartItemClickListener);
@@ -78,10 +85,14 @@ window.onload = function onload() {
     document.querySelector('.total-price').innerHTML = '0.00';
   },
   );
-
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then(dados => dados.results.forEach(produto =>
-    document.querySelector('.items').appendChild(
-    createProductItemElement({ sku: produto.id, name: produto.title, image: produto.thumbnail }))));
+    document.querySelector('.items').appendChild(createProductItemElement({ sku: produto.id, name: produto.title, image: produto.thumbnail }))))
+    .then(() => {
+      setTimeout(() => {
+        const loading = document.querySelector('.loading');
+        loading.parentElement.removeChild(loading);
+      }, 3000);
+    });
 };
