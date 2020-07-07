@@ -75,7 +75,7 @@ function getClickList(event) {
     })
     .then(() => updateOl());
     setTimeout(() => {
-      loadingSpan()
+      loadingSpan();
     }, 3000);
   }
 }
@@ -129,6 +129,6 @@ window.onload = function onload() {
   }))
   .then(data => data);
   setTimeout(() => {
-    loadingSpan()
+    loadingSpan();
   }, 3000);
 };
