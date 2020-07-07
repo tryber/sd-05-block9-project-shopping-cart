@@ -70,7 +70,6 @@ function getSkuFromProductItem(item) {
 }
 
 function starting() {
-  const loading = document.getElementsByClassName('loading')[0];
   const cart = document.querySelector('.cart__items');
   const total = document.getElementById('total-price');
   document.getElementById('empty-cart').addEventListener('click', () => {
