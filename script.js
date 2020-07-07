@@ -14,7 +14,7 @@ function atualizaDados() {
 
 async function sumPrices(price) {
   const preco = document.querySelector('.total-price');
-  preco.innerHTML = (parseFloat(preco.innerHTML) + price);
+  preco.innerHTML = ((Math.round(preco.innerHTML * 100) / 100) + price);
 }
 
 function cartItemClickListener(event) {
