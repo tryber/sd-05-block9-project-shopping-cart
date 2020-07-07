@@ -44,8 +44,8 @@ window.onload = function onload() {
   const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(endPoint)
   .then(resposta => resposta.json())
-  .then(resposta => resposta.results.forEach(produto => {
+  .then(resposta => resposta.results.forEach((produto) => {
     const items = document.getElementsByClassName('items')[0];
-    items.appendChild(createProductItemElement(produto)); 
+    items.appendChild(createProductItemElement(produto));
   }));
 };
