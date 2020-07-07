@@ -73,8 +73,10 @@ function getClickList(event) {
       const ol = document.getElementsByClassName('cart__items')[0];
       ol.appendChild(createCartItemElement(data));
     })
-    .then(() => updateOl())
-    .then(() => loadingSpan());
+    .then(() => updateOl());
+    setTimeout(() => {
+      loadingSpan()
+    }, 3000);
   }
 }
 
@@ -103,6 +105,7 @@ function beginnig() {
       ol.children[i].addEventListener('click', cartItemClickListener);
     }
   }
+  loadingSpan();
 }
 
 window.onload = function onload() {
@@ -118,13 +121,14 @@ window.onload = function onload() {
   const sectionProducts = document.getElementsByClassName('items')[0];
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${key}`;
   const resultSummom = [];
-  loadingSpan();
   fetch(url)
   .then(data => data.json())
   .then(data => data.results.forEach((result) => {
     sectionProducts.appendChild(createProductItemElement(result));
     resultSummom.push(result);
   }))
-  .then(data => data)
-  .then(() => loadingSpan());
+  .then(data => data);
+  setTimeout(() => {
+    loadingSpan()
+  }, 3000);
 };
