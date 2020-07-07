@@ -1,9 +1,10 @@
 window.onload = function onload() {
+  const product;
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then((dados) => {
       dados.results.forEach((result) => {
-        const product = createProductItemElement({
+          product = createProductItemElement({
           sku: result.id,
           name: result.title,
           image: result.thumbnail,
