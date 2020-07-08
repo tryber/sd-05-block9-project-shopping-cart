@@ -20,7 +20,6 @@ function addCarrinho(evento) {
     const ol = document.getElementsByClassName('cart__items')[0];
     ol.appendChild(createCartItemElement(item));
   });
-  
   // const novoItem = {sku:item.id, name:item.title, salesPrice:item.price}
   // const {sku:id, name:title, salesPrice:price} = item
 }
