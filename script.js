@@ -5,7 +5,7 @@ function valor(li) {
 async function total() {
   const ol = document.getElementsByClassName('cart__items')[0];
   const filhos = [...ol.children];
-  const valorTotal = filhos.reduce((totalF, atual) => (totalF += valor(atual)), 0);
+  const valorTotal = filhos.reduce((totalF, atual) => (totalF + valor(atual)), 0);
   document.querySelector('.total-price').innerHTML = valorTotal;
 }
 
@@ -87,6 +87,7 @@ window.onload = function onload() {
     ol.innerHTML = '';
     atualizaStorage();
   });
+  total();
   fetch(endPoint)
   .then(resposta => resposta.json())
   .then(resposta => resposta.results.forEach((produto) => {
