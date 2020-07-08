@@ -1,50 +1,31 @@
-// getItem from localStorage
-const getItem = () => {
+// 4. function to get items from local Storage
+const getCart = () => {
   const newCart = JSON.parse(localStorage.getItem('myCart'));
   return newCart || [];
 };
 
-let cart = getItem();
+let cart = getCart();
 
-// save localStorage
-const saveCart = async () => {
+const saveCart = () => {
   localStorage.setItem('myCart', JSON.stringify(cart));
 };
 
-const sum = async () => {
-  const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerText = cart.reduce((a, b) => a + b.salePrice, 0);
+// 5. function to sum prices of items who was added to cart
+const sumTotal = async () => {
+  const total = document.querySelector('.total-price');
+  total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
 };
 
+// 3. function to remove item drom the cart when clicked
 function cartItemClickListener(event) {
   event.target.remove();
+  const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
+  cart = remakeCart;
   saveCart();
-  sum();
+  sumTotal();
 }
 
-// function to create image to product
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-
-// function to create custom element with class and text
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-}
-
-// const loading = () => {
-//   document
-//     .querySelector('.load-container')
-//     .appendChild(createCustomElement('span', 'loading', 'loading...'));
-// };
-
-// fucntion to create element by json
+// DEFAULT - function to create an item to add to cart
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -53,22 +34,38 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// function to add item to cart
-async function addToCArt({ sku }) {
-  const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-  const data = await response.json();
+// 2. function to add item by id on the cart 
+async function addToCart({ sku }) {
+  const response = await fetch(`https://api.mercadolibre.com/items/${sku}`)
+  const data = await response.json()
   const cartItem = document.querySelectorAll('.cart__items')[0];
-  const addNewCArtItem = createCartItemElement({
+  const addNewCartItem = createCartItemElement({
     sku: data.id,
     name: data.title,
     salePrice: data.price,
-  });
-  cartItem.appendChild(addNewCArtItem);
-  sum();
+  })
+  cartItem.appendChild(addNewCartItem);
   saveCart();
+  sumTotal();
 }
 
-// function to create product item by json
+// DEFAULT - function to create image to product item came from json
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
+// DEFAULT - function to create custom element with class and text
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
+// DEFAULT - function to create product item by json (edit function to add event on the 'add to cart' button)
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -77,12 +74,22 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => {
-    addToCArt({ sku });
+    addToCart({ sku });
   });
   section.appendChild(btnAddCart);
   return section;
 }
 
+// 6. button to clean all items on the cart
+async function clearCart() {
+  const cartItems = document.getElementsByClassName('cart__items')[0];
+  cartItems.innerHTML = '';
+  cart = [];
+  saveCart();
+  sumTotal();
+}
+
+// 4. recovery all items saved on the local storage when page load
 const loadCart = () => {
   getCart()
     .map(products => createCartItemElement(products))
@@ -92,39 +99,27 @@ const loadCart = () => {
   sumTotal();
 };
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-// function to clean cart
-async function clearCart() {
-  const cartItems = document.getElementsByClassName('cart__items')[0];
-  cartItems.innerHTML = '';
-  cart = [];
-  saveCart();
-  sumTotal();
-}
-
-const clearButton = document.querySelector('.empty-cart');
-clearButton.addEventListener('click', clearCart);
-
-window.onload = function onload() {
+window.onload = function () {
   const myObject = {
     method: 'GET',
     headers: { Accept: 'application/json' },
   };
-  // API request
+
+  // 1. API request
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
-    .then(responde => responde.json())
+    .then(response => response.json())
     .then((data) => {
       data.results.forEach((element) => {
         const createProduct = createProductItemElement({
           sku: element.id,
           name: element.title,
           image: element.thumbnail,
-        });
-        document.querySelectorAll('.items')[0].appendChild(createProduct);
+        })
+        document.querySelectorAll('.items')[0]
+          .appendChild(createProduct);
       });
-    });
-  loadCart();
-};
+    })
+  loadCart()
+}
+
+
