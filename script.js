@@ -83,7 +83,6 @@ async function clearCart() {
   cartItems.innerHTML = '';
   cart = [];
   saveCart();
-  cardTotal();
 }
 
 window.onload = function () {
