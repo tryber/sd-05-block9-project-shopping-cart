@@ -1,19 +1,17 @@
-// 4. function to get items from local Storage
-const getCart = () => {
-  const newCart = JSON.parse(localStorage.getItem('myCart'));
-  return newCart || [];
-};
-
-let cart = getCart();
-
+// 4. function to save items from cart to local storage 
 const saveCart = () => {
-  localStorage.setItem('myCart', JSON.stringify(cart));
+  localStorage.setItem('Lista Salva',
+    document.getElementsByClassName('cart__items')[0].innerHTML);
+  localStorage.setItem('Total a Pagar',
+    document.getElementsByClassName('total-price')[0].innerHTML);
 };
 
 // 5. function to sum prices of items who was added to cart
-const sumTotal = async () => {
-  const total = document.querySelector('.total-price');
-  total.innerText = cart.reduce((acc, item) => acc + item.salePrice, 0);
+const cardTotal = async () => {
+  const cartItem = document.querySelectorAll('.cart__item');
+  const price = [...cartItem].map(e => e.textContent
+    .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0).toFixed(2);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
 // 3. function to remove item drom the cart when clicked
@@ -22,7 +20,7 @@ function cartItemClickListener(event) {
   const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
   cart = remakeCart;
   saveCart();
-  sumTotal();
+  cardTotal()
 }
 
 // DEFAULT - function to create an item to add to cart
@@ -32,6 +30,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+  cardTotal(saveCart)
 }
 
 // 2. function to add item by id on the cart
@@ -46,7 +45,7 @@ async function addToCart({ sku }) {
   });
   cartItem.appendChild(addNewCartItem);
   saveCart();
-  sumTotal();
+  cardTotal()
 }
 
 // DEFAULT - function to create image to product item came from json
@@ -87,18 +86,8 @@ async function clearCart() {
   cartItems.innerHTML = '';
   cart = [];
   saveCart();
-  sumTotal();
+  cardTotal()
 }
-
-// 4. recovery all items saved on the local storage when page load
-const loadCart = () => {
-  getCart()
-    .map(products => createCartItemElement(products))
-    .forEach((singleProduct) => {
-      document.getElementsByClassName('cart__items')[0].appendChild(singleProduct);
-    });
-  sumTotal();
-};
 
 window.onload = function () {
   const myObject = {
@@ -118,7 +107,13 @@ window.onload = function () {
         });
         document.querySelectorAll('.items')[0]
           .appendChild(createProduct);
+        document.getElementsByClassName('cart__items')[0]
+          .innerHTML = localStorage.getItem('Lista Salva');
+        document.getElementsByClassName('total-price')[0]
+          .innerHTML = localStorage.getItem('Total a Pagar');
+        document.querySelectorAll('li')
+          .forEach(inner => inner.
+            addEventListener('click', () => cartItemClickListener(inner)));
       });
     });
-  loadCart();
 };
