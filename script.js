@@ -10,15 +10,13 @@ const saveCart = () => {
 const cardTotal = async () => {
   const cartItem = document.querySelectorAll('.cart__item');
   const price = [...cartItem].map(e => e.textContent
-    .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0).toFixed(2);
+    .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
 // 3. function to remove item drom the cart when clicked
-function cartItemClickListener(event) {
-  event.target.remove();
-  const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
-  cart = remakeCart;
+async function cartItemClickListener(event) {
+  event.remove();
   saveCart();
   cardTotal();
 }
