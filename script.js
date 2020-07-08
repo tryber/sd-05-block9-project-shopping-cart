@@ -1,4 +1,4 @@
-// 4. function to save items from cart to local storage 
+// 4. function to save items from cart to local storage
 const saveCart = () => {
   localStorage.setItem('Lista Salva',
     document.getElementsByClassName('cart__items')[0].innerHTML);
@@ -20,7 +20,7 @@ function cartItemClickListener(event) {
   const remakeCart = cart.filter(({ id }) => `${id}` !== event.target.id);
   cart = remakeCart;
   saveCart();
-  cardTotal()
+  cardTotal();
 }
 
 // DEFAULT - function to create an item to add to cart
@@ -30,7 +30,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-  cardTotal(saveCart)
+  cardTotal(saveCart());
 }
 
 // 2. function to add item by id on the cart
@@ -86,7 +86,7 @@ async function clearCart() {
   cartItems.innerHTML = '';
   cart = [];
   saveCart();
-  cardTotal()
+  cardTotal();
 }
 
 window.onload = function () {
@@ -112,8 +112,8 @@ window.onload = function () {
         document.getElementsByClassName('total-price')[0]
           .innerHTML = localStorage.getItem('Total a Pagar');
         document.querySelectorAll('li')
-          .forEach(inner => inner.
-            addEventListener('click', () => cartItemClickListener(inner)));
+          .forEach(inner => inner
+            .addEventListener('click', () => cartItemClickListener(inner)));
       });
     });
 };
