@@ -65,7 +65,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// DEFAULT - function to create product item by json 
+// DEFAULT - function to create product item by json
 // (edit function to add event on the 'add to cart' button)
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
