@@ -30,7 +30,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-  cardTotal(saveCart());
 }
 
 // 2. function to add item by id on the cart
@@ -45,7 +44,7 @@ async function addToCart({ sku }) {
   });
   cartItem.appendChild(addNewCartItem);
   saveCart();
-  cardTotal()
+  cardTotal();
 }
 
 // DEFAULT - function to create image to product item came from json
