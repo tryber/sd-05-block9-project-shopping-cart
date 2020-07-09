@@ -116,4 +116,4 @@ if (localStorage.getItem('carrinho') !== undefined) {
   });
   soma = carregaValor;
   somaPrice();
-};
+}
