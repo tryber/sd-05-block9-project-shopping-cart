@@ -99,6 +99,12 @@ window.onload = function onload() {
         const { id: sku, title: name, thumbnail: image } = product;
         return createProductItemElement({ sku, name, image });
       });
+    })
+    .then ( () => {
+      setTimeout (() => {
+        const loading = document.querySelector('.loading');
+        document.querySelector('.items').removeChild(loading);
+      }, 3000);
     });
   document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
   if (localStorage.getItem('carrinho') !== undefined) {
