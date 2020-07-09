@@ -91,31 +91,29 @@ function createProductItemElement({ sku, name, image }) {
 
 const source = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
-window.onload = function onload() {
-  fetch(source)
-    .then(response => response.json())
-    .then(function (object) {
-      object.results.map(function (product) {
-        const { id: sku, title: name, thumbnail: image } = product;
-        return createProductItemElement({ sku, name, image });
-      });
-    })
-    .then (() => {
-      setTimeout(() => {
-        const loading = document.querySelector('.loading');
-        document.querySelector('.items').removeChild(loading);
-      }, 3000);
+fetch(source)
+  .then(response => response.json())
+  .then(function (object) {
+    object.results.map(function (product) {
+      const { id: sku, title: name, thumbnail: image } = product;
+      return createProductItemElement({ sku, name, image });
     });
-  document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
-  if (localStorage.getItem('carrinho') !== undefined) {
-    let carregaValor = 0;
-    const carregarCarrinho = document.getElementsByClassName('cart__item');
-    Array.from(carregarCarrinho).forEach(async (item) => {
-      item.addEventListener('click', cartItemClickListener);
-      const valor = item.innerText;
-      carregaValor += Number(valor.slice(valor.indexOf('$') + 1));
-    });
-    soma = carregaValor;
-    somaPrice();
-  }
+  })
+  .then(() => {
+    setTimeout(() => {
+      const loading = document.querySelector('.loading');
+      document.querySelector('.items').removeChild(loading);
+    }, 3000);
+  });
+document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('carrinho');
+if (localStorage.getItem('carrinho') !== undefined) {
+  let carregaValor = 0;
+  const carregarCarrinho = document.getElementsByClassName('cart__item');
+  Array.from(carregarCarrinho).forEach(async (item) => {
+    item.addEventListener('click', cartItemClickListener);
+    const valor = item.innerText;
+    carregaValor += Number(valor.slice(valor.indexOf('$') + 1));
+  });
+  soma = carregaValor;
+  somaPrice();
 };
