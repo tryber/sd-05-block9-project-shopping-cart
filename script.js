@@ -42,6 +42,7 @@ async function addToCart({ sku }) {
   });
   cartItem.appendChild(addNewCartItem);
   cardTotal();
+  saveCart();
 }
 
 // DEFAULT - function to create image to product item came from json
