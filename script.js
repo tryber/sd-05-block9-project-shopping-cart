@@ -1,4 +1,4 @@
-  // 4. function to save items from cart to local storage
+// 4. function to save items from cart to local storage
 const saveCart = () => {
   localStorage.setItem('Lista Salva',
     document.getElementsByClassName('cart__items')[0].innerHTML);
@@ -82,8 +82,14 @@ async function clearCart() {
   const cartItems = document.getElementsByClassName('cart__items')[0];
   cartItems.innerHTML = '';
   document.getElementsByClassName('total-price')[0]
-  .innerHTML = '';
+    .innerHTML = '';
 }
+
+// 7. loading requirement
+const loading = () =>
+  document
+    .querySelector('.load-container')
+    .appendChild(createCustomElement('span', 'loading', 'loading...'));
 
 window.onload = function () {
   const myObject = {
@@ -91,6 +97,11 @@ window.onload = function () {
     headers: { Accept: 'application/json' },
   };
 
+  loading();
+  setTimeout(() => {
+    (document.querySelector('.loading').remove());
+  }, 1000);
+  
   // 1. API request
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
     .then(response => response.json())
