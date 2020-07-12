@@ -1,4 +1,4 @@
-// 4. function to save items from cart to local storage
+  // 4. function to save items from cart to local storage
 const saveCart = () => {
   localStorage.setItem('Lista Salva',
     document.getElementsByClassName('cart__items')[0].innerHTML);
@@ -16,7 +16,7 @@ const cardTotal = async () => {
 
 // 3. function to remove item drom the cart when clicked
 async function cartItemClickListener(event) {
-  event.remove();
+  event.target.remove();
   saveCart();
   cardTotal();
 }
@@ -41,7 +41,6 @@ async function addToCart({ sku }) {
     salePrice: data.price,
   });
   cartItem.appendChild(addNewCartItem);
-  saveCart();
   cardTotal();
 }
 
@@ -81,8 +80,8 @@ function createProductItemElement({ sku, name, image }) {
 async function clearCart() {
   const cartItems = document.getElementsByClassName('cart__items')[0];
   cartItems.innerHTML = '';
-  cart = [];
-  saveCart();
+  document.getElementsByClassName('total-price')[0]
+  .innerHTML = '';
 }
 
 window.onload = function () {
@@ -107,9 +106,6 @@ window.onload = function () {
           .innerHTML = localStorage.getItem('Lista Salva');
         document.getElementsByClassName('total-price')[0]
           .innerHTML = localStorage.getItem('Total a Pagar');
-        document.querySelectorAll('li')
-          .forEach(inner => inner
-            .addEventListener('click', () => cartItemClickListener(inner)));
       });
     });
 };
