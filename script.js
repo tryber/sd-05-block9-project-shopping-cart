@@ -101,7 +101,7 @@ window.onload = function () {
   setTimeout(() => {
     (document.querySelector('.loading').remove());
   }, 1000);
-  
+
   // 1. API request
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
     .then(response => response.json())
