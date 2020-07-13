@@ -95,5 +95,9 @@ window.onload = function onload() {
     arrayProdutos.forEach(produto =>
       listaDeProdutos.appendChild(createProductItemElement(produto)));
     // acessando a propriedade results do objetoRespost
+      setTimeout(() => {
+        const loading = document.querySelector('span.loading');
+        loading.parentElement.removeChild(loading);
+        }, 3000);
   });
 };
