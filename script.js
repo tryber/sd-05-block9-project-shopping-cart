@@ -73,7 +73,7 @@ function createProductItemElement({ id, title, thumbnail }) {
 window.onload = function onload() {
   const ol = document.querySelector('ol');
   const botaoLimpaTudo = document.querySelector('button.empty-cart');
-  botaoLimpaTudo.addEventListener ('click', function() {
+  botaoLimpaTudo.addEventListener('click', function() {
     ol.innerHTML = '';
     atualizarLocalStorage();
   });
@@ -95,9 +95,10 @@ window.onload = function onload() {
     arrayProdutos.forEach(produto =>
       listaDeProdutos.appendChild(createProductItemElement(produto)));
     // acessando a propriedade results do objetoRespost
-      setTimeout(() => {
+    // incluindo o texto loading:
+    setTimeout(() => {
         const loading = document.querySelector('span.loading');
         loading.parentElement.removeChild(loading);
-        }, 3000);
+      }, 3000);
   });
 };
