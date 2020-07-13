@@ -83,8 +83,8 @@ window.onload = function onload() {
     arrayProdutos.forEach(produto =>
       listaDeProdutos.appendChild(createProductItemElement(produto)));
     setTimeout(() => {
-      const loading =  document.querySelector('.loading');
+      const loading = document.querySelector('.loading');
       loading.parentElement.removeChild(loading);
-      }, 3000);
+    }, 3000);
   });
 };
