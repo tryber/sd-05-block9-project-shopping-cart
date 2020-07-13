@@ -53,7 +53,7 @@ window.onload = function onload() {
   // resposta é param da gunção e só pode ser acessada e existe dentro da arrow function
   // json é um método e requer uso de () para ser chmado e aqui ele converte o resultado
   // da requisição em um objeto
-  .then(resposta => resposta.json());
+  .then(resposta => resposta.json())
   // .then é em cascata, sempre guarda o dado do then de cima para ser usado no próximo
   .then((objetoResposta) => {
     const arrayProdutos = objetoResposta.results;
