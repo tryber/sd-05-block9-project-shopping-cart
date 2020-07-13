@@ -18,14 +18,16 @@ function createCustomElement(element, className, innerText) {
 // que são criados chamando a função de cima que recebe 3 param, o elemento
 // a ser criado, a classe e o valor
 
-function createProductItemElement({ id, title, thunbnail }) {
+function createProductItemElement({ id, title, thumbnail }) {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thunbnail));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createProductImageElement(thumbnail));
+  const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  botao.addEventListener('click', buscaId);
+  section.appendChild(botao);
 
   return section;
 }
@@ -38,16 +40,27 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
+//objetoId é um objeto com todos os dados do elemento retornado pela API
+function buscaId(evento) {
+  const idDoproduto = evento.target.parentElement.firstChild.innerText;
+  const carrinho = document.querySelector('ol.cart__items');
+  fetch(`https://api.mercadolibre.com/items/${idDoProduto}`)
+  .then(idlistaDeProdutos => idProdutos.json())
+  .then(objetoId => {
+    carrinho.appendChild(createCaritemElement(objetoId));
+  })
+}
+
 window.onload = function onload() {
-  const produtos = document.querySelector('section.items');
+  const listaDeProdutos = document.querySelector('section.items');
   // fetch requer uma , retorna rejected ou resolved, é assíncrono
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   // then recebe como param uma arrow function e coloca todo o valor da requisição na resposta:
@@ -59,7 +72,7 @@ window.onload = function onload() {
   .then((objetoResposta) => {
     const arrayProdutos = objetoResposta.results;
     arrayProdutos.forEach(produto =>
-      produtos.appendChild(createProductItemElement(produto)));
+      listaDeProdutos.appendChild(createProductItemElement(produto)));
     // acessando a propriedade results do objetoRespost
   });
 };
