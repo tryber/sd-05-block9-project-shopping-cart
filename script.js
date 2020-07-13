@@ -82,9 +82,9 @@ window.onload = function onload() {
     const arrayProdutos = objetoResposta.results;
     arrayProdutos.forEach(produto =>
       listaDeProdutos.appendChild(createProductItemElement(produto)));
-      setTimeout(() => { 
-        const loading =  document.querySelector('.loading');
-        loading.parentElement.removeChild(loading);
+    setTimeout(() => {
+      const loading =  document.querySelector('.loading');
+      loading.parentElement.removeChild(loading);
       }, 3000);
   });
 };
