@@ -13,23 +13,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// sku é o id
-// esta função cria a section e cria spans, img e button como filhas de section
-// que são criados chamando a função de cima que recebe 3 param, o elemento
-// a ser criado, a classe e o valor
-
-function createProductItemElement({ id, title, thumbnail }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', id));
-  section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thumbnail));
-  const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  botao.addEventListener('click', buscaId);
-  section.appendChild(botao);
-  return section;
-}
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -55,6 +38,23 @@ function buscaId(evento) {
   .then((objetoId) => {
     carrinho.appendChild(createCartItemElement(objetoId));
   });
+}
+
+// sku é o id
+// esta função cria a section e cria spans, img e button como filhas de section
+// que são criados chamando a função de cima que recebe 3 param, o elemento
+// a ser criado, a classe e o valor
+
+function createProductItemElement({ id, title, thumbnail }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
+  const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  botao.addEventListener('click', buscaId);
+  section.appendChild(botao);
+  return section;
 }
 
 window.onload = function onload() {
