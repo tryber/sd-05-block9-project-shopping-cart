@@ -55,7 +55,7 @@ window.onload = function onload() {
   // da requisição em um objeto
   .then(resposta => resposta.json());
   // .then é em cascata, sempre guarda o dado do then de cima para ser usado no próximo
-  .then(objetoResposta => {
+  .then((objetoResposta) => {
     const arrayProdutos = objetoResposta.results;
       arrayProdutos.forEach(produto => produtos.appendChild(createProductItemElement(produto))); // acessando a propriedade results do objetoRespost
   });
