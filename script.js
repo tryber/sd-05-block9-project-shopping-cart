@@ -73,10 +73,10 @@ function createProductItemElement({ id, title, thumbnail }) {
 window.onload = function onload() {
   const ol = document.querySelector('ol');
   const botaoLimpaTudo = document.querySelector('button.empty-cart');
-  botaoLimpaTudo.addEventListener('click', function() {
+  botaoLimpaTudo.addEventListener ('click', function() {
     ol.innerHTML = '';
     atualizarLocalStorage();
-  })
+  });
   resgataLocalStorage();
   for (let i = 0; i < ol.children.length; i += 1) {
     ol.children[i].addEventListener('click', cartItemClickListener);
