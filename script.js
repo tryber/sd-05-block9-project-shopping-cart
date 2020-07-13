@@ -73,7 +73,7 @@ function createProductItemElement({ id, title, thumbnail }) {
 window.onload = function onload() {
   resgataLocalStorage();
   const ol = document.querySelector('ol');
-  for (let i = 0; i < ol.children.length; i +=1) {
+  for (let i = 0; i < ol.children.length; i += 1) {
     ol.children[i].addEventListener('click', cartItemClickListener);
   }
   const listaDeProdutos = document.querySelector('section.items');
