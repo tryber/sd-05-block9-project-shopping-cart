@@ -18,7 +18,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const li = event.target;
+  li.parentElement.removeChild(li);
 }
 
 function createCartItemElement({ id, title, price }) {
