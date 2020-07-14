@@ -1,23 +1,3 @@
-async function sum() {
-  div = document.createElement('div');
-  section = document.querySelector('.cart__items');
-  const sumAll = await prices.reduce((ac, cur) => Math.round(ac + cur), 0);
-  section.appendChild(div);
-  div.innerHTML = `Total: ${sumAll}`;
-}
-
-prices = [];
-async function foundPrices(array) {
-  for (i = 0; i < 30; i += 1) {
-    const product = localStorage.getItem(`product${i}`);
-    if (product !== null) {
-      fetch(`https://api.mercadolibre.com/items/${product}`)
-      .then(response => response.json())
-      .then(data => array.push(data.price));
-    }
-  }
-  sum();
-}
 function cartItemClickListener(event) {
   const remove = event.target;
   remove.parentNode.removeChild(remove);
