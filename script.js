@@ -48,7 +48,6 @@ async function loadCart() {
       });
     }
   }
-  foundPrices(prices);
 }
 
 window.onload = function onload() {
