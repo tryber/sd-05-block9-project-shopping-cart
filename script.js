@@ -98,4 +98,6 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
           });
       });
     }
+    const loading = document.querySelector('.loading');
+    loading.parentElement.removeChild(loading);
   });
