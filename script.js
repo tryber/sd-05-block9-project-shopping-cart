@@ -11,7 +11,7 @@ async function foundPrices(array) {
   for (i = 0; i < 30; i += 1) {
     const product = localStorage.getItem(`product${i}`);
     if (product !== null) {
-      await fetch(`https://api.mercadolibre.com/items/${product}`)
+      fetch(`https://api.mercadolibre.com/items/${product}`)
       .then(response => response.json())
       .then(data => array.push(data.price));
     }
@@ -37,7 +37,7 @@ async function loadCart() {
   for (i = 0; i < 30; i += 1) {
     const storage = localStorage.getItem(`product${i}`);
     if (localStorage.getItem(`product${i}`) !== null) {
-      await fetch(`https://api.mercadolibre.com/items/${storage}`)
+      fetch(`https://api.mercadolibre.com/items/${storage}`)
       .then(response => response.json())
       .then((dataSave) => {
         const product = {
