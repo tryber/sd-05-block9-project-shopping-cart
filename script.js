@@ -18,7 +18,6 @@ async function foundPrices(array) {
   }
   sum();
 }
-
 function cartItemClickListener(event) {
   const remove = event.target;
   remove.parentNode.removeChild(remove);
