@@ -2,7 +2,7 @@ let price = 0;
 
 async function sumPrices(valor) {
   price += valor;
-  document.querySelector('.total-price').innerText = Math.round(price * 100) / 100;
+  document.querySelector('.total-price').innerText = parseFloat(price);
 }
 
 function cartItemClickListener(event) {
