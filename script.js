@@ -2,7 +2,7 @@ let price = 0;
 
 async function sumPrices(valor) {
   price += valor;
-  document.querySelector('.total-price').innerText = price;
+  document.querySelector('.total-price').innerText = `Total ${price.toFixed(2)}`;
 }
 
 function cartItemClickListener(event) {
