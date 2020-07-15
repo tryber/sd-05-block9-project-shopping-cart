@@ -98,6 +98,7 @@ window.onload = function onload() {
     ol.children[i].addEventListener('click', cartItemClickListener);
   }
   const listaDeProdutos = document.querySelector('section.items');
+  valorTotal();
   // fetch requer uma , retorna rejected ou resolved, é assíncrono
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   // then recebe como param uma arrow function e coloca todo o valor da requisição na resposta:
