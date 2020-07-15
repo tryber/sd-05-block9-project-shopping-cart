@@ -1,9 +1,9 @@
-let price = 0;
-
 async function sumPrices(valor) {
-  price += valor;
-  document.querySelector('.total-price').innerText = parseFloat(price);
-}
+  const cartItem = document.querySelectorAll('.cart__item');
+  const price = [...cartItem].map(e => e.textContent
+    .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
+};
 
 function cartItemClickListener(event) {
   const remove = event.target;
