@@ -2,7 +2,7 @@ let price = 0;
 
 async function sumPrices(valor) {
   price += valor;
-  document.querySelector('.total-price').innerText = price.toFixed(2);
+  document.querySelector('.total-price').innerText = price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 function cartItemClickListener(event) {
