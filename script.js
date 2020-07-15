@@ -1,3 +1,10 @@
+let price = 0;
+
+async function sumPrices(valor) {
+  price += valor;
+  document.querySelector('.total-price').innerText = price;
+}
+
 function cartItemClickListener(event) {
   const remove = event.target;
   remove.parentNode.removeChild(remove);
@@ -88,6 +95,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
               name: dataCart.title,
               salePrice: dataCart.price,
             };
+            sumPrices(dataCart.price);
             shopCart.appendChild(createCartItemElement(productCart));
             const list = document.querySelectorAll('.cart__item');
             for (i = 0; i < list.length; i += 1) {
