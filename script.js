@@ -6,6 +6,8 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
+  const itemButton = event.target;
+  itemButton.parentNode.removeChild(itemButton);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
