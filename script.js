@@ -1,11 +1,29 @@
+function atualizaValor(texto) {
+  return parseFloat(texto.innerText.substr(texto.innerText.indexOf('PRICE: $') + 8));
+}
+
+async function valorTotal() {
+  const listaDeItens = document.getElementsByClassName('cart__items')[0];
+  const itens = [...listaDeItens.children];
+  const valorDeTudo = itens.reduce((acumulador, atual) => (acumulador + atualizaValor(atual)), 0);
+  document.querySelector('.total-price').innerHTML = valorDeTudo;
+}
+/* valor.innerHTML = Array.from(ol.innerHTML).reduce((acumulador, atual) => 
+  acumulador + (atualizaValor(atual)), 0);
+document.querySelector('.total-price').innerHTML = valor; */
+
 function atualizarLocalStorage() {
   const ol = document.querySelector('ol');
+  const valor = document.querySelector('.total-price');
   localStorage.setItem('ol', ol.innerHTML);
+  localStorage.setItem('valor', valor.innerHTML);
 }
 
 function resgataLocalStorage() {
+  const valor = document.querySelector('.total-price');
   const ol = document.querySelector('ol');
   ol.innerHTML = localStorage.getItem('ol');
+  valor.innerHTML = localStorage.getItem('valor');
 }
 
 function createProductImageElement(imageSource) {
