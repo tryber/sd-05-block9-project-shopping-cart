@@ -8,15 +8,13 @@ async function valorTotal() {
   const valorDeTudo = itens.reduce((acumulador, atual) => (acumulador + atualizaValor(atual)), 0);
   document.querySelector('.total-price').innerHTML = valorDeTudo;
 }
-/* valor.innerHTML = Array.from(ol.innerHTML).reduce((acumulador, atual) => 
-  acumulador + (atualizaValor(atual)), 0);
-document.querySelector('.total-price').innerHTML = valor; */
 
 function atualizarLocalStorage() {
   const ol = document.querySelector('ol');
   const valor = document.querySelector('.total-price');
   localStorage.setItem('ol', ol.innerHTML);
   localStorage.setItem('valor', valor.innerHTML);
+  valorTotal();
 }
 
 function resgataLocalStorage() {
