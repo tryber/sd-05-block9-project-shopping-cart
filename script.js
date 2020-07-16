@@ -1,5 +1,62 @@
-const listaDeItens = document.querySelector('.items');
-const cartCarrinho = document.getElementsByClassName('cart__items');
+const listaProdutos = [];
+const produtos = [];
+const cart = [];
+
+window.onload = function onload() {
+  fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador")
+    .then(async response => {
+      const result = await response.json();
+      listaProdutos = result.results;
+    })
+    .then(() => {
+      produtos = listaDeProdutos.map(({id, title, thumbnail}) => ({sku: id, name: title, image: thumbnail}))
+    })
+    .then (() => {
+    pushList();
+    defineLista();
+  }
+    )
+};
+
+function listaDoCarrinho () {
+  const preco = createCustomElement('span', 'total-price', 0);
+  let total = 0;
+  cart.forEach((item) => {
+    const li = createCartItemElement(item);
+    li.id = item.id;
+    total += item.salePrice;
+    document.querySelector('.cart__items').appendChild(li);
+  });
+  document.querySelector('.cart').appendChild(preco);
+  //imprimeTotal(total);
+}
+
+function defineLista () {
+  produtos.forEach(produto => {
+    const { sku } = produtos;
+    const item = createProductItemElement(produto);
+    item.lastElementChild.sku = sku;
+    //item.lastElementChild.addEventListener('click', addItemToCart())
+    document.querySelector('.items').appendChild(item);
+  })
+}
+
+function addItemToCart (event) {
+  const { sku:evsku } = event.target;
+  let li = null;
+  fetch(`https://api.mercadolibre.com/items/${evsku}`)
+  .then(async (data) => {
+    const { id: sku, title: name, price: salePrice } = await data.json();
+    const result = { sku, name, salePrice };
+    li = createCartItemElement(result);
+    result.id = `${sku}${cart.length}${Math.round(Math.random() * 1E7)}`
+    li.id = result.id;
+    //adicionaItemNoStorage(result);
+  })
+  .then(() => {
+    if (li) document.querySelector('.cart__items').appendChild(li);
+  })
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,13 +72,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id, title, thumbnail }) {
+function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', id));
-  section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -35,33 +92,10 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ id, title, price }) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-function lista() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(response => response.json())
-    .then(response => response.results.forEach((product) => {
-      const item = document.querySelector('.items');
-      item.appendChild(createProductItemElement(product));
-    }));
-}
-
-window.onload = function onload() {
-  lista();
-};
-
-listaDeItens.addEventListener('click', (event) => {
-  const itemProCarrinho = event.target;
-  const paiDoItem = itemProCarrinho.parentElement;
-  const id = paiDoItem.children[0].textContent;
-  const url = `https://api.mercadolibre.com/items/${id}`;
-  fetch(url)
-    .then(response => response.json())
-    .then(response => createCartItemElement(response));
-});
