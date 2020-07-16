@@ -2,7 +2,7 @@ function sumPrices() {
   const Itens = document.querySelectorAll('.cart__item');
   document.querySelector('.total-price').innerText = (
     [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
-    .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
+    .reduce((acc, add) => acc + parseFloat(add), 0));
 }
 
 function cartItemClickListener(event) {
