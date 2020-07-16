@@ -1,3 +1,6 @@
+const listaDeItens = document.querySelector('.items');
+const cartCarrinho =  document.getElementsByClassName('cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -52,3 +55,13 @@ function lista() {
 window.onload = function onload() {
   lista();
 };
+
+listaDeItens.addEventListener('click', (event) => {
+  const itemProCarrinho = event.target;
+  const paiDoItem = itemProCarrinho.parentElement;
+  const id = paiDoItem.children[0].textContent;
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(response => createCartItemElement(response))
+})
