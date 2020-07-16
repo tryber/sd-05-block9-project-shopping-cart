@@ -1,5 +1,5 @@
 const listaDeItens = document.querySelector('.items');
-const cartCarrinho =  document.getElementsByClassName('cart__items');
+const cartCarrinho = document.getElementsByClassName('cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -63,5 +63,5 @@ listaDeItens.addEventListener('click', (event) => {
   const url = `https://api.mercadolibre.com/items/${id}`;
   fetch(url)
     .then(response => response.json())
-    .then(response => createCartItemElement(response))
-})
+    .then(response => createCartItemElement(response));
+});
