@@ -1,18 +1,47 @@
+let ListaProdutos = [];
+let produtos = [];
+let cart = [];
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(response => response.json())
-    .then((dados) => {
-      dados.results.forEach((result) => {
-        const product = createProductItemElement({
-          sku: result.id,
-          name: result.title,
-          image: result.thumbnail,
-        });
-        document.querySelector('.items').appendChild(product);
-      });
-    });
+    //Baixa os dados da api.
+    .then(async response => {
+      const result = await response.json();
+      produtos = result.results;
+    })
+    //Prenchendo a lista de produtos.
+    .then(() =>
+      produtos = ListaProdutos.map(({ id, title, thumbnail }) => ({ sku: id, name: title, image: thumbnail })))
+    .then(() => {
+      defineLista();
+      pushList();
+      console.log("hbfkjhdsfjhsd");
+    })
+  
 };
 
+function pushList() {
+  const preco = createCustomElement('span', 'total-price', 0);
+  let total = 0;
+  cart.forEach(item => {
+    const li = createCartItemElement(item)
+    li.id = item.id;
+    total += item.salePrice;
+    document.querySelector('.cart__item').appendChild(li);
+  })
+
+  document.querySelector('.cart').appendChild(preco);
+  //imprime total,que recebe como parametro total
+}
+
+function defineLista() {
+  produtos.forEach(produto => {
+    const { sku } = produto;
+    const item = createProductItemElement(produto);
+    item.lastElementChild.sku = sku;
+    //item.lastElementChild.addEventListener('click',adicionaItemNoCarrinho);
+    document.querySelector('.itens').appendChild(item);
+  })
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -27,7 +56,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
