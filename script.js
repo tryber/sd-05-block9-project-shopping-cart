@@ -31,6 +31,7 @@ async function loadCart() {
           name: dataSave.title,
           salePrice: dataSave.price,
         };
+        sumPrices(dataSave.price);
         cart.appendChild(createCartItemElement(product));
       });
     }
@@ -76,7 +77,7 @@ function getSkuFromProductItem(item) {
 }
 
 fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(response => response.json())
+  .then(async response => response.json())
   .then((data) => {
     const section = document.querySelector('.items');
     for (let i = 0; i < data.results.length; i += 1) {
