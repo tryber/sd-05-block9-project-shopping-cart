@@ -12,7 +12,7 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   const item = event.target;
-  if(item.parentNode) {
+  if (item.parentNode) {
     item.parentNode.removeChild(item);
   }
   refreshStorage();
