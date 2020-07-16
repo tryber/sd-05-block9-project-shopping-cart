@@ -11,8 +11,10 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
-  const itemButton = event.target;
-  itemButton.parentNode.removeChild(itemButton);
+  const item = event.target;
+  if(item.parentNode) {
+    item.parentNode.removeChild(item);
+  }
   refreshStorage();
 }
 
