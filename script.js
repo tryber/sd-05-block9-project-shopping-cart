@@ -1,6 +1,6 @@
 let price = 0;
 
-async function sumPrices (valor) {
+async function sumPrices(valor) {
   price += valor;
   document.querySelector('.total-price').innerText = parseFloat(price);
 }
