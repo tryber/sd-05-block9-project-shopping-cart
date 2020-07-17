@@ -2,6 +2,7 @@ let ListaProdutos = [];
 let produtos = [];
 let cart = null;
 window.onload = function onload() {
+  document.querySelector('.empty-cart').addEventListener('click',limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     //Baixa os dados da api.
     .then(async (response) => {
@@ -31,6 +32,7 @@ function pushList() {
 
   document.querySelector('.cart').appendChild(preco);
   //imprime total,que recebe como parametro total
+  imprimeTotal(total);
 }
 
 function defineLista() {
@@ -57,6 +59,7 @@ function adicionaItemNoCarrinho(event) {
     })
     .then(() => {
       if (li) document.querySelector('.cart__items').appendChild(li);
+      calculaEImprimeTotal();
     })
 }
 
@@ -108,7 +111,27 @@ function cartItemClickListener(event) {
   cart = cart.filter(element => element.id != id)
   document.querySelector('.cart__items').removeChild(event.target);
   atualizaItemNoStorage();
+  calculaEImprimeTotal();
 }
+
+function imprimeTotal(total){
+  document.querySelector('.total-price').innerText = total;
+}
+function calculaEImprimeTotal(){
+  let total = 0;
+  cart.forEach(element => {
+  total += element.salePrice;
+  })
+  imprimeTotal(total);
+}
+
+function limpaTudo(){
+  document.querySelector('.cart__items').innerHTML = "";
+  cart = [];
+  atualizaItemNoStorage();
+  imprimeTotal(0);
+}
+
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
