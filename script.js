@@ -35,6 +35,15 @@ function adicionaItemNoStorage(item) {
   cart.push(item);
   atualizaItemNoStorage();
 }
+function defineLista() {
+  produtos.forEach((produto) => {
+    const { sku } = produto;
+    const item = createProductItemElement(produto);
+    item.lastElementChild.sku = sku;
+    item.lastElementChild.addEventListener('click', adicionaItemNoCarrinho);
+    document.querySelector('.items').appendChild(item);
+  });
+}
 
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
@@ -68,16 +77,6 @@ function pushList() {
   document.querySelector('.cart').appendChild(preco);
   // imprime total,que recebe como parametro total
   imprimeTotal(total);
-}
-
-function defineLista() {
-  produtos.forEach((produto) => {
-    const { sku } = produto;
-    const item = createProductItemElement(produto);
-    item.lastElementChild.sku = sku;
-    item.lastElementChild.addEventListener('click', adicionaItemNoCarrinho);
-    document.querySelector('.items').appendChild(item);
-  });
 }
 
 function adicionaItemNoCarrinho(event) {
