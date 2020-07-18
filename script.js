@@ -2,6 +2,16 @@ let ListaProdutos = [];
 let produtos = [];
 let cart = null;
 
+function atualizaItemNoStorage() {
+  if (typeof Storage !== 'undefined') {
+    cart = cart || JSON.parse(localStorage.getItem('cart'));
+    if (!cart) cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+  } else {
+    console.error('Navegador sem suporte para salvar pedido');
+  }
+}
+
 function limpaTudo() {
   document.querySelector('.cart__items').innerHTML = '';
   cart = [];
@@ -17,15 +27,7 @@ function calculaEImprimeTotal() {
   imprimeTotal(total);
 }
 
-function atualizaItemNoStorage() {
-  if (typeof Storage !== 'undefined') {
-    cart = cart || JSON.parse(localStorage.getItem('cart'));
-    if (!cart) cart = [];
-    localStorage.setItem('cart', JSON.stringify(cart));
-  } else {
-    console.error('Navegador sem suporte para salvar pedido');
-  }
-}
+
 
 function adicionaItemNoStorage(item) {
   cart.push(item);
