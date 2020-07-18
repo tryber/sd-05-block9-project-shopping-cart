@@ -18,6 +18,9 @@ function limpaTudo() {
   atualizaItemNoStorage();
   imprimeTotal(0);
 }
+function imprimeTotal(total) {
+  document.querySelector('.total-price').innerText = total;
+}
 
 function calculaEImprimeTotal() {
   let total = 0;
@@ -27,16 +30,12 @@ function calculaEImprimeTotal() {
   imprimeTotal(total);
 }
 
-
-
 function adicionaItemNoStorage(item) {
   cart.push(item);
   atualizaItemNoStorage();
 }
 
-function imprimeTotal(total) {
-  document.querySelector('.total-price').innerText = total;
-}
+
 
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
