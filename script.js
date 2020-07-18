@@ -57,6 +57,16 @@ function defineLista() {
   });
 }
 
+function pushList() {
+  const preco = createCustomElement('span', 'total-price', 0);
+  let total = 0;
+  cart.forEach((item) => {
+    const li = createCartItemElement(item);
+    li.id = item.id;
+    total += item.salePrice;
+    document.querySelector('.cart__items').appendChild(li);
+  });
+  
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
@@ -76,15 +86,7 @@ window.onload = function onload() {
     });
 };
 
-function pushList() {
-  const preco = createCustomElement('span', 'total-price', 0);
-  let total = 0;
-  cart.forEach((item) => {
-    const li = createCartItemElement(item);
-    li.id = item.id;
-    total += item.salePrice;
-    document.querySelector('.cart__items').appendChild(li);
-  });
+
 
   document.querySelector('.cart').appendChild(preco);
   // imprime total,que recebe como parametro total
