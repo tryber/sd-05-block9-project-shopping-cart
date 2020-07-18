@@ -2,7 +2,7 @@ let ListaProdutos = [];
 let produtos = [];
 let cart = null;
 window.onload = function onload() {
-  document.querySelector('.empty-cart').addEventListener('click',limpaTudo);
+  document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     //Baixa os dados da api.
     .then(async (response) => {
@@ -12,7 +12,8 @@ window.onload = function onload() {
     })
     //Prenchendo a lista de produtos.
     .then(() =>
-      produtos = ListaProdutos.map(({ id, title, thumbnail }) => ({ sku: id, name: title, image: thumbnail })))
+      produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
+        ({ sku: id, name: title, image: thumbnail })))
     .then(() => {
       defineLista();
       pushList();
@@ -63,16 +64,16 @@ function adicionaItemNoCarrinho(event) {
     })
 }
 
-function adicionaItemNoStorage(item){
+function adicionaItemNoStorage(item) {
   cart.push(item);
   atualizaItemNoStorage();
 }
-function atualizaItemNoStorage(){
-  if(typeof Storage != 'undefined'){
+function atualizaItemNoStorage() {
+  if (typeof Storage != 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
-    if(!cart) cart = [];
-    localStorage.setItem('cart',JSON.stringify(cart));
-  }else{
+    if (!cart) cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+  } else {
     console.error("Navegador sem suporte para salvar pedido");
   }
 }
@@ -114,18 +115,18 @@ function cartItemClickListener(event) {
   calculaEImprimeTotal();
 }
 
-function imprimeTotal(total){
+function imprimeTotal(total) {
   document.querySelector('.total-price').innerText = total;
 }
-function calculaEImprimeTotal(){
+function calculaEImprimeTotal() {
   let total = 0;
   cart.forEach(element => {
-  total += element.salePrice;
+    total += element.salePrice;
   })
   imprimeTotal(total);
 }
 
-function limpaTudo(){
+function limpaTudo() {
   document.querySelector('.cart__items').innerHTML = "";
   cart = [];
   atualizaItemNoStorage();
