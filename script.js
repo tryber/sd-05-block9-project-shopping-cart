@@ -10,7 +10,7 @@ window.onload = function onload() {
       atualizaItemNoStorage();
       ListaProdutos = result.results;
     })
-    //Prenchendo a lista de produtos.
+    // Prenchendo a lista de produtos.
     .then(() =>
       produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
         ({ sku: id, name: title, image: thumbnail })))
