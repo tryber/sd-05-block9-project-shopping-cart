@@ -4,7 +4,7 @@ let cart = null;
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    //Baixa os dados da api.
+    // Baixa os dados da api.
     .then(async (response) => {
       const result = await response.json();
       atualizaItemNoStorage();
@@ -17,51 +17,50 @@ window.onload = function onload() {
     .then(() => {
       defineLista();
       pushList();
-      console.log("hbfkjhdsfjhsd");
-    })
+    });
 };
 
 function pushList() {
   const preco = createCustomElement('span', 'total-price', 0);
   let total = 0;
-  cart.forEach(item => {
-    const li = createCartItemElement(item)
+  cart.forEach((item) => {
+    const li = createCartItemElement(item);
     li.id = item.id;
     total += item.salePrice;
     document.querySelector('.cart__items').appendChild(li);
-  })
+  });
 
   document.querySelector('.cart').appendChild(preco);
-  //imprime total,que recebe como parametro total
+  // imprime total,que recebe como parametro total
   imprimeTotal(total);
 }
 
 function defineLista() {
-  produtos.forEach(produto => {
+  produtos.forEach((produto) => {
     const { sku } = produto;
     const item = createProductItemElement(produto);
     item.lastElementChild.sku = sku;
     item.lastElementChild.addEventListener('click', adicionaItemNoCarrinho);
     document.querySelector('.items').appendChild(item);
-  })
+  });
 }
 
 function adicionaItemNoCarrinho(event) {
-  const { sku: evsku } = event.target
+  const { sku: evsku } = event.target;
   let li = null;
   fetch(`https://api.mercadolibre.com/items/${evsku}`)
     .then(async (data) => {
       const { id: sku, title: name, price: salePrice } = await data.json();
       const result = { sku, name, salePrice };
       li = createCartItemElement(result);
-      result.id = `${sku} ${cart.length} ${Math.round(Math.random() * 1E7)}`
+      result.id = `${sku} ${cart.length} ${Math.round(Math.random() * 1E7)}`;
       li.id = result.id;
-      adicionaItemNoStorage(result)
+      adicionaItemNoStorage(result);
     })
     .then(() => {
       if (li) document.querySelector('.cart__items').appendChild(li);
       calculaEImprimeTotal();
-    })
+    });
 }
 
 function adicionaItemNoStorage(item) {
@@ -69,12 +68,12 @@ function adicionaItemNoStorage(item) {
   atualizaItemNoStorage();
 }
 function atualizaItemNoStorage() {
-  if (typeof Storage != 'undefined') {
+  if (typeof Storage !== 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
     if (!cart) cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
   } else {
-    console.error("Navegador sem suporte para salvar pedido");
+    console.error('Navegador sem suporte para salvar pedido');
   }
 }
 
@@ -109,7 +108,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const id = event.target.id;
-  cart = cart.filter(element => element.id != id)
+  cart = cart.filter(element => element.id != id);
   document.querySelector('.cart__items').removeChild(event.target);
   atualizaItemNoStorage();
   calculaEImprimeTotal();
@@ -120,14 +119,14 @@ function imprimeTotal(total) {
 }
 function calculaEImprimeTotal() {
   let total = 0;
-  cart.forEach(element => {
+  cart.forEach((element )=> {
     total += element.salePrice;
-  })
+  });
   imprimeTotal(total);
 }
 
 function limpaTudo() {
-  document.querySelector('.cart__items').innerHTML = "";
+  document.querySelector('.cart__items').innerHTML = '';
   cart = [];
   atualizaItemNoStorage();
   imprimeTotal(0);
