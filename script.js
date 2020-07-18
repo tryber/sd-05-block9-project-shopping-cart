@@ -9,6 +9,14 @@ function limpaTudo() {
   imprimeTotal(0);
 }
 
+function calculaEImprimeTotal() {
+  let total = 0;
+  cart.forEach((element) => {
+    total += element.salePrice;
+  });
+  imprimeTotal(total);
+}
+
 function atualizaItemNoStorage() {
   if (typeof Storage !== 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
@@ -125,13 +133,6 @@ function cartItemClickListener(event) {
 
 function imprimeTotal(total) {
   document.querySelector('.total-price').innerText = total;
-}
-function calculaEImprimeTotal() {
-  let total = 0;
-  cart.forEach((element )=> {
-    total += element.salePrice;
-  });
-  imprimeTotal(total);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
