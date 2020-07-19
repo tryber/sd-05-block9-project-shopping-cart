@@ -107,8 +107,9 @@ function dataFetcher() {
 window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
-  if (localStorage.getItem('carrinho') !== '' || localStorage.getItem('carrinho') !== null) {
-    const local = localStorage.getItem('carrinho').split(',');
+  let local = localStorage.getItem('carrinho');
+  if (local !== '' || local !== null) {
+    local = local.split(',');
     local.forEach(el => getElementById(el));
   }
   const botaoLimpaTudo = document.querySelector('.empty-cart');
