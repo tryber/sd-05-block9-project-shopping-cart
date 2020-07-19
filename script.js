@@ -6,6 +6,7 @@ let ol;
 function apagaTutoo() {
   carrinho = [];
   ol.innerHTML = '';
+  localStorage.setItem('carrinho', '');
 }
 
 const botaoLimpaTudo = document.querySelector('.empty-cart');
@@ -17,6 +18,7 @@ function cartItemClickListener(event) {
   const pos = carrinho.indexOf(procurado);
   carrinho.splice(pos, 1);
   ol.removeChild(event.target);
+  localStorage.setItem('carrinho', carrinho.map(el => el.sku).join(','));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -33,10 +35,7 @@ function criaListaDoCarrinho() {
   carrinho.forEach(product => ol.appendChild(createCartItemElement(product)));
 }
 
-function addItemToCart(evento) {
-  const elemento = evento.target.parentElement;
-  const idBusca = elemento.children[0].innerText;
-  const cart = document.getElementsByClassName('.cart__items');
+function getElementById(idBusca) {
   fetch(`https://api.mercadolibre.com/items/${idBusca}`)
   .then(response => response.json())
   .then(({ id, price, title }) => ({
@@ -46,8 +45,15 @@ function addItemToCart(evento) {
   }))
   .then((obj) => {
     carrinho.push(obj);
+    localStorage.setItem('carrinho', carrinho.map(el => el.sku).join(','));
     criaListaDoCarrinho(obj);
   });
+}
+
+function addItemToCart(evento) {
+  const elemento = evento.target.parentElement;
+  const idBusca = elemento.children[0].innerText;
+  getElementById(idBusca);
 }
 
 function createCustomElement(element, className, innerText) {
@@ -104,6 +110,8 @@ function dataFetcher() {
 window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
+  const local = localStorage.getItem('carrinho').split(',');
+  if(localStorage.getItem('carrinho') !== '') local.forEach(el => getElementById(el));
 };
 
 function getSkuFromProductItem(item) {
