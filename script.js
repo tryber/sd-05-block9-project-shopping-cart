@@ -25,15 +25,18 @@ function addItemToCart(evento) {
   const elemento = evento.target.parentElement;
   const idBusca = elemento.children[0].innerText;
   const cart = document.getElementsByClassName('.cart__items');
+  let li = null;
   fetch(`https://api.mercadolibre.com/items/${idBusca}`)
   .then(response => response.json())
-  .then(({ id, price, title }) => carrinho.push({
+  .then(({ id, price, title }) =>({
     sku: id,
     salePrice: price,
     name: title,
   }))
-  .then(criaListaDoCarrinho());
-  console.log('add cart')
+  .then((obj) => {
+    carrinho.push(obj);
+    criaListaDoCarrinho(obj);
+  })
 }
 
 function createCustomElement(element, className, innerText) {
