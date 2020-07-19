@@ -108,7 +108,7 @@ window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
   let local = localStorage.getItem('carrinho');
-  if (local !== '' || local !== null) {
+  if (local.indexOf(',') > 0 && local !== null) {
     local = local.split(',');
     local.forEach(el => getElementById(el));
   }
