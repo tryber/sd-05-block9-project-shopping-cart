@@ -3,10 +3,21 @@ let lista = [];
 let listaAdaptada = [];
 let ol;
 
+async function somaOPreco() {
+  let valorTotal = 0;
+  if (carrinho.length === 0) {
+    valorTotal = 0;
+  } else {
+    valorTotal = await carrinho.reduce((total, atual) => total + atual.salePrice, 0);
+  }
+  document.querySelector('.total-price').innerText = valorTotal;
+}
+
 function apagaTutoo() {
   carrinho = [];
   ol.innerHTML = '';
   localStorage.setItem('carrinho', '');
+  somaOPreco();
 }
 
 function cartItemClickListener(event) {
@@ -16,6 +27,7 @@ function cartItemClickListener(event) {
   carrinho.splice(pos, 1);
   ol.removeChild(event.target);
   localStorage.setItem('carrinho', carrinho.map(el => el.sku).join(','));
+  somaOPreco();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -30,6 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 function criaListaDoCarrinho() {
   ol.innerHTML = '';
   carrinho.forEach(product => ol.appendChild(createCartItemElement(product)));
+  somaOPreco();
 }
 
 function getElementById(idBusca) {
