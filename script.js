@@ -70,7 +70,7 @@ function dataFetcher() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((response) => {
-    lista = response.results
+    lista = response.results;
   })
   .then(() => {
     listaAdaptada = (lista.map(({ id, title, thumbnail }) =>
