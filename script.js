@@ -4,14 +4,18 @@ let listaAdaptada = [];
 let ol;
 
 function cartItemClickListener(event) {
-  ol.removeChild(event.target)
-  console.log('ok')
+  const id = event.target.id;
+  const procurado = carrinho.find(el => el.sku === id);
+  const pos = carrinho.indexOf(procurado);
+  carrinho.splice(pos, 1);
+  ol.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = sku;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
