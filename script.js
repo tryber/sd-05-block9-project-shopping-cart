@@ -108,9 +108,11 @@ window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
   let local = localStorage.getItem('carrinho');
-  if (local.length > 0 && local !== null) {
-    local = local.split(',');
-    local.forEach(el => getElementById(el));
+  if (local !== null) {
+    if (local.length > 0) {
+      local = local.split(',');
+      local.forEach(el => getElementById(el));
+    }
   }
   const botaoLimpaTudo = document.querySelector('.empty-cart');
   botaoLimpaTudo.addEventListener('click', apagaTutoo);
