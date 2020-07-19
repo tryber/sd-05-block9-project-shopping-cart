@@ -101,6 +101,10 @@ function dataFetcher() {
   })
   .then(() => {
     criaALista();
+    setTimeout(() => {
+      const low = document.querySelector('.loading');
+      low.parentElement.removeChild(low);
+    }, 3000);
   });
 }
 
