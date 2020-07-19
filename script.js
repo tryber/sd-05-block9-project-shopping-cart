@@ -101,6 +101,8 @@ function dataFetcher() {
   })
   .then(() => {
     criaALista();
+  })
+  .then(() => {
     setTimeout(() => {
       const low = document.querySelector('.loading');
       low.parentElement.removeChild(low);
