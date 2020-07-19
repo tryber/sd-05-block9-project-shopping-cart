@@ -111,7 +111,7 @@ window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
   const local = localStorage.getItem('carrinho').split(',');
-  if(localStorage.getItem('carrinho') !== '') local.forEach(el => getElementById(el));
+  if (localStorage.getItem('carrinho') !== '') local.forEach(el => getElementById(el));
 };
 
 function getSkuFromProductItem(item) {
