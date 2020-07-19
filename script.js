@@ -1,10 +1,11 @@
-const carrinho = [];
+let carrinho = [];
 let lista = [];
 let listaAdaptada = [];
 let ol;
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  ol.removeChild(event.target)
+  console.log('ok')
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -17,7 +18,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 function criaListaDoCarrinho() {
   ol.innerHTML = '';
-  carrinho.forEach(item => ol.appendChild(createCartItemElement(item)));
+  carrinho.forEach(product => ol.appendChild(createCartItemElement(product)));
 }
 
 function addItemToCart(evento) {
@@ -32,6 +33,7 @@ function addItemToCart(evento) {
     name: title,
   }))
   .then(criaListaDoCarrinho());
+  console.log('add cart')
 }
 
 function createCustomElement(element, className, innerText) {
