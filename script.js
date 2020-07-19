@@ -1,27 +1,23 @@
 const carrinho = [];
 let lista = [];
-let listaAdaptada =[];
+let listaAdaptada = [];
 let ol;
 
-function dataFetcher () {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+function addItemToCart(evento) {
+  const elemento = evento.target.parentElement;
+  const idBusca = elemento.children[0].innerText;
+  const cart = document.getElementsByClassName('.cart__items');
+  fetch(`https://api.mercadolibre.com/items/${idBusca}`)
   .then(response => response.json())
-  .then(response => lista = response.results)
-  .then(() => {
-    listaAdaptada = lista.map(({id, title, thumbnail}) =>
-    ({
-      sku: id,
-      name: title,
-      image: thumbnail,
-    })
-    );
-  })
-  .then( () => {
-    criaALista();
-  })
+  .then(({ id, price, title }) => carrinho.push({
+    sku: id,
+    salePrice: price,
+    name: title,
+  }))
+  .then(criaListaDoCarrinho());
 }
 
-function criaALista () {
+function criaALista() {
   listaAdaptada.forEach((produto) => {
     const elemento = createProductItemElement(produto);
     elemento.lastElementChild.addEventListener('click', addItemToCart);
@@ -29,28 +25,26 @@ function criaALista () {
   });
 }
 
-function addItemToCart(evento) {
-  const elemento = evento.target.parentElement;
-  const id = elemento.children[0].innerText;
-  const cart = document.getElementsByClassName('.cart__items');
-  fetch(`https://api.mercadolibre.com/items/${id}`)
+function dataFetcher () {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
-  .then(({id, price, title}) => carrinho.push({
-    sku: id,
-    salePrice: price,
-    name: title,
-  }))
-  .then(criaListaDoCarrinho())
-}
-
-function criaListaDoCarrinho () {
-  ol.innerHTML = '';
-  carrinho.forEach(item => ol.appendChild(createCartItemElement(item)));
+  .then(response => lista = response.results)
+  .then(() => {
+    listaAdaptada = lista.map(({ id, title, thumbnail }) =>
+    ({
+      sku: id,
+      name: title,
+      image: thumbnail,
+    })
+    );
+  })
+  .then(() => {
+    criaALista();
+  });
 }
 
 window.onload = function onload() {
   ol = document.querySelector('.cart__items');
-  console.log(ol)
   dataFetcher();
 };
 
@@ -92,4 +86,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+function criaListaDoCarrinho() {
+  ol.innerHTML = '';
+  carrinho.forEach(item => ol.appendChild(createCartItemElement(item)));
 }
