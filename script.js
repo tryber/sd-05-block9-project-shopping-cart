@@ -2,13 +2,14 @@ let carrinho = [];
 let lista = [];
 let listaAdaptada = [];
 let ol;
-const botaoLimpaTudo = document.querySelector('.empty-cart');
-botaoLimpaTudo.addEventListener('click', apagaTutoo);
 
-function apagaTutoo () {
+function apagaTutoo() {
   carrinho = [];
   ol.innerHTML = '';
 }
+
+const botaoLimpaTudo = document.querySelector('.empty-cart');
+botaoLimpaTudo.addEventListener('click', apagaTutoo);
 
 function cartItemClickListener(event) {
   const id = event.target.id;
