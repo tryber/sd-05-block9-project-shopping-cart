@@ -107,8 +107,10 @@ function dataFetcher() {
 window.onload = function onload() {
   ol = document.querySelector('.cart__items');
   dataFetcher();
-  const local = localStorage.getItem('carrinho').split(',');
-  if (localStorage.getItem('carrinho') !== '') local.forEach(el => getElementById(el));
+  if (localStorage.getItem('carrinho') !== '' || localStorage.getItem('carrinho') !== null) {
+    const local = localStorage.getItem('carrinho').split(',');
+    local.forEach(el => getElementById(el));
+  }
   const botaoLimpaTudo = document.querySelector('.empty-cart');
   botaoLimpaTudo.addEventListener('click', apagaTutoo);
 };
