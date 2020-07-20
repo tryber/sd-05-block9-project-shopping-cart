@@ -1,11 +1,23 @@
+function atualizaValor(texto) {
+  return parseFloat(texto.substr(texto.indexOf('PRICE: $') + 8));
+}
+
 function atualizarLocalStorage() {
   const ol = document.querySelector('ol');
+  const valor = document.querySelector('.total-price');
+  let total = 0;
   localStorage.setItem('ol', ol.innerHTML);
+  [...ol.children].forEach((item) => {
+    total += atualizaValor(item.innerText);
+  });
+  valor.innerHTML = total;
 }
 
 function resgataLocalStorage() {
   const ol = document.querySelector('ol');
+  const valor = document.querySelector('.total-price');
   ol.innerHTML = localStorage.getItem('ol');
+  valor.innerHTML = localStorage.getItem('valor');
 }
 
 function createProductImageElement(imageSource) {
