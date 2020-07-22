@@ -1,4 +1,3 @@
-window.onload = function onload() { };
 const loading = document.querySelector('.loading');
 let valorTot = 0;
 let soma = 0;
