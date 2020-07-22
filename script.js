@@ -20,10 +20,10 @@ function createCustomElement(element, className, innerText) {
 }
 
 // Salvar item no carrinho
-const salvar = () => {
+function salvar() {
   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
   localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
-};
+}
 
 // Soma tot
 async function somar() {
@@ -37,7 +37,7 @@ async function somar() {
   }
 }
 
-// Removar
+// Remover
 function cartItemClickListener(event) {
   event.target.remove();
   salvar();
