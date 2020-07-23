@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "jest": "^26.1.0"
+  },
+  "dependencies": {
+    "node": "^14.5.0"
   }
 }
