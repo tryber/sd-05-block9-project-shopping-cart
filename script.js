@@ -21,6 +21,7 @@ window.onload = function onload() {
     });
 };
 
+
 function atualizaItemNoStorage() {
   if (typeof Storage !== 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
