@@ -35,7 +35,7 @@ function cartItemClickListener(event) {
   const click = event.target;
   const preco = parseFloat(event.target.innerHTML.substr(event.target.innerHTML.indexOf('PRICE: $')));
   changeValues(-preco);
-  click.remove(); 
+  click.remove();
   refreshLocalStorage();
 }
 
