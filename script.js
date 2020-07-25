@@ -5,6 +5,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function changeValues(price) {
+  const valorAtual = document.getElementsByClassName('total-price')[0];
+  valorAtual.innerHTML = (parseFloat(valorAtual.innerHTML) + price);
+}
+
 const remove = document.querySelector('.empty-cart');
 function removerItens() {
   document.getElementsByClassName('cart__items')[0].innerHTML = '';
@@ -13,9 +18,12 @@ function removerItens() {
 remove.addEventListener('click', removerItens);
 
 function refreshLocalStorage() {
-  const ol = document.querySelector('.cart__items');
+  const ol = document.getElementsByClassName('cart__items')[0];
+  const total = document.getElementsByClassName('total-price')[0];
   localStorage.setItem('cart', ol.innerHTML);
+  localStorage.setItem('totalCart', total.innerHTML);
 }
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -25,7 +33,9 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   const click = event.target;
-  click.remove();
+  const preco = parseFloat(event.target.innerHTML.substr(event.target.innerHTML.indexOf('PRICE: $')));
+  changeValues(-preco);
+  click.remove(); 
   refreshLocalStorage();
 }
 
@@ -34,6 +44,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  changeValues(salePrice);
   return li;
 }
 function idProducts(item) {
