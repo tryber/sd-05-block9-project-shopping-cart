@@ -10,19 +10,19 @@ async function changeValues(price) {
   valorAtual.innerHTML = (parseFloat(valorAtual.innerHTML) + price);
 }
 
-const remove = document.querySelector('.empty-cart');
 const ol = document.getElementsByClassName('cart__items')[0];
-remove.addEventListener('click', () => {
-  ol.innerHTML = '';
-  document.getElementsByClassName('total-price')[0].innerHTML = '0';
-  updateOl();
-});
-
 function refreshLocalStorage() {
   const total = document.getElementsByClassName('total-price')[0];
   localStorage.setItem('cart', ol.innerHTML);
   localStorage.setItem('totalCart', total.innerHTML);
 }
+
+const remove = document.querySelector('.empty-cart');
+remove.addEventListener('click', () => {
+  ol.innerHTML = '';
+  document.getElementsByClassName('total-price')[0].innerHTML = '0';
+  refreshLocalStorage();
+});
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
