@@ -11,14 +11,14 @@ async function changeValues(price) {
 }
 
 const remove = document.querySelector('.empty-cart');
-function removerItens() {
-  document.getElementsByClassName('cart__items')[0].innerHTML = '';
-  localStorage.setItem('cart', '');
-}
-remove.addEventListener('click', removerItens);
+const ol = document.getElementsByClassName('cart__items')[0];
+remove.addEventListener('click', () => {
+  ol.innerHTML = '';
+  document.getElementsByClassName('total-price')[0].innerHTML = '0';
+  updateOl();
+});
 
 function refreshLocalStorage() {
-  const ol = document.getElementsByClassName('cart__items')[0];
   const total = document.getElementsByClassName('total-price')[0];
   localStorage.setItem('cart', ol.innerHTML);
   localStorage.setItem('totalCart', total.innerHTML);
@@ -48,7 +48,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 function idProducts(item) {
-  const ol = document.querySelector('.cart__items');
   const url = `https://api.mercadolibre.com/items/${item}`;
   fetch(url)
   .then(response => response.json())
