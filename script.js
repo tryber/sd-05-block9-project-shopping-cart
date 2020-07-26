@@ -40,8 +40,8 @@ async function somaTotal() {
     totalPrice.innerHTML = 0;
     refreshLocalStorage();
   } else {
-    totalPrice.innerHTML = Math.round(((Math.round(valorItem * 100) / 100))
-    + (Math.round(soma * 100) * 100) / 100);
+    totalPrice.innerHTML = Math.round(((Math.round(valorItem * 100) / 100)
+    + (Math.round(soma * 100) / 100) + (Math.round(subtracao * 100) / 100)) * 100) / 100;
     refreshLocalStorage();
   }
 }
