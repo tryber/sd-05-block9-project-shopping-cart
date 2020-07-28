@@ -127,4 +127,5 @@ window.onload = function onload() {
       defineLista();
       pushList();
     });
+  document.querySelector('.loading').innerHTML = 'loading ......';
 };
