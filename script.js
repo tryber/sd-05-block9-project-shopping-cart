@@ -115,8 +115,8 @@ window.onload = function onload() {
     // Baixa os dados da api.
     .then(async (response) => {
       const result = await response.json();
-      atualizaItemNoStorage();
       ListaProdutos = result.results;
+      atualizaItemNoStorage();
     })
     // Prenchendo a lista de produtos.
     .then(() => {
