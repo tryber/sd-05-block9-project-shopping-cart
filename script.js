@@ -40,8 +40,8 @@ function cartItemClickListener(event) {
   const id = event.target.id;
   cart = cart.filter(element => element.id !== id);
   document.querySelector('.cart__items').removeChild(event.target);
-  atualizaItemNoStorage();
-  calculaEImprimeTotal();
+  // atualizaItemNoStorage();
+  // calculaEImprimeTotal();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
