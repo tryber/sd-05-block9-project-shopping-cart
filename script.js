@@ -23,6 +23,16 @@ function limpaTudo() {
   imprimeTotal(0);
 }
 
+function defineLista() {
+  produtos.forEach((produto) => {
+    const { sku } = produto;
+    const item = createProductItemElement(produto);
+    item.lastElementChild.sku = sku;
+    item.lastElementChild.addEventListener('click', adicionaItemNoCarrinho);
+    document.querySelector('.items').appendChild(item);
+  });
+}
+
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
@@ -114,17 +124,6 @@ function adicionaItemNoCarrinho(event) {
       calculaEImprimeTotal();
     });
 }
-
-function defineLista() {
-  produtos.forEach((produto) => {
-    const { sku } = produto;
-    const item = createProductItemElement(produto);
-    item.lastElementChild.sku = sku;
-    item.lastElementChild.addEventListener('click', adicionaItemNoCarrinho);
-    document.querySelector('.items').appendChild(item);
-  });
-}
-
 
 /*
   function getSkuFromProductItem(item) {
