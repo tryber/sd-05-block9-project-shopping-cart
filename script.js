@@ -106,7 +106,7 @@ function createProductItemElement({ sku, name, image }) {
 }
   
 function getSkuFromProductItem(item) {
-    return item.querySelector('span.item__sku').innerText;
+  return item.querySelector('span.item__sku').innerText;
 }
 
 window.onload = function onload() {
