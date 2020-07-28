@@ -2,6 +2,26 @@ let ListaProdutos = [];
 let produtos = [];
 let cart = null;
 
+window.onload = function onload() {
+  document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    // Baixa os dados da api.
+    .then(async (response) => {
+      const result = await response.json();
+      atualizaItemNoStorage();
+      ListaProdutos = result.results;
+    })
+    // Prenchendo a lista de produtos.
+    .then(() => {
+      produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
+      ({ sku: id, name: title, image: thumbnail }));
+    })
+    .then(() => {
+      defineLista();
+      pushList();
+    });
+};
+
 function atualizaItemNoStorage() {
   if (typeof Storage !== 'undefined') {
     cart = cart || JSON.parse(localStorage.getItem('cart'));
@@ -105,25 +125,6 @@ function defineLista() {
   });
 }
 
-window.onload = function onload() {
-  document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    // Baixa os dados da api.
-    .then(async (response) => {
-      const result = await response.json();
-      atualizaItemNoStorage();
-      ListaProdutos = result.results;
-    })
-    // Prenchendo a lista de produtos.
-    .then(() => {
-      produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
-      ({ sku: id, name: title, image: thumbnail }));
-    })
-    .then(() => {
-      defineLista();
-      pushList();
-    });
-};
 
 /*
   function getSkuFromProductItem(item) {
