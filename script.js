@@ -2,6 +2,10 @@ let ListaProdutos = [];
 let produtos = [];
 let cart = null;
 
+function imprimeTotal(total) {
+  document.querySelector('.total-price').innerText = total;
+}
+
 function limpaTudo() {
   document.querySelector('.cart__items').innerHTML = '';
   cart = [];
@@ -37,10 +41,6 @@ function atualizaItemNoStorage() {
   } else {
     console.error('Navegador sem suporte para salvar pedido');
   }
-}
-
-function imprimeTotal(total) {
-  document.querySelector('.total-price').innerText = total;
 }
 
 function createCustomElement(element, className, innerText) {
