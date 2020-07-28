@@ -115,18 +115,13 @@ window.onload = function onload() {
       ListaProdutos = result.results;
     })
     // Prenchendo a lista de produtos.
-    .then(() =>
-      produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
+    .then(() => produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
         ({ sku: id, name: title, image: thumbnail })))
     .then(() => {
       defineLista();
       pushList();
     });
 };
-
-document.querySelector('.cart').appendChild(preco);
-// imprime total,que recebe como parametro total
-imprimeTotal(total);
 
 /*
   function getSkuFromProductItem(item) {
