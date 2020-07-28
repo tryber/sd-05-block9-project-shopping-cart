@@ -29,13 +29,6 @@ function calculaEImprimeTotal() {
   imprimeTotal(total);
 }
 
-function limpaTudo() {
-  document.querySelector('.cart__items').innerHTML = '';
-  cart = [];
-  atualizaItemNoStorage();
-  imprimeTotal(0);
-}
-
 function cartItemClickListener(event) {
   const id = event.target.id;
   cart = cart.filter(element => element.id !== id);
@@ -108,6 +101,13 @@ function defineLista() {
 // function getSkuFromProductItem(item) {
   // return item.querySelector('span.item__sku').innerText;
 // }
+
+function limpaTudo() {
+  document.querySelector('.cart__items').innerHTML = '';
+  cart = [];
+  atualizaItemNoStorage();
+  imprimeTotal(0);
+}
 
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
