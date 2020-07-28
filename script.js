@@ -6,6 +6,16 @@ function imprimeTotal(total) {
   document.querySelector('.total-price').innerText = total;
 }
 
+function atualizaItemNoStorage() {
+  if (typeof Storage !== 'undefined') {
+    cart = cart || JSON.parse(localStorage.getItem('cart'));
+    if (!cart) cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+  } else {
+    console.error('Navegador sem suporte para salvar pedido');
+  }
+}
+
 function limpaTudo() {
   document.querySelector('.cart__items').innerHTML = '';
   cart = [];
@@ -32,16 +42,6 @@ window.onload = function onload() {
       pushList();
     });
 };
-
-function atualizaItemNoStorage() {
-  if (typeof Storage !== 'undefined') {
-    cart = cart || JSON.parse(localStorage.getItem('cart'));
-    if (!cart) cart = [];
-    localStorage.setItem('cart', JSON.stringify(cart));
-  } else {
-    console.error('Navegador sem suporte para salvar pedido');
-  }
-}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
