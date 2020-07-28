@@ -110,7 +110,7 @@ function limpaTudo() {
 }
 
 window.onload = function onload() {
-  document.querySelector('.loading').innerHTML = 'loading ......';
+  document.querySelector('.loading').innerHTML = 'loading...';
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     // Baixa os dados da api.
