@@ -110,9 +110,10 @@ function limpaTudo() {
 }
 
 window.onload = function onload() {
-  document.querySelector('span.loading').innerHTML = 'loading...';
+  
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then( document.querySelector('span.loading').innerHTML = 'loading...')
     // Baixa os dados da api.
     .then(async (response) => {
       const result = await response.json();
