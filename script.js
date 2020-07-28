@@ -115,8 +115,10 @@ window.onload = function onload() {
       ListaProdutos = result.results;
     })
     // Prenchendo a lista de produtos.
-    .then(() => produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
-        ({ sku: id, name: title, image: thumbnail })))
+    .then(() => {
+      produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
+      ({ sku: id, name: title, image: thumbnail }));
+    })
     .then(() => {
       defineLista();
       pushList();
