@@ -110,7 +110,7 @@ function limpaTudo() {
 }
 const i = setInterval(function () {
   clearInterval(i);
-  document.getElementById("loading");
+  document.getElementById('loading');
 }, 4000);
 
 window.onload = function onload() {
