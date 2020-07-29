@@ -109,10 +109,10 @@ function limpaTudo() {
   imprimeTotal(0);
 }
 const i = setInterval(function () {
-      clearInterval(i);
-      document.getElementById("loading");
-  }, 4000);
-  
+  clearInterval(i);
+  document.getElementById("loading");
+}, 4000);
+
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
