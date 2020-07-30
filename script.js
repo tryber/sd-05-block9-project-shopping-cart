@@ -109,7 +109,6 @@ function limpaTudo() {
   imprimeTotal(0);
 }
 
-
 window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
