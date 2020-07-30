@@ -114,7 +114,6 @@ window.onload = function onload() {
     // Baixa os dados da api.
     .then(async (response) => {
       const result = await response.json();
-      console.log(result);
       ListaProdutos = result.results;
       atualizaItemNoStorage();
     })
@@ -122,6 +121,7 @@ window.onload = function onload() {
     .then(() => {
       produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
       ({ sku: id, name: title, image: thumbnail }));
+      console.log(produtos);
     })
     .then(() => {
       defineLista();
