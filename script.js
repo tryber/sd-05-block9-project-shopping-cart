@@ -121,7 +121,6 @@ window.onload = function onload() {
     .then(() => {
       produtos = ListaProdutos.map(({ id, title, thumbnail }) =>
       ({ sku: id, name: title, image: thumbnail }));
-      console.log(produtos);
     })
     .then(() => {
       defineLista();
