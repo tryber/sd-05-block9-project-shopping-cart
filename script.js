@@ -11,7 +11,6 @@ function atualizaItemNoStorage() {
     console.error('Navegador sem suporte para salvar pedido');
   }
 }
-
 function adicionaItemNoStorage(item) {
   cart.push(item);
   atualizaItemNoStorage();
