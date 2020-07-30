@@ -109,13 +109,14 @@ function limpaTudo() {
 }
 
 window.onload = function onload() {
-  atualizaItemNoStorage();
   document.querySelector('.empty-cart').addEventListener('click', limpaTudo);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     // Baixa os dados da api.
     .then(async (response) => {
       const result = await response.json();
+      console.log(result);
       ListaProdutos = result.results;
+      atualizaItemNoStorage();
     })
     // Prenchendo a lista de produtos.
     .then(() => {
@@ -124,6 +125,6 @@ window.onload = function onload() {
     })
     .then(() => {
       defineLista();
-      pushList();
+      // pushList();
     });
 };
