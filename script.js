@@ -1,6 +1,8 @@
 function refreshStorage() {
   const itemsList = document.querySelector('.cart__items');
+  const totalPrice = document.querySelector('.total-price');
   localStorage.setItem('cart item:', itemsList.innerHTML);
+  localStorage.setItem('total price:', totalPrice.innerHTML);
 }
 
 function createProductImageElement(imageSource) {
@@ -10,21 +12,30 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function cartItemClickListener(event) {
-  const item = event.target;
-  if (item.parentNode) {
-    item.parentNode.removeChild(item);
-  }
-  refreshStorage();
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  calculateTotal(salePrice);
   return li;
 }
+
+function cartItemClickListener(event) {
+  const item = event.target;
+  const text = event.target.innerText;
+  if (item.parentNode) {
+    const price = (Math.round(text.substr(text.indexOf('PRICE: $') + 8) *100) / 100).toFixed(2);
+    calculateTotal(-price);
+    item.parentNode.removeChild(item);
+  }
+  refreshStorage();
+}
+
+async function calculateTotal(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerText = (Math.round((totalPrice.innerText) * 100) / 100 + salePrice).toFixed(2);
+};
 
 function addToCart(event) {
   const button = event.target;
@@ -72,6 +83,7 @@ function getSkuFromProductItem(item) {
 function clearCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
+  document.querySelector('.total-price').innerText = '0.00';
     refreshStorage();
   });
 }
@@ -79,7 +91,7 @@ function clearCart() {
 window.onload = function onload() {
   setTimeout(() => {
     document.getElementsByClassName('loading')[0].remove();
-  }, 200);
+  }, 300);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(data => data.results.forEach((item) => {
@@ -87,13 +99,17 @@ window.onload = function onload() {
         sku: item.id,
         name: item.title,
         image: item.thumbnail,
+        salePrice: item.price,
       });
       document.getElementsByClassName('items')[0].appendChild(product);
     }))
     .then(() => {
-      const storage = localStorage.getItem('cart item:');
+      const itemStorage = localStorage.getItem('cart item:');
+      const priceStorage = localStorage.getItem('total price:');
       const itemsCart = document.querySelector('.cart__items');
-      itemsCart.innerHTML = storage;
+      const totalPrice = document.querySelector('.total-price');
+      itemsCart.innerHTML = itemStorage;
+      totalPrice.innerHTML = priceStorage;
       itemsCart.addEventListener('click', cartItemClickListener);
     })
     .then(() => clearCart());
