@@ -145,6 +145,5 @@ window.onload = function onload() {
 
 setTimeout(() => {
   const loading = document.querySelector('.loading');
-  loading.parentElement.removeChild(loading)
-
+  loading.parentElement.removeChild(loading);
 }, 3000);
