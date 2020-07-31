@@ -142,3 +142,9 @@ window.onload = function onload() {
       pushList();
     });
 };
+
+setTimeout(() => {
+  const loading = document.querySelector('.loading');
+  loading.parentElement.removeChild(loading)
+
+}, 3000);
