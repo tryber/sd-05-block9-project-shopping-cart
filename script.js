@@ -14,7 +14,7 @@ function createProductImageElement(imageSource) {
 
 async function calculateTotal(salePrice) {
   const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice).toFixed(2);
+  totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
 }
 
 function cartItemClickListener(event) {
