@@ -17,6 +17,17 @@ async function calculateTotal(salePrice) {
   totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice).toFixed(2);
 }
 
+function cartItemClickListener(event) {
+  const item = event.target;
+  const text = event.target.innerText;
+  if (item.parentNode) {
+    const price = (Math.round(text.substr(text.indexOf('PRICE: $') + 8) * 100) / 100).toFixed(2);
+    calculateTotal(-price);
+    item.parentNode.removeChild(item);
+  }
+  refreshStorage();
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -24,17 +35,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   calculateTotal(salePrice);
   return li;
-}
-
-function cartItemClickListener(event) {
-  const item = event.target;
-  const text = event.target.innerText;
-  if (item.parentNode) {
-    const price = (Math.round(text.substr(text.indexOf('PRICE: $') + 8) *100) / 100).toFixed(2);
-    calculateTotal(-price);
-    item.parentNode.removeChild(item);
-  }
-  refreshStorage();
 }
 
 function addToCart(event) {
