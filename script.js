@@ -174,7 +174,7 @@ function emptycart() {
 
 // criar o loading
 function loading() {
-  document.querySelector('.loading').innerHTML = 'Loading';
+  document.querySelector('.loading').innerHTML = 'loading...';
 }
 
 // Fetch API retorna as promisses
