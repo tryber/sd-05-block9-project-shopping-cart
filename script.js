@@ -174,7 +174,7 @@ function emptycart() {
 
 // criar o loading
 function loading() {
-  document.querySelector('.loading').innerHTML;
+  document.querySelector('.loading').innerHTML = 'loading...';
 }
 
 // Fetch API retorna as promisses
@@ -187,7 +187,7 @@ window.onload = function onload() {
     .then(loading())
     .then(queryButtons)
     .then(emptycart);
-    setTimeout(() => {
-      loading.parentElement.removeChild(loading);
-    }, 3000);
+  setTimeout(() => {
+    loading.parentElement.removeChild(loading);
+  }, 3000);
 };
