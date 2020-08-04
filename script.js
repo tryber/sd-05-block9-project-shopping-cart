@@ -5,7 +5,7 @@ const OBJ = { method: 'GET' };
 
 const Items = document.querySelector('.items');
 
-// Colocar duas casas após a virgula 
+// Colocar duas casas após a virgula
 
 function dinheiro(num) {
   return (Math.round(num.toFixed(2) * 100) / 100);
@@ -33,11 +33,11 @@ function montarPag(prod) {
 
 // chama o id, nome e imagem dos produtos
   const todosProd = [];
-  pagina.forEach((elementos) => {
+  pagina.forEach((el) => {
     todosProd.push({
-      sku: elementos.id,
-      name: elementos.title,
-      image: elementos.thumbnail,
+      sku: el.id,
+      name: el.title,
+      image: el.thumbnail,
     });
   });
 
@@ -70,9 +70,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function elementos(n) {
-  n.forEach((elementos) => {
-    Items.appendChild(createProductItemElement(elementos));
+function criaElementos(n) {
+  n.forEach((objetos) => {
+    Items.appendChild(createProductItemElement(objetos));
   });
 }
 
@@ -81,8 +81,8 @@ function somar(valor) {
   if (document.querySelector('.total-price').innerText) {
     const todosProdutos = document.querySelectorAll('.cart__item');
     const soma = [];
-      todosProdutos.forEach((elementos) => {
-      soma.push(elementos.innerHTML.match(/([0-9.]){1,}$/)[0]);
+    todosProdutos.forEach((product) => {
+      soma.push(product.innerHTML.match(/([0-9.]){1,}$/)[0]);
     });
     let resultado = 0;
     for (let i = 0; i < soma.length; i += 1) {
@@ -146,8 +146,8 @@ const IdProd = (event) => {
 // botao adicionar
 function queryButtons() {
   const buttons = document.querySelectorAll('.item__add');
-  buttons.forEach((elementos) => {
-    elementos.addEventListener('click', IdProd);
+  buttons.forEach((item) => {
+    item.addEventListener('click', IdProd);
   });
 }
 
@@ -174,7 +174,7 @@ function emptycart() {
 
 // criar o loading
 function loading() {
-  document.querySelector('.loading').innerHTML = 'loading...';
+  document.querySelector('.loading').innerHTML = 'Loading';
 }
 
 // Fetch API retorna as promisses
@@ -183,7 +183,7 @@ window.onload = function onload() {
   fetch(API, OBJ)
     .then(response => response.json())
     .then(jsonResponse => montarPag(jsonResponse))
-    .then(n => elementos(n))
+    .then(n => criaElementos(n))
     .then(loading())
     .then(queryButtons)
     .then(emptycart);
