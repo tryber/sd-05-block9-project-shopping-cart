@@ -169,12 +169,6 @@ function emptycart() {
     document.querySelector('.total-price').innerHTML = '';
     atualizar();
   });
-  document.querySelector('.loading').remove();
-}
-
-// criar o loading
-function loading() {
-  document.querySelector('.loading').innerHTML = 'loading...';
 }
 
 // Fetch API retorna as promisses
@@ -184,10 +178,10 @@ window.onload = function onload() {
     .then(response => response.json())
     .then(jsonResponse => montarPag(jsonResponse))
     .then(n => criaElementos(n))
-    .then(loading())
     .then(queryButtons)
     .then(emptycart);
   setTimeout(() => {
+    const loading = document.querySelector('.loading');
     loading.parentElement.removeChild(loading);
   }, 3000);
 };
