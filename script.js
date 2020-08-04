@@ -188,3 +188,6 @@ window.onload = function onload() {
     .then(queryButtons)
     .then(emptycart);
 };
+setTimeout(() => {
+  document.getElementsByClassName('loading')[0].remove();
+}, 2000);
