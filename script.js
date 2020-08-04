@@ -1,22 +1,49 @@
-window.onload = function onload() { };
-const novoCarrinho = () => {
-  const new = JSON.parse(localStorage.getItem('myCart'));
-  return new || [];
-}
-let cart = novoCarrinho();
+const API = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const OBJ = { method: 'GET' };
 
-const loading = document.querySelector('.loading');
-let valorTot = 0;
-let soma = 0;
-let sub = 0;
+// Pegar elementos html
 
-// Salvar item no carrinho
-function salvar() {
-  localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
-  localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
+const Items = document.querySelector('.items');
+
+// Colocar duas casas após a virgula 
+
+function dinheiro(num) {
+  return (Math.round(num.toFixed(2) * 100) / 100);
 }
 
-// Função pronta
+/* Assim como no projeto em grupo, a função que atualiza o localStorage tem que ficar no começo
+remove tudo e cria de novo(setItem)
+*/
+
+function atualizar() {
+  const itens = document.querySelector('.cart__items').innerHTML;
+  const total = document.querySelector('.total-price').innerHTML;
+  localStorage.removeItem('carrinhoDeCompras');
+  localStorage.removeItem('totalCompras');
+  localStorage.setItem('carrinhoDeCompras', itens);
+  localStorage.setItem('totalCompras', total);
+}
+
+// produtos na pagina inicial
+function montarPag(prod) {
+  const pagina = [];
+  prod.results.forEach((elementos) => {
+    pagina.push(elementos);
+  });
+
+// chama o id, nome e imagem dos produtos
+  const todosProd = [];
+  pagina.forEach((elementos) => {
+    todosProd.push({
+      sku: elementos.id,
+      name: elementos.title,
+      image: elementos.thumbnail,
+    });
+  });
+
+  return todosProd;
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -24,7 +51,6 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// Função pronta
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -32,31 +58,53 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// Soma tot
-async function somar() {
-  const totalPrice = await document.querySelector('.total-price');
-  if (localStorage.carrinho === undefined || localStorage.carrinho === '') {
-    totalPrice.innerHTML = 0;
-    salvar();
-  } else {
-    totalPrice.innerHTML = Math.round(((Math.round(valorTot * 100) / 100)
-    + (Math.round(soma * 100) / 100) + (Math.round(sub * 100) / 100)) * 100) / 100;
-  }
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Comprar'));
+
+  return section;
 }
 
-// Remover
+function elementos(n) {
+  n.forEach((elementos) => {
+    Items.appendChild(createProductItemElement(elementos));
+  });
+}
+
+// fazer soma
+function somar(valor) {
+  if (document.querySelector('.total-price').innerText) {
+    const todosProdutos = document.querySelectorAll('.cart__item');
+    const soma = [];
+      todosProdutos.forEach((elementos) => {
+      soma.push(elementos.innerHTML.match(/([0-9.]){1,}$/)[0]);
+    });
+    let resultado = 0;
+    for (let i = 0; i < soma.length; i += 1) {
+      const number = parseFloat(soma[i]);
+      resultado += number;
+    }
+    return dinheiro(resultado);
+  }
+  return valor;
+}
+
+function atualizarPreco(valor) {
+  document.querySelector('.total-price').innerText = valor;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
-  salvar();
-  eventSplit = event.target.innerText.split(' ');
-  const valorRmv = eventSplit[eventSplit.length - 1];
-  const valorRmv2 = valorRmv.split('$');
-  sub -= valorRmv2[1];
-  salvar();
-  somar();
+  const preco = somar();
+  atualizarPreco(preco);
+  atualizar();
 }
 
-// Função pronta
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -65,90 +113,78 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// carregar o carrinho
-const carregar = () => {
-  new()
-  .map(itens => createCartItemElement(itens))
-  .forEach((product) => {
-    document.getElementsByClassName('.cart__items')[0].appendChild(product);
-  });
-  somar();
+function carrinho(data) {
+  const objForCartItem = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  };
+  const li = createCartItemElement(objForCartItem);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
+  const price = dinheiro(objForCartItem.salePrice);
+  return price;
+}
+
+// funcao assincrona
+const IdItem = async (id) => {
+  const URL = `https://api.mercadolibre.com/items/${id}`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  const obj = await carrinho(data);
+  const preco = await somar(obj);
+  atualizarPreco(preco);
+  atualizar();
 };
 
-// Add no carrinho
-async function addToCart({ sku }) {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(response => response.json())
-    .then((data) => {
-      const itemAdd = {
-        name: data.title,
-        salePrice: data.price,
-        id: sku,
-      };
-      carrinho.push(itemAdd);
-      const cartItems = document.getElementsByClassName('cart__items')[0];
-      cartItems.appendChild(createCartItemElement(itemAdd));
-    });
-  salvar();
-  somar();
-}
+const IdProd = (event) => {
+  const acessarSection = event.target.parentNode;
+  const idFirstElement = acessarSection.firstChild.innerText;
+  IdItem(idFirstElement);
+};
 
-// Função pronta
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const botaoAdd = section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  botaoAdd.addEventListener('click', () => {
-    addToCart({ sku });
-  });
-  section.appendChild(botaoAdd);
-  return section;
-}
-
-// Limpar tudo
-function clearAll() {
-  const itemRmv = document.querySelectorAll('.cart__item');
-  itemRmv.forEach((item) => {
-    item.remove();
-    localStorage.clear();
-    valorTot = 0;
-    soma = 0;
-    sub = 0;
-    somar();
-    salvar();
+// botao adicionar
+function queryButtons() {
+  const buttons = document.querySelectorAll('.item__add');
+  buttons.forEach((elementos) => {
+    elementos.addEventListener('click', IdProd);
   });
 }
 
-const botaoLimpar = document.querySelector('.empty-cart');
-botaoLimpar.addEventListener('click', clearAll);
-
-/* Função pronta
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+// gravar o carrinho
+function recuperaLocalStorage() {
+  const dadosGravados = localStorage.getItem('carrinhoDeCompras');
+  const total = localStorage.getItem('totalCompras');
+  document.querySelector('.cart__items').innerHTML = dadosGravados;
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.forEach(elementos => elementos.addEventListener('click', cartItemClickListener));
+  document.querySelector('.total-price').innerText = total;
 }
-*/
- 
+
+// limpar carrinho, atualiza o localStorage
+function emptycart() {
+  const empt = document.querySelector('.empty-cart');
+  empt.addEventListener('click', function () {
+    document.querySelector('.cart__items').innerHTML = '';
+    document.querySelector('.total-price').innerHTML = '';
+    atualizar();
+  });
+  document.querySelector('.loading').remove();
+}
+
+// criar o loading
+function loading() {
+  document.querySelector('.loading').innerHTML = 'loading...';
+}
+
+// Fetch API retorna as promisses
 window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  recuperaLocalStorage();
+  fetch(API, OBJ)
     .then(response => response.json())
-    .then((data) => {
-      data.results.forEach((result) => {
-        const product = createProductItemElement({
-          sku: result.id,
-          name: result.title,
-          image: result.thumbnail,
-        });
-        document.querySelector('.items').appendChild(product);
-      });
-      document.querySelector('.items').appendChild(product);
-    });
-  })
-  .catch(() => console.log('Erro: API não encontrada'));  
-  carregar();
-  
-  setTimeout(() => {
-  loading.remove();
-}, 2000);
+    .then(jsonResponse => montarPag(jsonResponse))
+    .then(n => elementos(n))
+    .then(loading())
+    .then(queryButtons)
+    .then(emptycart);
+};
