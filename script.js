@@ -169,6 +169,7 @@ function emptycart() {
     document.querySelector('.total-price').innerHTML = '';
     atualizar();
   });
+  document.querySelector('.loading').remove();
 }
 
 // Fetch API retorna as promisses
