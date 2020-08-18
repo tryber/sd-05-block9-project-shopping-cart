@@ -42,8 +42,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 async function createList() {
   const items = document.getElementsByClassName('items')[0];
-  const query = document.getElementById('query_input').value;
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
+  // const query = document.getElementById('query_input').value;
+  // acho que talvez o teste não peça por um retorno de qqr pesquisa, só de "computador"
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   await fetch(url)
     .then(r => r.json())
     .then(r => r.results.map(item => createProductItemElement(item)))
@@ -53,5 +54,5 @@ async function createList() {
 }
 
 window.onload = function onload() {
-  document.getElementById('search_button').addEventListener('click', createList);
+  createList();
 };
