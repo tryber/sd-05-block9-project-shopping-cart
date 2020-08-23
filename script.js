@@ -26,7 +26,6 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  cartStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -68,7 +67,6 @@ function emptyCart() {
 
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
-    .then(setTimeout(() => document.querySelector('.loading').remove(), 1000))
     .then(r => r.json()) // transformar dados em json.
     .then(data =>
       data.results.forEach((item) => {
@@ -80,5 +78,5 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
       }))
-      .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart()));
+      .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart));
 };
