@@ -9,9 +9,9 @@ window.onload = function onload() {
           image: item.thumbnail,
         });
         document.querySelector('.items').appendChild(product);
-      })
+      }),
     );
-}; // feito um loop por cada item buscando os itens citados na função: sku,name e img e fazendo .appendChild do produto na class items
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -30,13 +30,10 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
-  );
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
 }
