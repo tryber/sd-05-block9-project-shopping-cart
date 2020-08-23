@@ -5,7 +5,7 @@ function cartStorage() {
   localStorage.setItem('priceTotal', prices.innerHTML);
 }
 
-const getAndSumPrices = () => {
+const sumTotal = () => {
   const cartItens = document.querySelectorAll('.cart__item');
   const priceArray = [...cartItens].map(item => item.innerHTML.match(/[\d.\d]+$/));
   const totalPricePlace = document.getElementsByClassName('total-price')[0];
@@ -33,7 +33,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  getAndSumPrices();
+  sumTotal();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -53,7 +53,7 @@ async function addToCart(ItemID) {
       salePrice: data.price,
     };
     document.querySelector('.cart__items').appendChild(createCartItemElement(addCart));
-    getAndSumPrices();
+    sumTotal();
     cartStorage();
   });
 } // copiado o fetch de onload porem com novo link, valor de ItemID sendo sku para recuperar id
