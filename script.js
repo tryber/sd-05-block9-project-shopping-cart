@@ -80,5 +80,5 @@ window.onload = function onload() {
         document.querySelector('.items').appendChild(product);
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
       }))
-      .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart));
+      .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart()));
 };
