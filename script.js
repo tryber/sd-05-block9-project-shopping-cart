@@ -1,8 +1,17 @@
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(r => r.json()) // transformar dados em json.
-    .then(data => console.log(data.results));
-};
+    .then(data =>
+      data.results.forEach((item) => {
+        const product = createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        });
+        document.querySelector('.items').appendChild(product);
+      })
+    );
+}; // feito um loop por cada item buscando os itens citados na função: sku,name e img e fazendo .appendChild do produto na class items
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -26,7 +35,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
   );
 
   return section;
