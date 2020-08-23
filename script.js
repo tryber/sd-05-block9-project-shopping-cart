@@ -58,6 +58,10 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function emptyCart() {
+  document.querySelectorAll('.cart__item').forEach(item => item.remove());
+  cartStorage();
+}
 
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
@@ -71,6 +75,6 @@ window.onload = function onload() {
         });
         document.querySelector('.items').appendChild(product);
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart');
-      }),
-    );
+      }))
+      .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart))
 };
