@@ -1,6 +1,6 @@
 function cartStorage() {
   const cart = document.getElementsByClassName('cart__items')[0];
-  localStorage.setItem('cart', cart.innerHTML);  
+  localStorage.setItem('cart', cart.innerHTML);
 }
 
 function createProductImageElement(imageSource) {
