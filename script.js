@@ -90,3 +90,8 @@ window.onload = function onload() {
       .then(setTimeout(() => document.querySelector('.loading').remove(), 1000))
       .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', emptyCart));
 };
+
+/* 
+Transparencia: Ref localStorage: 'https://tableless.com.br/guia-f%C3%A1cil-sobre-usar-localstorage-com-javascript/'
+Soma total feito com auxilio Juliette
+*/
