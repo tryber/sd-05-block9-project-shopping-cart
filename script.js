@@ -18,8 +18,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  event.target.remove(); 
-  //Perdi tempo achando que quando clicava adicionar ao carrinho removia da lista mas é se clicar no texto remove do carrinho.
+  event.target.remove();
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
