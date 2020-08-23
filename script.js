@@ -19,7 +19,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', () => { addToCart({ sku })}); // após mudar evento de add2cart p/ sku parou de dar undefined
+  .addEventListener('click', () => { addToCart({ sku }); }); // após mudar evento de add2cart p/ sku parou de dar undefined
   return section;
 }
 
@@ -29,7 +29,6 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
