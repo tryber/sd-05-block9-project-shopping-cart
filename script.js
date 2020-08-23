@@ -52,6 +52,10 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function cartStorage() {
+  localStorage.setItem('cart', document.querySelector('.cart__items'));
+}
+
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(r => r.json()) // transformar dados em json.
