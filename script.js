@@ -12,13 +12,27 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function addToCart(ItemID) {
+  fetch(`https://api.mercadolibre.com/items/${ItemID.sku}`)
+  .then(response => response.json())
+  .then((data) => {
+    const addCart= {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price
+  }
+  document.querySelector('.cart__items').appendChild(createCartItemElement(addCart));
+  });
+} // copiado o fetch de onload porem com novo link, valor de ItemID sendo sku para recuperar id
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', ()=>{ addToCart({sku})}); // após mudar evento de add2cart p/ sku parou de dar undefined
   return section;
 }
 
@@ -28,6 +42,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
