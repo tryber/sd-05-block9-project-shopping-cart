@@ -1,3 +1,10 @@
+function refreshStorage() {
+  const itemsList = document.querySelector('.cart__items');
+  const totalPrice = document.querySelector('.total-price');
+  localStorage.setItem('cart item:', itemsList.innerHTML);
+  localStorage.setItem('total price:', totalPrice.innerHTML);
+}
+
 window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
