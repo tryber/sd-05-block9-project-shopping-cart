@@ -5,6 +5,11 @@ function refreshStorage() {
   localStorage.setItem('total price:', totalPrice.innerHTML);
 }
 
+async function calculateTotal(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
+}
+
 window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
