@@ -31,8 +31,14 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-  return null;
+  const item = event.target;
+  const text = event.target.innerText;
+  if (item.parentNode) {
+    const price = (Math.round(text.substr(text.indexOf('PRICE: $') + 8) * 100) / 100).toFixed(2);
+    calculateTotal(-price);
+    item.parentNode.removeChild(item);
+  }
+  refreshStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
